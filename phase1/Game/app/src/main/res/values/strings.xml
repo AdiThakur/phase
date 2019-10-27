@@ -3,4 +3,9 @@
     <string name="game_name">Phase 1</string>
     <string name="sign_up">Sign Up</string>
     <string name="log_in">Log In</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="connect">Connect</string>
+    <string name="match">Match</string>
+    <string name="Guess">Guess</string>
 </resources>

@@ -3,13 +3,20 @@ package com.example.game;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class logIn extends AppCompatActivity {
 
+    final String TAG = "logIn";
     SharedPreferences sharedPreferences;
 
     @Override
@@ -18,40 +25,47 @@ public class logIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         sharedPreferences = getSharedPreferences("com.example.game", Context.MODE_PRIVATE);
+        HashSet<String> users = (HashSet<String>) sharedPreferences.getStringSet("users", null);
+        if (users != null) {
+            Log.i(TAG, users.toString());
+        }
     }
 
-    public void logIn(View view) {
+    public void logInButton(View view) {
 
-        // Check if user in file
-        // If they are in file, valid = true. Load all of their preferences, and move on to game
-        // selection screen
-        // else output Not a valid user, please try again.
-        EditText userNameEditText = findViewById(R.id.userNameEditText);
-        EditText passwordEditText = findViewById(R.id.passwordEditText);
+        HashSet<String> savedUserList = (HashSet<String>)
+                sharedPreferences.getStringSet("users", null);
 
-        String enteredUserName = userNameEditText.getText().toString();
-        String enteredPassword = passwordEditText.getText().toString();
-
-        String userName = sharedPreferences.getString(enteredUserName, null);
-        // If enteredUserName in user list.
-        if (userName != null) {
-            // Check if correct password.
-            // Create a new User object using just the username. Call User.load() to load all of
-            // this user's data. Check if entered password is the same as saved password.
-            if (enteredPassword.equals("password")) {
-                // Then we can jump to the main menu
-             // If the user exists, but password is messed
-            } else {
-                // Raise toast: wrong password - Try again
-                // reset the editTextField for password
-            }
-        // If username not in list
+        if (savedUserList == null) {
+            Toast.makeText(this, "No local accounts. Please sign up.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), signUp.class));
+            finish();
         } else {
-            // jump to sign-up activity
-            // create a new user, save it in sharedprefferences, and txt file
+
+            ArrayList<String> userList = new ArrayList<>(savedUserList);
+
+            EditText userNameEditText = findViewById(R.id.userNameEditText);
+            String enteredUserName = userNameEditText.getText().toString();
+            EditText passwordEditText = findViewById(R.id.passwordEditText);
+            String enteredPassword = userNameEditText.getText().toString();
+
+            // If username and password fields aren't empty.
+            if (!enteredUserName.equals("") || !enteredPassword.equals("")) {
+                Log.i(TAG, enteredUserName);
+
+                // If such user exists.
+                if (userList.contains(enteredUserName)) {
+                    // TODO: Check password.
+                    Toast.makeText(this, "Welcome " + enteredUserName, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), gameSelection.class));
+                    finish();
+                } else {
+                    Toast.makeText(this, "No such user found!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_SHORT).show();
+            }
+
         }
-
-
-
     }
 }
