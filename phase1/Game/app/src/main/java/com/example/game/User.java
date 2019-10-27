@@ -13,6 +13,9 @@ import java.util.HashMap;
 
 public class User {
 
+    static final int USERNAME_INDEX = 0;
+    static final int PASSWORD_INDEX = 1;
+
     /**
      * name of this user
      */
