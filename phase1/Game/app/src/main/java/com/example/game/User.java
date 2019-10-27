@@ -1,5 +1,14 @@
 package com.example.game;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
@@ -23,6 +32,13 @@ public class User {
      * customizations for each game of this user
      */
     HashMap<String, HashMap<String, String>> customizations;
+
+    static ArrayList<String> userList = new ArrayList<>();
+
+    public static boolean validUser(String username) {
+        return userList.contains(username);
+    }
+
 
     /**
      * Constructs a new User
