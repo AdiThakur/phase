@@ -2,22 +2,35 @@ package com.example.game;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Scanner;
+
+enum Classes {
+    gameSelection,
+    signUp
+}
 
 public class logIn extends AppCompatActivity {
 
-    final String TAG = "logIn";
+    private final String TAG = "logIn";
     SharedPreferences sharedPreferences;
+
+    private EditText userNameEditText;
+    private EditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,47 +38,58 @@ public class logIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         sharedPreferences = getSharedPreferences("com.example.game", Context.MODE_PRIVATE);
-        HashSet<String> users = (HashSet<String>) sharedPreferences.getStringSet("users", null);
-        if (users != null) {
-            Log.i(TAG, users.toString());
-        }
+
+        // Initializing views.
+        userNameEditText = findViewById(R.id.userNameEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
     }
 
     public void logInButton(View view) {
 
-        HashSet<String> savedUserList = (HashSet<String>)
-                sharedPreferences.getStringSet("users", null);
+        String enteredUserName = userNameEditText.getText().toString();
+        String enteredPassword = passwordEditText.getText().toString();
 
-        if (savedUserList == null) {
-            Toast.makeText(this, "No local accounts. Please sign up.", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getApplicationContext(), signUp.class));
-            finish();
+        // Using a DataLoader to try to load User enteredUserName.
+        DataLoader dataLoader = new DataLoader(this);
+        User user = dataLoader.loadUser(enteredUserName);
+
+        if (user == null) {
+            raiseToast("No such user found.");
         } else {
-
-            ArrayList<String> userList = new ArrayList<>(savedUserList);
-
-            EditText userNameEditText = findViewById(R.id.userNameEditText);
-            String enteredUserName = userNameEditText.getText().toString();
-            EditText passwordEditText = findViewById(R.id.passwordEditText);
-            String enteredPassword = userNameEditText.getText().toString();
-
-            // If username and password fields aren't empty.
             if (!enteredUserName.equals("") || !enteredPassword.equals("")) {
                 Log.i(TAG, enteredUserName);
-
-                // If such user exists.
-                if (userList.contains(enteredUserName)) {
-                    // TODO: Check password.
-                    Toast.makeText(this, "Welcome " + enteredUserName, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), gameSelection.class));
-                    finish();
+                if (user.authenticateUser(enteredUserName, enteredPassword)) {
+                    jumpToActivity(user.name, Classes.gameSelection);
                 } else {
-                    Toast.makeText(this, "No such user found!", Toast.LENGTH_SHORT).show();
+                    raiseToast("Incorrect credentials!");
                 }
+            // Empty fields.
             } else {
-                Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_SHORT).show();
+                raiseToast("Fields cannot be empty!");
             }
-
         }
+    }
+
+    private void jumpToActivity(String userName, Classes activityToShow) {
+
+        Intent intent = null;
+
+        switch(activityToShow) {
+            case gameSelection:
+                intent = new Intent(getApplicationContext(), gameSelection.class);
+                intent.putExtra("user", userName);
+                raiseToast("Welcome " + userName);
+                break;
+            case signUp:
+                intent = new Intent(getApplicationContext(), signUp.class);
+                raiseToast("No users registered!");
+                break;
+        }
+        startActivity(intent);
+        finish();
+    }
+
+    private void raiseToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }
