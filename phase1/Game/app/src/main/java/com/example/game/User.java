@@ -1,8 +1,19 @@
 package com.example.game;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
+
+
 
     /**
      * name of this user
@@ -12,7 +23,7 @@ public class User {
     /**
      * password of this user
      */
-    String password;
+    private String password;
 
     /**
      * statistics for each game of this user
@@ -24,12 +35,24 @@ public class User {
      */
     HashMap<String, HashMap<String, String>> customizations;
 
+    static ArrayList<String> userList = new ArrayList<>();
+    private String backgroundColor;
+    private String textColor;
+    public String language;
+
+    public static boolean validUser(String username) {
+        return userList.contains(username);
+    }
+
+
     /**
      * Constructs a new User
      *
      * @param name the name of this user
      */
     User(String name) {
+
+        // TODO - THis contstructor will only be called by DataLoader. Create new constrcutor for a default user (username, password).
         this.name = name;
 
         // initialize statistics
@@ -118,7 +141,23 @@ public class User {
      *
      * @param password the password of this User
      */
-    void set_password(String password) {
+    void setPassword(String password) {
         this.password = password;
+    }
+
+    void setBackgroundColor(String backgroundColorHexa) {
+        this.backgroundColor = backgroundColorHexa;
+    }
+
+    void setTextColor(String textColorHexa) {
+        this.textColor = textColorHexa;
+    }
+
+    void setLanguage(String language) {
+        this.language = language;
+    }
+
+    boolean authenticateUser(String enteredUsername, String enteredPassword) {
+        return this.name.equals(enteredUsername) && this.password.equals(enteredPassword);
     }
 }
