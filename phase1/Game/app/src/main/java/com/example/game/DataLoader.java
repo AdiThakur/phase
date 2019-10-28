@@ -63,16 +63,16 @@ class DataLoader {
             user.setLanguage(userData.get(LANGUAGE_INDEX));
             // Statistics for Connect.
             String[] connectStats = userData.get(CONNECT_STATS).split(",");
-            user.initializeConnectStats(Integer.parseInt(connectStats[0]),
-                    Long.parseLong(connectStats[1]), Integer.parseInt(connectStats[2]));
+            user.initializeConnectStats(Integer.parseInt(connectStats[0].trim()),
+                    Long.parseLong(connectStats[1].trim()), Integer.parseInt(connectStats[2].trim()));
             // Statistics for Match.
             String[] matchStats = userData.get(MATCH_STATS).split(",");
-            user.initializeMatchStats(Integer.parseInt(matchStats[0]),
-                    Long.parseLong(matchStats[1]), Integer.parseInt(matchStats[2]));
+            user.initializeMatchStats(Integer.parseInt(matchStats[0].trim()),
+                    Long.parseLong(matchStats[1].trim()), Integer.parseInt(matchStats[2].trim()));
             // Statistics for Guess
             String[] guessStats = userData.get(GUESS_STATS).split(",");
-            user.initializeGuessStats(Integer.parseInt(guessStats[0]),
-                    Long.parseLong(guessStats[1]), Integer.parseInt(guessStats[2]));
+            user.initializeGuessStats(Integer.parseInt(guessStats[0].trim()),
+                    Long.parseLong(guessStats[1].trim()), Integer.parseInt(guessStats[2].trim()));
         }
         return user;
     }

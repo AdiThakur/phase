@@ -17,6 +17,7 @@ import java.util.HashSet;
 
 public class gameSelection extends AppCompatActivity {
 
+    private final String TAG = "gameSelection";
     String userName;
     User user;
 
@@ -25,18 +26,17 @@ public class gameSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_selection);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
-        HashSet<String> users = (HashSet<String>) sharedPreferences.getStringSet("users", null);
-        if (users != null) {
-            Log.i("gameSelection", users.toString());
-        }
-
         Intent intent = getIntent();
         userName = intent.getStringExtra("user");
 
         // Loading user's data.
         DataLoader dataLoader = new DataLoader(this);
         user = dataLoader.loadUser(userName);
+
+        if (user != null) {
+            Log.i(TAG, user.connectStats.getGamesWon() + ", " + user.connectStats.getGamesPlayed() + ", " + user.connectStats.getTimePlayed());
+        }
+
     }
 
     void displayPrefferences(User user) {
