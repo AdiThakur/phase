@@ -14,6 +14,9 @@ class DataLoader {
     private final int BACKGROUNDCOLOR_INDEX = 2;
     private final int TEXTCOLOR_INDEX = 3;
     private final int LANGUAGE_INDEX = 4;
+    private final int CONNECT_STATS = 5;
+    private final int MATCH_STATS = 6;
+    private final int GUESS_STATS = 7;
 
     private final String TAG = "DataLoader";
     private Context appContext;
@@ -25,7 +28,6 @@ class DataLoader {
     // Reads data from user.txt and loads it into an ArrayList<String>.
     private ArrayList<String> dataToArrayList(String userName) {
 
-        // Saves data read from text file.
         String fileName = userName + ".txt";
         ArrayList<String> dataFromFile = new ArrayList<>();
         // Reading from file
@@ -59,12 +61,19 @@ class DataLoader {
             user.setBackgroundColor(userData.get(BACKGROUNDCOLOR_INDEX));
             user.setTextColor(userData.get(TEXTCOLOR_INDEX));
             user.setLanguage(userData.get(LANGUAGE_INDEX));
-            // Three sets of stats.
-            // TODO: Create a super class game - contains stats games played and time played. Make each game inherit from it.
-            // user.setConnectStats(userData.get(LANGUAGE_INDEX));
-
+            // Statistics for Connect.
+            String[] connectStats = userData.get(CONNECT_STATS).split(",");
+            user.initializeConnectStats(Integer.parseInt(connectStats[0]),
+                    Long.parseLong(connectStats[1]), Integer.parseInt(connectStats[2]));
+            // Statistics for Match.
+            String[] matchStats = userData.get(MATCH_STATS).split(",");
+            user.initializeMatchStats(Integer.parseInt(matchStats[0]),
+                    Long.parseLong(matchStats[1]), Integer.parseInt(matchStats[2]));
+            // Statistics for Guess
+            String[] guessStats = userData.get(GUESS_STATS).split(",");
+            user.initializeGuessStats(Integer.parseInt(guessStats[0]),
+                    Long.parseLong(guessStats[1]), Integer.parseInt(guessStats[2]));
         }
         return user;
-
     }
 }

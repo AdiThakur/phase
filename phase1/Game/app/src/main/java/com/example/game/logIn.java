@@ -57,9 +57,8 @@ public class logIn extends AppCompatActivity {
             raiseToast("No such user found.");
         } else {
             if (!enteredUserName.equals("") || !enteredPassword.equals("")) {
-                Log.i(TAG, enteredUserName);
                 if (user.authenticateUser(enteredUserName, enteredPassword)) {
-                    jumpToActivity(user.name, Classes.gameSelection);
+                    jumpToActivity(user.getName(), Classes.gameSelection);
                 } else {
                     raiseToast("Incorrect credentials!");
                 }
@@ -90,6 +89,6 @@ public class logIn extends AppCompatActivity {
     }
 
     private void raiseToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }
