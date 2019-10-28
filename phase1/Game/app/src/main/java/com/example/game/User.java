@@ -43,7 +43,7 @@ public class User {
         this.textColor = textColorHexa;
     }
 
-    String getTextColor(String textColorHexa) {
+    String getTextColor() {
         return this.textColor;
     }
 

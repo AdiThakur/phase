@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-public class DataSaver {
+class DataSaver {
 
     private final String TAG = "DataSaver";
     private final Context appContext;
@@ -16,18 +16,17 @@ public class DataSaver {
         this.appContext = appContext;
     }
 
-    boolean saveUser(User user, String userName) {
+    boolean saveUser(User user, String userName, String password) {
 
         String stringToSave;
         String fileName = userName + ".txt";
         PrintWriter out;
 
         if (user == null) {
-            stringToSave = defaultDataToString(userName);
+            stringToSave = defaultDataToString(userName, password);
         } else {
             stringToSave = userDataToString(user);
         }
-
         try {
             OutputStream outStream = this.appContext.openFileOutput(fileName, Context.MODE_PRIVATE);
             out = new PrintWriter(outStream);
@@ -41,18 +40,12 @@ public class DataSaver {
         }
     }
 
-    // TODO user DataSaver.saveUser to MODIFY the SHIT out of signUp
-
-    private String defaultDataToString(String userName) {
-        return "Finish this method ploz.";
-    }
-
-    private String userDataToString(User user) {
+    private String defaultDataToString(String userName, String password) {
 
         StringBuilder output = new StringBuilder();
-        output.append(user.getName());
+        output.append(userName);
         output.append("\n");
-        output.append(user.getPassword());
+        output.append(password);
         output.append("\n");
         output.append("green"); // BG color.
         output.append("\n");
@@ -65,6 +58,34 @@ public class DataSaver {
         output.append("0, 0, 0"); // Match
         output.append("\n");
         output.append("0, 0, 0"); // Higher or Lower
+        output.append("\n");
+
+        return output.toString();
+    }
+
+    private String userDataToString(User user) {
+
+        StringBuilder output = new StringBuilder();
+
+        output.append(user.getName());
+        output.append("\n");
+        output.append(user.getPassword());
+        output.append("\n");
+        output.append(user.getBackgroundColor()); // BG color.
+        output.append("\n");
+        output.append(user.getTextColor()); // Text color
+        output.append("\n");
+        output.append(user.getLanguage()); // Language
+        output.append("\n");
+        // TODO - Change concatenations to append.
+        output.append(user.connectStats.getGamesPlayed() + ", " +
+                user.connectStats.getTimePlayed() + ", " + user.connectStats.getGamesWon());
+        output.append("\n");
+        output.append(user.matchStats.getGamesPlayed() + ", " +
+                user.matchStats.getTimePlayed() + ", " + user.matchStats.getTotalMistakes());
+        output.append("\n");
+        output.append(user.guessStats.getGamesPlayed() + ", " +
+                user.guessStats.getTimePlayed() + ", " + user.guessStats.getLongestStreak());
         output.append("\n");
 
         return output.toString();

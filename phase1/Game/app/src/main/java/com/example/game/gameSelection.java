@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -35,6 +36,15 @@ public class gameSelection extends AppCompatActivity {
 
         if (user != null) {
             Log.i(TAG, user.connectStats.getGamesWon() + ", " + user.connectStats.getGamesPlayed() + ", " + user.connectStats.getTimePlayed());
+        }
+
+        user.connectStats.incrementGamesWon();
+        DataSaver dataSaver = new DataSaver(this);
+        boolean saved = dataSaver.saveUser(user, user.getName(), user.getPassword());
+        if (saved) {
+            Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Ruh-Roh!!", Toast.LENGTH_SHORT).show();
         }
 
     }
