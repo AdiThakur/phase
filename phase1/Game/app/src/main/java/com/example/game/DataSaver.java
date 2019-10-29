@@ -47,7 +47,7 @@ class DataSaver {
         output.append("\n");
         output.append(password);
         output.append("\n");
-        output.append("green"); // BG color.
+        output.append("white"); // BG color.
         output.append("\n");
         output.append("white"); // Text color
         output.append("\n");

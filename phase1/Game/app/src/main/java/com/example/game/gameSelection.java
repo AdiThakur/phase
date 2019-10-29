@@ -34,23 +34,12 @@ public class gameSelection extends AppCompatActivity {
         DataLoader dataLoader = new DataLoader(this);
         user = dataLoader.loadUser(userName);
 
-        if (user != null) {
-            Log.i(TAG, user.connectStats.getGamesWon() + ", " + user.connectStats.getGamesPlayed() + ", " + user.connectStats.getTimePlayed());
-        }
-
-        user.connectStats.incrementGamesWon();
-        DataSaver dataSaver = new DataSaver(this);
-        boolean saved = dataSaver.saveUser(user, user.getName(), user.getPassword());
-        if (saved) {
-            Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Ruh-Roh!!", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
 
     }
 
     void displayPrefferences(User user) {
-        // TODO - Grab user's choice of BG color, text color, and language, draw GUI accordingly.
+        // TODO - Grab user's choice of BG color, text color, and language, draw GUI accordingly. This should be part of game superclass as well.
         View backgroundView = findViewById(R.id.backgroundView);
         backgroundView.setBackgroundColor(Color.parseColor(user.getBackgroundColor()));
 
