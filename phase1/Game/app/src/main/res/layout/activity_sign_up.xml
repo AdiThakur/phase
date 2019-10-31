@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/signUpButton"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="155dp"
         android:layout_marginTop="153dp"
@@ -17,12 +17,15 @@
         android:background="@drawable/button"
         android:onClick="signUpButton"
         android:text="@string/sign_up"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textColor="@color/colorField"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-        app:layout_constraintVertical_bias="0.736" />
+        app:layout_constraintVertical_bias="0.777" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -51,7 +54,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/greeting_signup"
+        android:textSize="45sp"
+        android:textColor="@color/colorPrimary"
         tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="124dp" />
+        tools:layout_editor_absoluteY="143dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
