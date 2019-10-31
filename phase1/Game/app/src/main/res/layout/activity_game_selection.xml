@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:onClick="gameClicked"
             android:tag="level3"
             android:text="@string/Guess"
             android:textColor="@android:color/background_light"
