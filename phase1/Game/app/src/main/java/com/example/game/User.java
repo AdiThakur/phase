@@ -13,8 +13,6 @@ import java.util.HashMap;
 
 public class User {
 
-
-
     /**
      * name of this user
      */
@@ -44,7 +42,6 @@ public class User {
         return userList.contains(username);
     }
 
-
     /**
      * Constructs a new User
      *
@@ -52,7 +49,7 @@ public class User {
      */
     User(String name) {
 
-        // TODO - THis contstructor will only be called by DataLoader. Create new constrcutor for a default user (username, password).
+        // TODO - This constructor will only be called by DataLoader. Create new constructor for a default user (username, password).
         this.name = name;
 
         // initialize statistics

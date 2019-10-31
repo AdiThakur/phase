@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/login_signup_bg">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -18,17 +19,21 @@
 
         <Button
             android:id="@+id/logInButton"
-            android:layout_width="wrap_content"
+            android:background="@drawable/button"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:fontFamily="sans-serif"
             android:onClick="logIn"
             android:text="@string/log_in" />
 
         <Button
             android:id="@+id/signUpButton"
-            android:layout_width="wrap_content"
+            android:background="@drawable/button"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
             android:onClick="signUp"
             android:text="@string/sign_up" />
     </LinearLayout>
@@ -38,12 +43,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="174dp"
-        android:layout_marginTop="99dp"
+        android:layout_marginTop="168dp"
         android:layout_marginEnd="178dp"
+        android:fontFamily="sans-serif"
         android:text="@string/game_name"
         android:textSize="50sp"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.164" />
 </androidx.constraintlayout.widget.ConstraintLayout>
