@@ -1,11 +1,15 @@
 package com.example.game;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,6 +33,24 @@ public class gameSelection extends AppCompatActivity {
         user = dataLoader.loadUser(userName);
 
         Toast.makeText(this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.checkstatsmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.checkStatsButton) {
+            Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
+            intent.putExtra("user", userName);
+            startActivity(intent);
+        }
+        return true;
     }
 
     void displayPrefferences(User user) {
