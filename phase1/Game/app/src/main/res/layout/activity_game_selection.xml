@@ -22,33 +22,36 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/connectButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:tag="level1"
+            android:onClick="gameClicked"
+            android:tag="CONNECT"
             android:text="@string/connect"
             android:textColor="@android:color/background_light"
             android:textSize="50sp"
             android:textStyle="bold|italic" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/matchButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:tag="level2"
+            android:onClick="gameClicked"
+            android:tag="MATCH"
             android:text="@string/match"
             android:textColor="@android:color/background_light"
             android:textSize="50sp"
             android:textStyle="bold|italic" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/guessButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:tag="level3"
+            android:onClick="gameClicked"
+            android:tag="GUESS"
             android:text="@string/Guess"
             android:textColor="@android:color/background_light"
             android:textSize="50sp"

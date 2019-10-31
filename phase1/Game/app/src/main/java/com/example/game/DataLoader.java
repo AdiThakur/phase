@@ -19,7 +19,7 @@ class DataLoader {
     private final int GUESS_STATS = 7;
 
     private final String TAG = "DataLoader";
-    private Context appContext;
+    private final Context appContext;
 
     DataLoader(Context appContext) {
         this.appContext = appContext;

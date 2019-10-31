@@ -38,7 +38,6 @@ public class signUp extends AppCompatActivity {
         Intent intent = getIntent();
         String desiredUserName = intent.getStringExtra("user");
         userNameEditText.setText(desiredUserName);
-
     }
 
     public void signUpButton(View view) {
@@ -67,7 +66,6 @@ public class signUp extends AppCompatActivity {
         } else {
             raiseToast("Fields cannot be empty!");
         }
-
     }
 
     private void raiseToast(String msg) {

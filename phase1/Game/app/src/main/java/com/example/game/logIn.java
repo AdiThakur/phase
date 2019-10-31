@@ -23,13 +23,13 @@ import java.util.Scanner;
 
 enum Classes {
     gameSelection,
-    signUp
+    signUp,
+    logIn
 }
 
 public class logIn extends AppCompatActivity {
 
     private final String TAG = "logIn";
-    SharedPreferences sharedPreferences;
 
     private EditText userNameEditText;
     private EditText passwordEditText;
@@ -39,9 +39,6 @@ public class logIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        sharedPreferences = getSharedPreferences("com.example.game", Context.MODE_PRIVATE);
-
-        // Initializing views.
         userNameEditText = findViewById(R.id.userNameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
     }
@@ -100,7 +97,6 @@ public class logIn extends AppCompatActivity {
                 jumpToActivity(userName, Classes.signUp);
             }
         });
-
         AlertDialog alert = builder.create();
         alert.show();
     }

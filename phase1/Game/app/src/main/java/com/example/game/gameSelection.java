@@ -2,19 +2,13 @@ package com.example.game;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.HashSet;
 
 public class gameSelection extends AppCompatActivity {
 
@@ -35,16 +29,31 @@ public class gameSelection extends AppCompatActivity {
         user = dataLoader.loadUser(userName);
 
         Toast.makeText(this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
-
     }
 
     void displayPrefferences(User user) {
         // TODO - Grab user's choice of BG color, text color, and language, draw GUI accordingly. This should be part of game superclass as well.
         View backgroundView = findViewById(R.id.backgroundView);
         backgroundView.setBackgroundColor(Color.parseColor(user.getBackgroundColor()));
-
     }
 
+    public void gameClicked(View view) {
+
+        Intent intent = null;
+        String tag = view.getTag().toString();
+
+        if (tag.equals("GUESS")) {
+            intent = new Intent(getApplicationContext(), GuessActivity.class);
+        }
+        if(tag.equals("CONNECT")) {
+            intent = new Intent(getApplicationContext(), MemoryActivity.class);
+        }
+        if (tag.equals("MATCH")) {
+            intent = new Intent(getApplicationContext(), MemoryActivity.class);
+        }
+        intent.putExtra("user", userName);
+        startActivity(intent);
+    }
 
     @Override
     public void onBackPressed() {
@@ -55,7 +64,7 @@ public class gameSelection extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 gameSelection.super.onBackPressed();
-                Toast.makeText(gameSelection.this, "Goodbye " + userName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(gameSelection.this, "Goodbye " + userName, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -63,4 +72,9 @@ public class gameSelection extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "Goodbye, " + userName, Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+    }
 }
