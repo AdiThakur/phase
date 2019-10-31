@@ -13,6 +13,7 @@
         <activity android:name=".gameSelection" />
         <activity android:name=".signUp" />
         <activity android:name=".logIn" />
+        <activity android:name=".MemoryActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

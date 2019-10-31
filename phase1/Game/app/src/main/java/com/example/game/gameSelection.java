@@ -44,15 +44,15 @@ public class gameSelection extends AppCompatActivity {
 
         if (tag.equals("GUESS")) {
             intent = new Intent(getApplicationContext(), GuessActivity.class);
-        }
-        if(tag.equals("CONNECT")) {
+        } else if (tag.equals("CONNECT")) {
+            intent = new Intent(getApplicationContext(), MemoryActivity.class);
+        } else  if (tag.equals("MATCH")){
             intent = new Intent(getApplicationContext(), MemoryActivity.class);
         }
-        if (tag.equals("MATCH")) {
-            intent = new Intent(getApplicationContext(), MemoryActivity.class);
+        if (intent != null) {
+            intent.putExtra("user", userName);
+            startActivity(intent);
         }
-        intent.putExtra("user", userName);
-        startActivity(intent);
     }
 
     @Override

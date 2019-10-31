@@ -11,11 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 public class MemoryActivity extends AppCompatActivity {
 
-    private TextView displayNumverTextView;
+    private TextView displayNumberTextView;
     private EditText userNumberEditText;
 
     private MemoryGame memoryGame;
@@ -26,7 +24,7 @@ public class MemoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
 
-        displayNumverTextView = findViewById(R.id.displayNumberTextView);
+        displayNumberTextView = findViewById(R.id.displayNumberTextView);
         userNumberEditText = findViewById(R.id.userEnteredNumberEditText);
 
         Intent intent = getIntent();
@@ -71,7 +69,7 @@ public class MemoryActivity extends AppCompatActivity {
             }catch (Exception e){
                 e.printStackTrace();
             }
-            displayNumverTextView.setText(numberSequence.charAt(i) + "");
+            displayNumberTextView.setText(numberSequence.charAt(i) + "");
         }
     }
 
