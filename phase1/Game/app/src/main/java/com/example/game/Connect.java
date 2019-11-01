@@ -128,11 +128,12 @@ public class Connect {
         }
 
         boolean backwardDiagonalAllSame = true;
-        for (int row = this.row - 1, col = this.col - 1; (row >= 0 && col >= 0); row--, col--) {
+        for (int row = 0, col = this.col - 1; (row < this.row && col > -1); row++, col--) {
             if (gameBoard[row][col] != player) {
                 backwardDiagonalAllSame = false;
             }
         }
+        Log.i("Connect/backward", backwardDiagonalAllSame + "'");
         return forwardDiagonalAllSame || backwardDiagonalAllSame;
     }
 
