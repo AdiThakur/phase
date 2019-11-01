@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:onClick="gameClicked"
             android:tag="MATCH"
-            android:text="Repeat"
+            android:text="@string/repeat"
             android:textColor="@android:color/background_light"
             android:textSize="50sp"
             android:textStyle="bold|italic" />
