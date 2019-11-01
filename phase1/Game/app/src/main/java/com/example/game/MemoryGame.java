@@ -12,12 +12,16 @@ public class MemoryGame {
     private StringBuilder numberSequence;
     private long startTime;
 
+    private int streaks;
 
-   MemoryGame(String userName, Context appContext) {
+
+
+    MemoryGame(String userName, Context appContext) {
        this.appContext = appContext;
        this.user = new DataLoader(this.appContext).loadUser(userName);
        user.matchStats.incrementGamesPlayed();
 
+       this.streaks = 0;
        startTime = System.currentTimeMillis();
        numberSequence = new StringBuilder();
        generateNumber();
@@ -36,10 +40,12 @@ public class MemoryGame {
 
        if (guessCorrect) {
            generateNumber();
+           incrementStreaks();
        } else {
            user.matchStats.incrementTotalMistakes();
            numberSequence = new StringBuilder();
            generateNumber();
+           setStreaks(0);
        }
    }
 
@@ -57,5 +63,17 @@ public class MemoryGame {
        user.matchStats.incrementTimePlayed(durationInSeconds);
        new DataSaver(this.appContext).saveUser(user, user.getName(), user.getPassword());
    }
+
+    int getStreaks() {
+        return this.streaks;
+    }
+
+    private void setStreaks(int newStreaks) {
+        this.streaks = newStreaks;
+    }
+
+    private void incrementStreaks() {
+        this.streaks++;
+    }
 
 }

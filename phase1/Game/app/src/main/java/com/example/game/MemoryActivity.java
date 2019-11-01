@@ -25,10 +25,14 @@ public class MemoryActivity extends AppCompatActivity {
     private String userName;
     private CountDownTimer countDownTimer;
 
+    private TextView streaksTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
+
+        streaksTextView = findViewById(R.id.streaksTextView);
 
         displayNumberTextView = findViewById(R.id.displayNumberTextView);
         userNumberEditText = findViewById(R.id.userEnteredNumberEditText);
@@ -51,9 +55,11 @@ public class MemoryActivity extends AppCompatActivity {
         if (!enteredNumber.equals("")) {
             if (guessCorrect) {
                 correctGuess();
+                updateGUI();
                 Log.i("Memory/Answer", "Correct");
             } else {
                 wrongGuess();
+                updateGUI();
                 Log.i("Memory/Answer", "Wrong");
             }
         } else {
@@ -104,7 +110,10 @@ public class MemoryActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
 
+    private void updateGUI(){
+        streaksTextView.setText(Integer.toString(memoryGame.getStreaks()));
     }
 
     @Override

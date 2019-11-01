@@ -6,6 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".MemoryActivity">
 
+    <LinearLayout
+        android:id="@+id/streaksLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkButton"
+        app:layout_constraintVertical_bias="0.106">
+
+        <ImageView
+            android:id="@+id/streaksImageView"
+            android:layout_width="55dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/fire"
+            android:padding="3dp"
+            app:srcCompat="@drawable/fire"
+            tools:ignore="InefficientWeight" />
+
+        <TextView
+            android:id="@+id/streaksTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:text="@string/_0"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/displayNumberTextView"
         android:layout_width="wrap_content"
@@ -59,4 +97,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userEnteredNumberEditText"
         app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
