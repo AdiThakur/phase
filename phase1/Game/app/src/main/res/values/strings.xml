@@ -17,4 +17,13 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="repeat">Repeat</string>
+    <string name="_10000">10000</string>
+    <string name="higher">Higher</string>
+    <string name="lower">Lower</string>
+    <string name="higher_or_lower">Higher or Lower?</string>
+    <string name="fire">fire</string>
+    <string name="_0">0</string>
+    <string name="remember">Remember</string>
+    <string name="check">Check</string>
 </resources>
