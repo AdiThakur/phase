@@ -17,4 +17,11 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="games_played">Games Played</string>
+    <string name="_0">0</string>
+    <string name="time_played">Time Played</string>
+    <string name="games_won">Games Won</string>
+    <string name="longest_streak">Longest Streak</string>
+    <string name="mistakes">Mistakes</string>
+    <string name="repeat">Repeat</string>
 </resources>

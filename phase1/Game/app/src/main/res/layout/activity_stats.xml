@@ -8,8 +8,6 @@
     tools:context=".StatsActivity">
 
 
-    -
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,8 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        -
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/connectLayout"
@@ -44,8 +40,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            -
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -61,8 +55,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/connectTitle">
 
 
-                -
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -77,24 +69,23 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Games Played"
+                        android:text="@string/games_played"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/connectGamesPlayed"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
 
                 </LinearLayout>
 
-
-                -
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -109,24 +100,23 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Time Played"
+                        android:text="@string/time_played"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/connectTimePlayed"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
 
                 </LinearLayout>
 
-
-                -
 
                 <LinearLayout
                     android:id="@+id/connectGamesPlayedTitle"
@@ -142,16 +132,17 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Games Won"
+                        android:text="@string/games_won"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/connectGamesWon"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
@@ -162,8 +153,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        -
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/matchLayout"
@@ -177,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="180dp"
-                android:text="Repeat"
+                android:text="@string/repeat"
                 android:textSize="30sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -185,8 +174,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            -
 
             <LinearLayout
                 android:id="@+id/matchLayoutLinear"
@@ -204,8 +191,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/repeatTitle">
 
 
-                -
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -218,24 +203,23 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Games Played"
+                        android:text="@string/games_played"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/repeatGamesPlayed"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
 
                 </LinearLayout>
 
-
-                -
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -249,24 +233,23 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Time Played"
+                        android:text="@string/time_played"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/repeatTimePlayed"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
 
                 </LinearLayout>
 
-
-                -
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -280,16 +263,17 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Mistakes"
+                        android:text="@string/mistakes"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/repeatMistakes"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
@@ -300,8 +284,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        -
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/guessLayout"
@@ -326,8 +308,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            -
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -343,8 +323,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/guessTitle">
 
 
-                -
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -358,9 +336,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Games Played"
+                        android:text="@string/games_played"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/guessGamesPlayed"
@@ -368,15 +347,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
 
                 </LinearLayout>
 
-
-                -
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -391,9 +368,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Time Played"
+                        android:text="@string/time_played"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/guessTimePlayed"
@@ -401,15 +379,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
 
                 </LinearLayout>
 
-
-                -
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -424,9 +400,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Longest Streak"
+                        android:text="@string/longest_streak"
                         android:textSize="20sp"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold|italic"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/guessLongestStreak"
@@ -434,7 +411,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
                         android:textStyle="bold|italic" />
