@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 public class gameSelection extends AppCompatActivity {
 
-    private final String TAG = "gameSelection";
     String userName;
     User user;
 
@@ -86,7 +85,6 @@ public class gameSelection extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 gameSelection.super.onBackPressed();
-                //Toast.makeText(gameSelection.this, "Goodbye " + userName, Toast.LENGTH_SHORT).show();
             }
         });
 

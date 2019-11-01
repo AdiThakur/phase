@@ -1,38 +1,35 @@
 package com.example.game;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class MemoryGame {
 
     private User user;
     private Context appContext;
-    private int score;
-    private int mistakes;
-    private StringBuilder numberSeqeunce;
+    private StringBuilder numberSequence;
+    private long startTime;
 
 
    MemoryGame(String userName, Context appContext) {
        this.appContext = appContext;
        this.user = new DataLoader(this.appContext).loadUser(userName);
+       user.matchStats.incrementGamesPlayed();
 
-       numberSeqeunce = new StringBuilder();
-       this.score = 0;
-
+       startTime = System.currentTimeMillis();
+       numberSequence = new StringBuilder();
        generateNumber();
    }
 
     private void generateNumber() {
         Random random = new Random();
-        numberSeqeunce.append(random.nextInt(10));
+        numberSequence.append(random.nextInt(10));
    }
 
    StringBuilder displaySequence() {
-       return numberSeqeunce;
+       return numberSequence;
    }
 
    private void setUpNextLevel(boolean guessCorrect) {
@@ -41,17 +38,24 @@ public class MemoryGame {
            generateNumber();
        } else {
            user.matchStats.incrementTotalMistakes();
-           numberSeqeunce = new StringBuilder();
+           numberSequence = new StringBuilder();
            generateNumber();
        }
    }
 
    boolean checkGuess(String enteredNumber) {
 
-       boolean guessCorrect = enteredNumber.equals(numberSeqeunce.toString());
+       boolean guessCorrect = enteredNumber.equals(numberSequence.toString());
        setUpNextLevel(guessCorrect);
        return guessCorrect;
 
+   }
+
+   void saveData() {
+       long durationInSeconds = (System.currentTimeMillis() - startTime)/1000;
+       Log.i("MemoryGame - Time Played", durationInSeconds + "");
+       user.matchStats.incrementTimePlayed(durationInSeconds);
+       new DataSaver(this.appContext).saveUser(user, user.getName(), user.getPassword());
    }
 
 }
