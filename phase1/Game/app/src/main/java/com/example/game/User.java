@@ -15,7 +15,7 @@ public class User {
 
     User(String name) {
 
-        // TODO - THis contstructor will only be called by DataLoader. Create new constrcutor for a default user (username, password).
+        // TODO - THis constructor will only be called by DataLoader. Create new constructor for a default user (username, password).
         this.name = name;
     }
 

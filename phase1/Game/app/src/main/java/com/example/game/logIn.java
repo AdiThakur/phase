@@ -41,6 +41,7 @@ public class logIn extends AppCompatActivity {
 
         userNameEditText = findViewById(R.id.userNameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+
     }
 
     public void logInButton(View view) {

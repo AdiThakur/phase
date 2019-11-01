@@ -38,7 +38,14 @@ public class MemoryActivity extends AppCompatActivity {
         userName = intent.getStringExtra("user");
         memoryGame = new MemoryGame(userName, this);
 
-        displaySequence();
+        // Puts a delay in the initial run
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displaySequence();
+            }
+        }, 1500);
     }
 
     public void checkEnteredNumber(View view) {
@@ -62,14 +69,13 @@ public class MemoryActivity extends AppCompatActivity {
     }
 
     private void displaySequence() {
-
         checkButton.setEnabled(false);
         userNumberEditText.setEnabled(false);
         final String numSeq = memoryGame.displaySequence().toString();
         Log.i("Memory/Actual", numSeq);
         final int numSeqLen = numSeq.length();
 
-        countDownTimer = new CountDownTimer((numSeqLen*2000) + 500, 1000) {
+        countDownTimer = new CountDownTimer((numSeqLen*2000) + 700, 1000) {
             int counter = 0;
             @Override
             public void onTick(long l) {
