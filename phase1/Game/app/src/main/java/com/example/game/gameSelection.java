@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 public class gameSelection extends AppCompatActivity {
 
-    private final String TAG = "gameSelection";
     String userName;
     User user;
 
@@ -66,13 +65,15 @@ public class gameSelection extends AppCompatActivity {
 
         if (tag.equals("GUESS")) {
             intent = new Intent(getApplicationContext(), GuessActivity.class);
-        } else if(tag.equals("CONNECT")) {
-            intent = new Intent(getApplicationContext(), GuessActivity.class);
-        } else {
-            intent = new Intent(getApplicationContext(), GuessActivity.class);
+        } else if (tag.equals("CONNECT")) {
+            intent = new Intent(getApplicationContext(), MemoryActivity.class);
+        } else  if (tag.equals("MATCH")){
+            intent = new Intent(getApplicationContext(), MemoryActivity.class);
         }
-        intent.putExtra("user", userName);
-        startActivity(intent);
+        if (intent != null) {
+            intent.putExtra("user", userName);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -84,7 +85,6 @@ public class gameSelection extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 gameSelection.super.onBackPressed();
-                //Toast.makeText(gameSelection.this, "Goodbye " + userName, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -98,4 +98,3 @@ public class gameSelection extends AppCompatActivity {
         super.onDestroy();
     }
 }
-
