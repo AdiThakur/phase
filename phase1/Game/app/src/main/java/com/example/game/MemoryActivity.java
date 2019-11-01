@@ -82,6 +82,7 @@ public class MemoryActivity extends AppCompatActivity {
                 if (counter < numSeqLen) {
                     displayNumberTextView.setText(numSeq.charAt(counter) + "");
                     counter++;
+                    fade();
                 }
             }
             @Override
@@ -91,6 +92,16 @@ public class MemoryActivity extends AppCompatActivity {
                 userNumberEditText.setEnabled(true);
             }
         }.start();
+    }
+
+    private void fade() {
+        displayNumberTextView.animate().alpha(1f).setDuration(150);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                displayNumberTextView.animate().alpha(0f).setDuration(150);
+            }
+        }, 400);
     }
 
     private void correctGuess() {
