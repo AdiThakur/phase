@@ -11,52 +11,65 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="155dp"
-        android:layout_marginTop="153dp"
         android:layout_marginEnd="168dp"
-        android:layout_marginBottom="317dp"
         android:background="@drawable/button"
         android:onClick="signUpButton"
+        android:fontFamily="@font/josefinsans"
         android:text="@string/sign_up"
         android:textAllCaps="false"
-        android:textSize="20sp"
         android:textColor="@color/colorField"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.12" />
 
     <EditText
         android:id="@+id/passwordEditText"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="@drawable/field"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:fontFamily="@font/josefinsans"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userNameEditText"
-        tools:layout_editor_absoluteX="105dp" />
+        app:layout_constraintVertical_bias="0.034" />
 
     <EditText
         android:id="@+id/userNameEditText"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/field"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="245dp" />
+        android:fontFamily="@font/josefinsans"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.057" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/greeting_signup"
-        android:textSize="45sp"
         android:textColor="@color/colorPrimary"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="143dp" />
+        android:fontFamily="@font/josefinsans"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.261" />
 </androidx.constraintlayout.widget.ConstraintLayout>

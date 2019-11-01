@@ -3,7 +3,9 @@ package com.example.game;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,6 +44,7 @@ public class logIn extends AppCompatActivity {
         // Initializing views.
         userNameEditText = findViewById(R.id.userNameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+
     }
 
     public void logInButton(View view) {
@@ -54,12 +57,11 @@ public class logIn extends AppCompatActivity {
         User user = dataLoader.loadUser(enteredUserName);
 
         if (user == null) {
-            raiseToast("No such user found.");
+            raiseNoRegisteredUserAlert(enteredUserName);
         } else {
-            if (!enteredUserName.equals("") || !enteredPassword.equals("")) {
-                Log.i(TAG, enteredUserName);
+            if (!enteredUserName.equals("") && !enteredPassword.equals("")) {
                 if (user.authenticateUser(enteredUserName, enteredPassword)) {
-                    jumpToActivity(user.name, Classes.gameSelection);
+                    jumpToActivity(user.getName(), Classes.gameSelection);
                 } else {
                     raiseToast("Incorrect credentials!");
                 }
@@ -78,18 +80,33 @@ public class logIn extends AppCompatActivity {
             case gameSelection:
                 intent = new Intent(getApplicationContext(), gameSelection.class);
                 intent.putExtra("user", userName);
-                raiseToast("Welcome " + userName);
                 break;
             case signUp:
                 intent = new Intent(getApplicationContext(), signUp.class);
-                raiseToast("No users registered!");
+                intent.putExtra("user", userName);
                 break;
         }
         startActivity(intent);
         finish();
     }
 
+    private void raiseNoRegisteredUserAlert(final String userName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Invalid User");
+        builder.setMessage("No such user exists. Would you like to sign-up?");
+        builder.setNegativeButton("Cancel", null);
+        builder.setPositiveButton("Sure!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                jumpToActivity(userName, Classes.signUp);
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     private void raiseToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }
