@@ -1,24 +1,21 @@
 package com.example.game;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.HashSet;
 
 public class gameSelection extends AppCompatActivity {
 
-    private final String TAG = "gameSelection";
     String userName;
     User user;
 
@@ -35,16 +32,49 @@ public class gameSelection extends AppCompatActivity {
         user = dataLoader.loadUser(userName);
 
         Toast.makeText(this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.checkstatsmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.checkStatsButton) {
+            Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
+            intent.putExtra("user", userName);
+            startActivity(intent);
+        }
+        return true;
     }
 
     void displayPrefferences(User user) {
         // TODO - Grab user's choice of BG color, text color, and language, draw GUI accordingly. This should be part of game superclass as well.
         View backgroundView = findViewById(R.id.backgroundView);
         backgroundView.setBackgroundColor(Color.parseColor(user.getBackgroundColor()));
-
     }
 
+    public void gameClicked(View view) {
+
+        Intent intent = null;
+        String tag = view.getTag().toString();
+
+        if (tag.equals("GUESS")) {
+            intent = new Intent(getApplicationContext(), GuessActivity.class);
+        } else if (tag.equals("CONNECT")) {
+            intent = new Intent(getApplicationContext(), MemoryActivity.class);
+        } else  if (tag.equals("MATCH")){
+            intent = new Intent(getApplicationContext(), MemoryActivity.class);
+        }
+        if (intent != null) {
+            intent.putExtra("user", userName);
+            startActivity(intent);
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -55,7 +85,6 @@ public class gameSelection extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 gameSelection.super.onBackPressed();
-                Toast.makeText(gameSelection.this, "Goodbye " + userName, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -63,4 +92,9 @@ public class gameSelection extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "Goodbye, " + userName, Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+    }
 }
