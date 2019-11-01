@@ -53,7 +53,6 @@ public class MemoryGame {
 
    void saveData() {
        long durationInSeconds = (System.currentTimeMillis() - startTime)/1000;
-       Log.i("MemoryGame - Time Played", durationInSeconds + "");
        user.matchStats.incrementTimePlayed(durationInSeconds);
        new DataSaver(this.appContext).saveUser(user, user.getName(), user.getPassword());
    }

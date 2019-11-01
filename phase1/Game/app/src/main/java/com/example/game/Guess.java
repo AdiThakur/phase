@@ -9,6 +9,7 @@ class Guess {
     private final String LOWER_GUESS = "LOWER";
     private final String HIGHER_GUESS = "HIGHER";
 
+    private long startTime;
     private int pivotNumber;
     private int correctNumber;
     private int streaks;
@@ -20,6 +21,7 @@ class Guess {
         this.appContext = appContext;
         user = new DataLoader(this.appContext).loadUser(userName);
         user.guessStats.incrementGamesPlayed();
+        startTime = System.currentTimeMillis();
 
         this.pivotNumber = generateNumber(MAX_BOUND);
         this.correctNumber = generateNumber(MAX_BOUND);
@@ -55,11 +57,6 @@ class Guess {
         }
     }
 
-    void saveData() {
-        new DataSaver(this.appContext).saveUser(this.user, this.user.getName(),
-                this.user.getPassword());
-    }
-
     private void setUpNewNumber() {
         this.correctNumber = generateNumber(MAX_BOUND);
         this.pivotNumber = generateNumber(MAX_BOUND);
@@ -86,8 +83,11 @@ class Guess {
         return this.pivotNumber;
     }
 
-    int getCorrectNumber() {
-        return this.correctNumber;
+    void saveData() {
+        long durationInSeconds = (System.currentTimeMillis() - startTime)/1000;
+        user.guessStats.incrementTimePlayed(durationInSeconds);
+        new DataSaver(this.appContext).saveUser(this.user, this.user.getName(),
+                this.user.getPassword());
     }
 
 }
