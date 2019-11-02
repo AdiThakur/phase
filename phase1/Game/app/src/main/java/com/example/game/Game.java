@@ -35,7 +35,7 @@ public class Game {
         } else {
             user.guessStats.incrementTimePlayed(durationInSeconds);
         }
-        new DataSaver(appContext).saveUser(user, user.getName(), user.getPassword());
+        new DataSaver(appContext).saveUser(user, user.getName(), user.getPassword(), gameName);
     }
 
 }

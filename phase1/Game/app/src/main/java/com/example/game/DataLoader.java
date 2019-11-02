@@ -17,6 +17,7 @@ class DataLoader {
     private final int CONNECT_STATS = 5;
     private final int MATCH_STATS = 6;
     private final int GUESS_STATS = 7;
+    private final int LAST_GAME = 8;
     private final Context appContext;
 
     DataLoader(Context appContext) {
@@ -70,6 +71,7 @@ class DataLoader {
             String[] guessStats = userData.get(GUESS_STATS).split(",");
             user.initializeGuessStats(Integer.parseInt(guessStats[0].trim()),
                     Long.parseLong(guessStats[1].trim()), Integer.parseInt(guessStats[2].trim()));
+            user.setLastGame(userData.get(LAST_GAME).trim());
         }
         return user;
     }

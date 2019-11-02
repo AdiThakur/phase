@@ -43,8 +43,7 @@ public class MemoryActivity extends AppCompatActivity {
         memoryGame = new MemoryGame(userName, this);
 
         // Puts a delay in the initial run
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 displaySequence();
