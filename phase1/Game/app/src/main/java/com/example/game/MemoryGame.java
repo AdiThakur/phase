@@ -5,20 +5,14 @@ import android.util.Log;
 
 import java.util.Random;
 
-public class MemoryGame {
+class MemoryGame extends Game {
 
-    private User user;
-    private Context appContext;
+    private static final String gameName = "Repeat";
+
     private StringBuilder numberSequence;
-    private long startTime;
-
 
    MemoryGame(String userName, Context appContext) {
-       this.appContext = appContext;
-       this.user = new DataLoader(this.appContext).loadUser(userName);
-       user.matchStats.incrementGamesPlayed();
-
-       startTime = System.currentTimeMillis();
+       super(userName, appContext, gameName);
        numberSequence = new StringBuilder();
        generateNumber();
    }
@@ -49,12 +43,6 @@ public class MemoryGame {
        setUpNextLevel(guessCorrect);
        return guessCorrect;
 
-   }
-
-   void saveData() {
-       long durationInSeconds = (System.currentTimeMillis() - startTime)/1000;
-       user.matchStats.incrementTimePlayed(durationInSeconds);
-       new DataSaver(this.appContext).saveUser(user, user.getName(), user.getPassword());
    }
 
 }

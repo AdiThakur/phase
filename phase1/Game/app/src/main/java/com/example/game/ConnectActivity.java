@@ -5,22 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.os.SystemClock;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.Toast;
 
 public class ConnectActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout;
+    private Chronometer chronometer;
 
-    private final String TAG = "Connect";
     private Connect connectBoard;
     private String userName;
 
@@ -30,12 +28,13 @@ public class ConnectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connect);
 
         linearLayout = findViewById(R.id.parent);
-
-        Log.i(TAG, "Stared");
+        chronometer = findViewById(R.id.chronometer);
 
         Intent intent = getIntent();
         userName = intent.getStringExtra("user");
         connectBoard = new Connect(userName, this);
+
+        startClock();
     }
 
     public void imageClicked(View view) {
@@ -53,26 +52,42 @@ public class ConnectActivity extends AppCompatActivity {
             imageClicked.setAlpha(1f);
             final String resultOfMove = connectBoard.playerMove(x, y);
 
-            if (resultOfMove == null) {
-                raiseToast("Tie game!");
-                clearBoard();
-            } else if (resultOfMove.equals("P")) {
-                raiseToast(userName + " wins!");
-                clearBoard();
-            } else if (resultOfMove.equals("C")) {
-                raiseToast("Computer wins!");
-                clearBoard();
-            } else {
+            // This move did not result in the game ending.
+            if (resultOfMove != null & resultOfMove.length() == 2) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         updateComputerMove(resultOfMove);
                     }
                 }, 500);
+            } else {
+                displayWinner(resultOfMove);
             }
         } else {
             raiseToast("Invalid move!");
         }
+    }
+
+    private void displayWinner(String winningMsg) {
+        chronometer.stop();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(winningMsg);
+        builder.setMessage("Do you want to play again?");
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                connectBoard.saveData();
+                finish();
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                clearBoard();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void updateComputerMove(String resultOfMove) {
@@ -99,6 +114,12 @@ public class ConnectActivity extends AppCompatActivity {
                 imageView.setAlpha(0.5f);
             }
         }
+        startClock();
+    }
+
+    private void startClock() {
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
     }
 
     private void raiseToast(String msg) {
@@ -108,11 +129,14 @@ public class ConnectActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        chronometer.stop();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to exit?");
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                chronometer.setBase(chronometer.getBase());
+                chronometer.start();
             }
         });
         builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {

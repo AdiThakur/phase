@@ -22,11 +22,11 @@ public class MemoryActivity extends AppCompatActivity {
     private Button checkButton;
 
     private MemoryGame memoryGame;
-    private String userName;
     private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
 
@@ -35,7 +35,7 @@ public class MemoryActivity extends AppCompatActivity {
         checkButton = findViewById(R.id.checkButton);
 
         Intent intent = getIntent();
-        userName = intent.getStringExtra("user");
+        String userName = intent.getStringExtra("user");
         memoryGame = new MemoryGame(userName, this);
 
         // Puts a delay in the initial run
@@ -52,16 +52,12 @@ public class MemoryActivity extends AppCompatActivity {
 
         String enteredNumber = userNumberEditText.getText().toString();
         userNumberEditText.setText("");
-        Log.i("Memory/Entered", enteredNumber);
         boolean guessCorrect = memoryGame.checkGuess(enteredNumber);
-        // If not empty
         if (!enteredNumber.equals("")) {
             if (guessCorrect) {
                 correctGuess();
-                Log.i("Memory/Answer", "Correct");
             } else {
                 wrongGuess();
-                Log.i("Memory/Answer", "Wrong");
             }
         } else {
             Toast.makeText(this, "Please enter a number first!", Toast.LENGTH_SHORT).show();
@@ -69,10 +65,10 @@ public class MemoryActivity extends AppCompatActivity {
     }
 
     private void displaySequence() {
+
         checkButton.setEnabled(false);
         userNumberEditText.setEnabled(false);
         final String numSeq = memoryGame.displaySequence().toString();
-        Log.i("Memory/Actual", numSeq);
         final int numSeqLen = numSeq.length();
 
         countDownTimer = new CountDownTimer((numSeqLen*2000) + 700, 1000) {
@@ -98,19 +94,26 @@ public class MemoryActivity extends AppCompatActivity {
     }
 
     private void wrongGuess() {
+
         countDownTimer.cancel();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Wrong Sequence! Try Again");
-        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+        builder.setTitle("Wrong Sequence!");
+        builder.setMessage("Would you like to try again?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 displaySequence();
             }
         });
-
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                memoryGame.saveData();
+                finish();
+            }
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 
     @Override

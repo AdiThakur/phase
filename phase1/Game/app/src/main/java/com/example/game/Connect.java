@@ -1,30 +1,21 @@
 package com.example.game;
 
 import android.content.Context;
-import android.util.Log;
 
-public class Connect {
+class Connect extends  Game {
+
+    private static final String gameName = "Connect";
 
     private final int PLAYER_1 = 1;
     private final int COMPUTER = 2;
     private final int row = 3;
     private final int col = 3;
 
-    // Instance variables
-    private final Context appContext;
-    private User user;
-    private long startTime;
-
-    boolean gameOver;
-    int[][] gameBoard;
+    private int[][] gameBoard;
 
     Connect(String userName, Context appContext) {
 
-        this.appContext = appContext;
-        this.user = new DataLoader(this.appContext).loadUser(userName);
-        user.connectStats.incrementGamesPlayed();
-        startTime = System.currentTimeMillis();
-        this.gameOver = false;
+        super(userName, appContext, gameName);
         this.gameBoard = new int[row][col];
     }
 
@@ -44,18 +35,22 @@ public class Connect {
         if (checkGameWon(PLAYER_1)) {
             resetBoard();
             user.connectStats.incrementGamesWon();
-            return "P";
+            return user.getName() + " wins!";
         }
         String computerMove = computerMove();
         if (checkGameWon(COMPUTER)) {
             resetBoard();
-            return "C";
+            return "Computer wins!";
         }
-        return computerMove;
+        if (computerMove == null) {
+            return "Tie game!";
+        } else {
+            return computerMove;
+        }
     }
 
     private String computerMove() {
-        // Very basic (literally random) AI
+        // Very basic (literally random) AI. Will be methodical in Phase 2.
         int count = 0;
         String computerMove = null;
         for (int x = 0; x < gameBoard.length; x++) {
@@ -70,21 +65,15 @@ public class Connect {
         return computerMove;
     }
 
-    boolean checkGameWon(int player) {
+    private boolean checkGameWon(int player) {
 
-        if (checkHorizontal(player) || checkVertical(player) || checkDiagonal(player)) {
-            return true;
-        } else {
-            return false;
-        }
+        return checkHorizontal(player) || checkVertical(player) || checkDiagonal(player);
     }
 
     private boolean checkHorizontal(int player) {
 
-        // Iterate over each row.
         for (int row = 0; row < this.row; row++) {
             boolean rowAllSame = true;
-            // Iterate over each column in current row.
             for (int col = 0; col < this.col; col++) {
                 if (gameBoard[row][col] != player) {
                     rowAllSame = false;
@@ -102,10 +91,9 @@ public class Connect {
      * able to play games of rectangular (non-square board) tic-tact-toe.
      */
     private boolean checkVertical(int player) {
-        // Iterate over each column.
+
         for (int col = 0; col < this.col; col++) {
             boolean colAllSame = true;
-            // Iterate over each row in current column.
             for (int row = 0; row < this.row; row++) {
                 if (gameBoard[row][col] != player) {
                     colAllSame = false;
@@ -126,14 +114,12 @@ public class Connect {
                 forwardDiagonalAllSame = false;
             }
         }
-
         boolean backwardDiagonalAllSame = true;
         for (int row = 0, col = this.col - 1; (row < this.row && col > -1); row++, col--) {
             if (gameBoard[row][col] != player) {
                 backwardDiagonalAllSame = false;
             }
         }
-        Log.i("Connect/backward", backwardDiagonalAllSame + "'");
         return forwardDiagonalAllSame || backwardDiagonalAllSame;
     }
 
@@ -141,9 +127,4 @@ public class Connect {
         gameBoard = new int[row][col];
     }
 
-    void saveData() {
-        long durationInSeconds = (System.currentTimeMillis() - startTime) / 1000;
-        user.connectStats.incrementTimePlayed(durationInSeconds);
-        new DataSaver(this.appContext).saveUser(user, user.getName(), user.getPassword());
-    }
 }

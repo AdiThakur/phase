@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 public class GuessActivity extends AppCompatActivity {
 
-    private String userName;
     private Guess guessGame;
 
     private final String CORRECT_GUESS = "CORRECT!";
@@ -40,7 +39,7 @@ public class GuessActivity extends AppCompatActivity {
         chronometer = findViewById(R.id.chronometer);
 
         Intent intent = getIntent();
-        userName = intent.getStringExtra("user");
+        String userName = intent.getStringExtra("user");
         guessGame = new Guess(userName, this);
 
         updateGUI();
@@ -106,14 +105,12 @@ public class GuessActivity extends AppCompatActivity {
                 GuessActivity.super.onBackPressed();
             }
         });
-
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
     @Override
     protected void onDestroy() {
-        guessGame.setTimePlayed((SystemClock.elapsedRealtime() - chronometer.getBase())/1000);
         guessGame.saveData();
         super.onDestroy();
     }

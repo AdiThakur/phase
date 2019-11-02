@@ -3,32 +3,26 @@ package com.example.game;
 import android.content.Context;
 import java.util.Random;
 
-class Guess {
+class Guess extends Game {
+
+    private static final String gameName = "Guess";
 
     private final int MAX_BOUND = 10000;
     private final String LOWER_GUESS = "LOWER";
     private final String HIGHER_GUESS = "HIGHER";
 
-    private long startTime;
     private int pivotNumber;
     private int correctNumber;
     private int streaks;
-    private User user;
-    private Context appContext;
 
     Guess(String userName, Context appContext) {
 
-        this.appContext = appContext;
-        user = new DataLoader(this.appContext).loadUser(userName);
-        user.guessStats.incrementGamesPlayed();
-        startTime = System.currentTimeMillis();
+        super (userName, appContext, gameName);
 
         this.pivotNumber = generateNumber(MAX_BOUND);
         this.correctNumber = generateNumber(MAX_BOUND);
         this.streaks = 0;
-
     }
-    // TODO - Implement a stopwatch (records how long you play each session).
 
     boolean checkCorrect(String userGuess){
 
@@ -39,7 +33,7 @@ class Guess {
             correctGuess =  true;
         // Round ends: Save time, restart clock.
         } else {
-            setStreaks(0);
+            resetStreaks();
             correctGuess = false;
         }
         checkNewHighestStreak();
@@ -48,18 +42,18 @@ class Guess {
     }
 
     void setTimePlayed(long timePlayedInSeconds) {
-        this.user.guessStats.incrementTimePlayed(timePlayedInSeconds);
+        user.guessStats.incrementTimePlayed(timePlayedInSeconds);
     }
 
     private void checkNewHighestStreak() {
-        if (this.user.guessStats.getLongestStreak() < this.streaks) {
-            this.user.guessStats.setLongestStreak(this.streaks);
+        if (user.guessStats.getLongestStreak() < streaks) {
+            user.guessStats.setLongestStreak(streaks);
         }
     }
 
     private void setUpNewNumber() {
-        this.correctNumber = generateNumber(MAX_BOUND);
-        this.pivotNumber = generateNumber(MAX_BOUND);
+        correctNumber = generateNumber(MAX_BOUND);
+        pivotNumber = generateNumber(MAX_BOUND);
     }
 
     private int generateNumber(int maxBound){
@@ -68,26 +62,19 @@ class Guess {
     }
 
     int getStreaks() {
-        return this.streaks;
+        return streaks;
     }
 
-    private void setStreaks(int newStreaks) {
-        this.streaks = newStreaks;
+    private void resetStreaks() {
+        streaks = 0;
     }
 
-    private void incrementStreaks() {
-        this.streaks++;
+    private void incrementStreaks() { streaks++;
     }
 
     int getPivotNumber() {
-        return this.pivotNumber;
+        return pivotNumber;
     }
 
-    void saveData() {
-        long durationInSeconds = (System.currentTimeMillis() - startTime)/1000;
-        user.guessStats.incrementTimePlayed(durationInSeconds);
-        new DataSaver(this.appContext).saveUser(this.user, this.user.getName(),
-                this.user.getPassword());
-    }
 
 }
