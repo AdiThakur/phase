@@ -20,7 +20,6 @@ public class ConnectActivity extends AppCompatActivity {
     private Chronometer chronometer;
 
     private Connect connectBoard;
-    private String userName;
 
     /**
      * Create Connect game when user starts the game.
@@ -36,7 +35,7 @@ public class ConnectActivity extends AppCompatActivity {
         chronometer = findViewById(R.id.chronometer);
 
         Intent intent = getIntent();
-        userName = intent.getStringExtra("user");
+        String userName = intent.getStringExtra("user");
         connectBoard = new Connect(userName, this);
 
         startClock();

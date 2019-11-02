@@ -1,39 +1,30 @@
 package com.example.game;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
+import androidx.appcompat.app.AppCompatActivity;
 
 enum Classes {
     gameSelection,
     signUp,
-    logIn
 }
 
 public class logIn extends AppCompatActivity {
-
     private final String TAG = "logIn";
 
     private EditText userNameEditText;
     private EditText passwordEditText;
 
+    /**
+     * Initializes activity.
+     * @param savedInstanceState saved instance state (null on first run)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +35,11 @@ public class logIn extends AppCompatActivity {
 
     }
 
+    /**
+     * Tries to log the user into the app: raises messages if this is not possible that inform
+     * the user why this is the case (ex. Incorrect credentials, etc).
+     * @param view standard view parameter
+     */
     public void logInButton(View view) {
 
         String enteredUserName = userNameEditText.getText().toString();
@@ -69,6 +65,11 @@ public class logIn extends AppCompatActivity {
         }
     }
 
+    /**
+     * Jumps to a new activity.
+     * @param userName current user that is passed to the new activity
+     * @param activityToShow activityToShow
+     */
     private void jumpToActivity(String userName, Classes activityToShow) {
 
         Intent intent = null;
@@ -87,6 +88,10 @@ public class logIn extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Gives the user an option to go straight to the sign-up.
+     * @param userName current user that is passed to the signUp activity
+     */
     private void raiseNoRegisteredUserAlert(final String userName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Invalid User");
@@ -102,6 +107,10 @@ public class logIn extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * Gives feedback to the user in a small pop up on their phone.
+     * @param msg the given message to the user
+     */
     private void raiseToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }

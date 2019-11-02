@@ -177,6 +177,7 @@ class Connect extends  Game {
      */
     private void resetBoard() {
         gameBoard = new int[row][col];
+        user.connectStats.incrementGamesPlayed();
     }
 
 }

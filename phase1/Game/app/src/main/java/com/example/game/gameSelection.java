@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,13 +18,9 @@ import android.widget.Toast;
 public class gameSelection extends AppCompatActivity {
 
     String userName;
+    String lastGame;
     User user;
 
-    /**
-     * Sets up game selection screen.
-     *
-     * @param savedInstanceState the saved instance state
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,18 +30,20 @@ public class gameSelection extends AppCompatActivity {
         userName = intent.getStringExtra("user");
 
         // Loading user's data.
-        DataLoader dataLoader = new DataLoader(this);
-        user = dataLoader.loadUser(userName);
+        user = new DataLoader(this).loadUser(userName);
+        lastGame = user.getLastGame();
 
         Toast.makeText(this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+        if (!lastGame.equals("")) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    continueLastGame();
+                }
+            }, 1000);
+        }
     }
 
-    /**
-     * Creates the option menu.
-     *
-     * @param menu the option menu
-     * @return if menu is open or not
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -52,12 +51,6 @@ public class gameSelection extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    /**
-     * Handles the function when options item is selected.
-     *
-     * @param item the menu item
-     * @return whether options item is selected
-     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
@@ -69,32 +62,41 @@ public class gameSelection extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Display user's theme preferences.
-     *
-     * @param user the current user logged in
-     */
     void displayPrefferences(User user) {
         // TODO - Grab user's choice of BG color, text color, and language, draw GUI accordingly. This should be part of game superclass as well.
         View backgroundView = findViewById(R.id.backgroundView);
         backgroundView.setBackgroundColor(Color.parseColor(user.getBackgroundColor()));
     }
 
-    /**
-     * Changes the screen to the game when User clicks on a game button.
-     *
-     * @param view the view of what the User clicked
-     */
+    private void continueLastGame() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Continue last game?");
+        builder.setMessage("Looks like you were last playing " + lastGame + ". Would you like to continue?");
+        builder.setNegativeButton("No", null);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+               launchGame(lastGame);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public void gameClicked(View view) {
 
-        Intent intent = null;
         String tag = view.getTag().toString();
+        launchGame(tag);
+    }
 
-        if (tag.equals("GUESS")) {
+    private void launchGame(String gameName) {
+        Intent intent = null;
+        if (gameName.equalsIgnoreCase("GUESS")) {
             intent = new Intent(getApplicationContext(), GuessActivity.class);
-        } else if (tag.equals("CONNECT")) {
+        } else if (gameName.equalsIgnoreCase("CONNECT")) {
             intent = new Intent(getApplicationContext(), ConnectActivity.class);
-        } else  if (tag.equals("MATCH")){
+        } else  if (gameName.equalsIgnoreCase("REPEAT")){
             intent = new Intent(getApplicationContext(), MemoryActivity.class);
         }
         if (intent != null) {
@@ -103,9 +105,6 @@ public class gameSelection extends AppCompatActivity {
         }
     }
 
-    /**
-     * Handles the function when back button is pressed.
-     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -122,9 +121,6 @@ public class gameSelection extends AppCompatActivity {
         dialog.show();
     }
 
-    /**
-     * Handles the function to destroy content when User decides to exit screen.
-     */
     @Override
     protected void onDestroy() {
         Toast.makeText(this, "Goodbye, " + userName, Toast.LENGTH_SHORT).show();

@@ -1,19 +1,19 @@
 package com.example.game;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MemoryActivity extends AppCompatActivity {
 
@@ -24,6 +24,10 @@ public class MemoryActivity extends AppCompatActivity {
     private MemoryGame memoryGame;
     private CountDownTimer countDownTimer;
 
+    /**
+     * Initializes activity.
+     * @param savedInstanceState saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -39,8 +43,7 @@ public class MemoryActivity extends AppCompatActivity {
         memoryGame = new MemoryGame(userName, this);
 
         // Puts a delay in the initial run
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 displaySequence();
@@ -48,6 +51,10 @@ public class MemoryActivity extends AppCompatActivity {
         }, 1500);
     }
 
+    /**
+     * Checks the entered number to see if it is correct.
+     * @param view standard view parameter
+     */
     public void checkEnteredNumber(View view) {
 
         String enteredNumber = userNumberEditText.getText().toString();
@@ -64,6 +71,9 @@ public class MemoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays the sequence of numbers that the user has to remember.
+     */
     private void displaySequence() {
 
         checkButton.setEnabled(false);
@@ -73,6 +83,7 @@ public class MemoryActivity extends AppCompatActivity {
 
         countDownTimer = new CountDownTimer((numSeqLen*2000) + 700, 1000) {
             int counter = 0;
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTick(long l) {
                 if (counter < numSeqLen) {
@@ -89,10 +100,16 @@ public class MemoryActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * Displays the new, harder sequence.
+     */
     private void correctGuess() {
         displaySequence();
     }
 
+    /**
+     * Informs the user that they have failed and asks if they want to try again.
+     */
     private void wrongGuess() {
 
         countDownTimer.cancel();
@@ -116,6 +133,9 @@ public class MemoryActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Asks the user if they really want to exit the game upon pressing the back button.
+     */
     @Override
     public void onBackPressed() {
 
@@ -137,6 +157,9 @@ public class MemoryActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Saves the users data in the game upon destruction.
+     */
     @Override
     protected void onDestroy() {
         memoryGame.saveData();
