@@ -1,16 +1,16 @@
 package com.example.game;
 
-public class User {
+class User {
 
     private String name;
     private String password;
     private String backgroundColor;
     private String textColor;
-    public String language;
+    private String language;
 
-    public ConnectStats connectStats;
-    public MatchStats matchStats;
-    public GuessStats guessStats;
+    ConnectStats connectStats;
+    MatchStats matchStats;
+    GuessStats guessStats;
 
 
     User(String name) {

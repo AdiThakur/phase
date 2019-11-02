@@ -1,6 +1,6 @@
 package com.example.game;
 
-public class ConnectStats extends GameStats {
+class ConnectStats extends GameStats {
 
     private int gamesWon;
 
@@ -10,11 +10,11 @@ public class ConnectStats extends GameStats {
 
     }
 
-    public int getGamesWon() {
+    int getGamesWon() {
         return gamesWon;
     }
 
-    public void incrementGamesWon() {
+    void incrementGamesWon() {
         this.gamesWon++;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.game;
 
-public class GuessStats extends GameStats {
+class GuessStats extends GameStats {
 
     private int longestStreak;
 
@@ -9,11 +9,11 @@ public class GuessStats extends GameStats {
         this.longestStreak = longestStreak;
     }
 
-    public int getLongestStreak() {
+    int getLongestStreak() {
         return longestStreak;
     }
 
-    public void setLongestStreak(int longestStreak) {
+    void setLongestStreak(int longestStreak) {
         this.longestStreak = longestStreak;
     }
 }

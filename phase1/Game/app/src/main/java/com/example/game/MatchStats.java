@@ -1,6 +1,6 @@
 package com.example.game;
 
-public class MatchStats extends GameStats {
+class MatchStats extends GameStats {
 
     private int totalMistakes;
 
@@ -9,11 +9,11 @@ public class MatchStats extends GameStats {
         this.totalMistakes = totalMistakes;
     }
 
-    public int getTotalMistakes() {
+    int getTotalMistakes() {
         return totalMistakes;
     }
 
-    public void incrementTotalMistakes() {
+    void incrementTotalMistakes() {
         this.totalMistakes++;
     }
 

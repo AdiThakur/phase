@@ -24,7 +24,6 @@ import java.util.Scanner;
 enum Classes {
     gameSelection,
     signUp,
-    logIn
 }
 
 public class logIn extends AppCompatActivity {

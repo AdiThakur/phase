@@ -17,8 +17,6 @@ class DataLoader {
     private final int CONNECT_STATS = 5;
     private final int MATCH_STATS = 6;
     private final int GUESS_STATS = 7;
-
-    private final String TAG = "DataLoader";
     private final Context appContext;
 
     DataLoader(Context appContext) {
@@ -37,7 +35,6 @@ class DataLoader {
                 dataFromFile.add(line);
             }
         } catch (IOException e) {
-            Log.e(TAG, "Couldn't open " + fileName + ". Loading default user.");
             dataFromFile = null;
         }
 

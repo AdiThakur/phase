@@ -23,7 +23,6 @@ import java.util.Scanner;
 
 public class signUp extends AppCompatActivity {
 
-    final String TAG = "signUp";
     private EditText userNameEditText;
     private EditText passwordEditText;
 
