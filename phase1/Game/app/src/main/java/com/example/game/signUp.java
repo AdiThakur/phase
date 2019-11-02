@@ -51,7 +51,7 @@ public class signUp extends AppCompatActivity {
             // If such user isn't saved in files.
             if (user == null) {
                 DataSaver dataSaver = new DataSaver(this);
-                boolean userCreated = dataSaver.saveUser(null, enteredUserName, enteredPassword);
+                boolean userCreated = dataSaver.saveUser(null, enteredUserName, enteredPassword, null);
                 if (userCreated) {
                     Intent intent = new Intent(getApplicationContext(), gameSelection.class);
                     // This allows gameSelection activity to load data from enteredUserName.txt

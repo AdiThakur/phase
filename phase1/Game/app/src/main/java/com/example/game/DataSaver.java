@@ -13,7 +13,7 @@ class DataSaver {
         this.appContext = appContext;
     }
 
-    boolean saveUser(User user, String userName, String password) {
+    boolean saveUser(User user, String userName, String password, String lastGame) {
 
         String stringToSave;
         String fileName = userName + ".txt";
@@ -22,7 +22,7 @@ class DataSaver {
         if (user == null) {
             stringToSave = defaultDataToString(userName, password);
         } else {
-            stringToSave = userDataToString(user);
+            stringToSave = userDataToString(user, lastGame);
         }
         try {
             OutputStream outStream = this.appContext.openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -54,11 +54,13 @@ class DataSaver {
         output.append("\n");
         output.append("0, 0, 0"); // Higher or Lower
         output.append("\n");
+        output.append("");
+        output.append("\n");
 
         return output.toString();
     }
 
-    private String userDataToString(User user) {
+    private String userDataToString(User user, String lastGame) {
 
         StringBuilder output = new StringBuilder();
 
@@ -80,6 +82,8 @@ class DataSaver {
         output.append("\n");
         output.append(user.guessStats.getGamesPlayed() + ", " +
                 user.guessStats.getTimePlayed() + ", " + user.guessStats.getLongestStreak());
+        output.append("\n");
+        output.append(lastGame);
         output.append("\n");
 
         return output.toString();

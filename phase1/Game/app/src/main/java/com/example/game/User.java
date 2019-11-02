@@ -7,6 +7,7 @@ class User {
     private String backgroundColor;
     private String textColor;
     private String language;
+    private String lastGame;
 
     ConnectStats connectStats;
     MatchStats matchStats;
@@ -17,6 +18,14 @@ class User {
 
         // TODO - THis constructor will only be called by DataLoader. Create new constructor for a default user (username, password).
         this.name = name;
+    }
+
+    String getLastGame() {
+        return lastGame;
+    }
+
+    void setLastGame(String lastGame) {
+        this.lastGame = lastGame;
     }
 
     String getName() {

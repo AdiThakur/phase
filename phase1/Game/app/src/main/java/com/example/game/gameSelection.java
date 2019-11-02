@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 public class gameSelection extends AppCompatActivity {
 
     String userName;
+    String lastGame;
     User user;
 
     @Override
@@ -28,10 +30,18 @@ public class gameSelection extends AppCompatActivity {
         userName = intent.getStringExtra("user");
 
         // Loading user's data.
-        DataLoader dataLoader = new DataLoader(this);
-        user = dataLoader.loadUser(userName);
+        user = new DataLoader(this).loadUser(userName);
+        lastGame = user.getLastGame();
 
         Toast.makeText(this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+        if (!lastGame.equals("")) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    continueLastGame();
+                }
+            }, 1000);
+        }
     }
 
     @Override
@@ -58,16 +68,35 @@ public class gameSelection extends AppCompatActivity {
         backgroundView.setBackgroundColor(Color.parseColor(user.getBackgroundColor()));
     }
 
+    private void continueLastGame() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Continue last game?");
+        builder.setMessage("Looks like you were last playing " + lastGame + ". Would you like to continue?");
+        builder.setNegativeButton("No", null);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+               launchGame(lastGame);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public void gameClicked(View view) {
 
-        Intent intent = null;
         String tag = view.getTag().toString();
+        launchGame(tag);
+    }
 
-        if (tag.equals("GUESS")) {
+    private void launchGame(String gameName) {
+        Intent intent = null;
+        if (gameName.equalsIgnoreCase("GUESS")) {
             intent = new Intent(getApplicationContext(), GuessActivity.class);
-        } else if (tag.equals("CONNECT")) {
+        } else if (gameName.equalsIgnoreCase("CONNECT")) {
             intent = new Intent(getApplicationContext(), ConnectActivity.class);
-        } else  if (tag.equals("MATCH")){
+        } else  if (gameName.equalsIgnoreCase("MATCH")){
             intent = new Intent(getApplicationContext(), MemoryActivity.class);
         }
         if (intent != null) {
