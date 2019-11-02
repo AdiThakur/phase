@@ -96,7 +96,7 @@ public class gameSelection extends AppCompatActivity {
             intent = new Intent(getApplicationContext(), GuessActivity.class);
         } else if (gameName.equalsIgnoreCase("CONNECT")) {
             intent = new Intent(getApplicationContext(), ConnectActivity.class);
-        } else  if (gameName.equalsIgnoreCase("MATCH")){
+        } else  if (gameName.equalsIgnoreCase("REPEAT")){
             intent = new Intent(getApplicationContext(), MemoryActivity.class);
         }
         if (intent != null) {
