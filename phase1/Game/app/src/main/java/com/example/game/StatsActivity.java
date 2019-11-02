@@ -2,12 +2,17 @@ package com.example.game;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
 public class StatsActivity extends AppCompatActivity {
-
+    /**
+     * Initializes the activity.
+     * @param savedInstanceState saved instance state
+     */
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

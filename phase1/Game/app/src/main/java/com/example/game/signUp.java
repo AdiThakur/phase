@@ -1,31 +1,22 @@
 package com.example.game;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class signUp extends AppCompatActivity {
 
     private EditText userNameEditText;
     private EditText passwordEditText;
 
+    /**
+     * Initializes activity.
+     * @param savedInstanceState saved instance state (null on first run)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +30,11 @@ public class signUp extends AppCompatActivity {
         userNameEditText.setText(desiredUserName);
     }
 
+    /**
+     * Tries to sign the user up: raises messages messages if that is not possible that inform
+     * the user why this is the case (ex. Empty Fields, etc).
+     * @param view standard view parameter
+     */
     public void signUpButton(View view) {
 
         String enteredUserName = userNameEditText.getText().toString();
@@ -67,6 +63,10 @@ public class signUp extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gives feedback to the user in a small pop up on their phone.
+     * @param msg the given message to the user
+     */
     private void raiseToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }

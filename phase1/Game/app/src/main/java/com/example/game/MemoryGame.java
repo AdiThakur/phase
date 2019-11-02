@@ -1,7 +1,6 @@
 package com.example.game;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.Random;
 
@@ -11,21 +10,37 @@ class MemoryGame extends Game {
 
     private StringBuilder numberSequence;
 
+    /**
+     * The memory game.
+     * @param userName current user playing this game
+     * @param appContext appContext
+     */
    MemoryGame(String userName, Context appContext) {
        super(userName, appContext, gameName);
        numberSequence = new StringBuilder();
        generateNumber();
    }
 
+    /**
+     * Generates the random number.
+     */
     private void generateNumber() {
         Random random = new Random();
         numberSequence.append(random.nextInt(10));
    }
 
+    /**
+     * Displays the sequence of numbers.
+     * @return the sequence of numbers
+     */
    StringBuilder displaySequence() {
        return numberSequence;
    }
 
+    /**
+     * Sets up the next, harder level or resets the difficulty if the user failed.
+     * @param guessCorrect if the user guessed correctly or not
+     */
    private void setUpNextLevel(boolean guessCorrect) {
 
        if (guessCorrect) {
@@ -37,6 +52,11 @@ class MemoryGame extends Game {
        }
    }
 
+    /**
+     * Checks if the users guess was correct or not, and sets up the next level accordingly.
+     * @param enteredNumber the number entered
+     * @return if the guess was correct or not
+     */
    boolean checkGuess(String enteredNumber) {
 
        boolean guessCorrect = enteredNumber.equals(numberSequence.toString());
