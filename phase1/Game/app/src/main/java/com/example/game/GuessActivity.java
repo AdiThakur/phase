@@ -28,6 +28,11 @@ public class GuessActivity extends AppCompatActivity {
     private TextView pivotNumberTextView;
     private Chronometer chronometer;
 
+    /**
+     * Sets up the entire game when user clicks the game button.
+     *
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,11 @@ public class GuessActivity extends AppCompatActivity {
         startClock();
     }
 
+    /**
+     * Checks if the user made the correct guess then outputs if it's right or wrong.
+     *
+     * @param view the button view of higher or lower
+     */
     public void guessNumber(View view) {
 
         String userGuess = view.getTag().toString();
@@ -60,11 +70,20 @@ public class GuessActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the GUI with streaks and the pivot number.
+     */
     private void updateGUI() {
         streaksTextView.setText(Integer.toString(guessGame.getStreaks()));
         pivotNumberTextView.setText(Integer.toString(guessGame.getPivotNumber()));
     }
 
+    /**
+     * Displays whether the user got the correct guess or not.
+     *
+     * @param userGuess the string input of correct or wrong
+     * @param color the color of the text
+     */
     private void displayGuess(String userGuess, String color) {
         updateGUI();
         guessCorrectTextView.setText(userGuess);
@@ -72,6 +91,9 @@ public class GuessActivity extends AppCompatActivity {
         fade();
     }
 
+    /**
+     * Handles the fading feature for texts.
+     */
     private void fade() {
         guessCorrectTextView.animate().alpha(1f).setDuration(100);
         new Handler().postDelayed(new Runnable() {
@@ -82,11 +104,17 @@ public class GuessActivity extends AppCompatActivity {
         }, 300);
     }
 
+    /**
+     * Starts the clock.
+     */
     private void startClock() {
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }
 
+    /**
+     * Handles the function when back button is pressed.
+     */
     @Override
     public void onBackPressed() {
         chronometer.stop();
@@ -109,6 +137,9 @@ public class GuessActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Saves the game data and then destroys the content.
+     */
     @Override
     protected void onDestroy() {
         guessGame.saveData();

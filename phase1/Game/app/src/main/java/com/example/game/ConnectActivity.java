@@ -22,6 +22,11 @@ public class ConnectActivity extends AppCompatActivity {
     private Connect connectBoard;
     private String userName;
 
+    /**
+     * Create Connect game when user starts the game.
+     *
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,11 @@ public class ConnectActivity extends AppCompatActivity {
         startClock();
     }
 
+    /**
+     *
+     *
+     * @param view
+     */
     public void imageClicked(View view) {
 
         ImageView imageClicked = (ImageView) view;
@@ -68,6 +78,11 @@ public class ConnectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays the winner of the game.
+     *
+     * @param winningMsg the winning message
+     */
     private void displayWinner(String winningMsg) {
         chronometer.stop();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -90,6 +105,11 @@ public class ConnectActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Update the computer's move.
+     *
+     * @param resultOfMove the result of the move
+     */
     private void updateComputerMove(String resultOfMove) {
 
         for (int row = 0; row < linearLayout.getChildCount(); row++) {
@@ -104,6 +124,9 @@ public class ConnectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Clears the board.
+     */
     private void clearBoard() {
 
         for (int row = 0; row < linearLayout.getChildCount(); row++) {
@@ -117,15 +140,26 @@ public class ConnectActivity extends AppCompatActivity {
         startClock();
     }
 
+    /**
+     * Starts the clock
+     */
     private void startClock() {
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }
 
+    /**
+     * Raise a Toast
+     *
+     * @param msg the message for the Toast
+     */
     private void raiseToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Handles the back button function.
+     */
     @Override
     public void onBackPressed() {
 
@@ -149,6 +183,9 @@ public class ConnectActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Handles the destroy function.
+     */
     @Override
     protected void onDestroy() {
         connectBoard.saveData();

@@ -13,12 +13,25 @@ class Connect extends  Game {
 
     private int[][] gameBoard;
 
+    /**
+     * Constructor of Connect.
+     *
+     * @param userName
+     * @param appContext
+     */
     Connect(String userName, Context appContext) {
 
         super(userName, appContext, gameName);
         this.gameBoard = new int[row][col];
     }
 
+    /**
+     * Check if x and y are valid coordinates.
+     *
+     * @param x x-coordinate of the board
+     * @param y y-coordinate of the board
+     * @return whether if it is a valid move
+     */
     boolean validMove(int x, int y) {
 
         if (gameBoard[x][y] == 0) {
@@ -29,6 +42,13 @@ class Connect extends  Game {
         }
     }
 
+    /**
+     * Handles the player move function.
+     *
+     * @param x x-coordinate of the board
+     * @param y y-coordinate of the board
+     * @return a message of who won the game
+     */
     String playerMove(int x, int y) {
 
         gameBoard[x][y] = PLAYER_1;
@@ -49,6 +69,11 @@ class Connect extends  Game {
         }
     }
 
+    /**
+     * Handles the computer's move.
+     *
+     * @return the computer's move
+     */
     private String computerMove() {
         // Very basic (literally random) AI. Will be methodical in Phase 2.
         int count = 0;
@@ -65,11 +90,23 @@ class Connect extends  Game {
         return computerMove;
     }
 
+    /**
+     * Check if game is won.
+     *
+     * @param player the user that is playing the game
+     * @return if the player won the game
+     */
     private boolean checkGameWon(int player) {
 
         return checkHorizontal(player) || checkVertical(player) || checkDiagonal(player);
     }
 
+    /**
+     * Check if player has a horizontal win.
+     *
+     * @param player the current player
+     * @return whether the player won or not
+     */
     private boolean checkHorizontal(int player) {
 
         for (int row = 0; row < this.row; row++) {
@@ -86,6 +123,12 @@ class Connect extends  Game {
         return false;
     }
 
+    /**
+     * Check if player has a vertical win.
+     *
+     * @param player the current player
+     * @return whether the player won or not
+     */
     /*
      * This some-what duplicate method has been left intact as in the future we might want to be
      * able to play games of rectangular (non-square board) tic-tact-toe.
@@ -106,6 +149,12 @@ class Connect extends  Game {
         return false;
     }
 
+    /**
+     * Check if player has a diagonal win.
+     *
+     * @param player the current player
+     * @return whether the player won or not
+     */
     private boolean checkDiagonal(int player) {
 
         boolean forwardDiagonalAllSame = true;
@@ -123,6 +172,9 @@ class Connect extends  Game {
         return forwardDiagonalAllSame || backwardDiagonalAllSame;
     }
 
+    /**
+     * Resets the board.
+     */
     private void resetBoard() {
         gameBoard = new int[row][col];
     }

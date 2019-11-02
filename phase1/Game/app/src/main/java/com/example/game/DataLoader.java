@@ -21,6 +21,11 @@ class DataLoader {
     private final String TAG = "DataLoader";
     private final Context appContext;
 
+    /**
+     * Constructor for DataLoader.
+     *
+     * @param appContext the context of the class
+     */
     DataLoader(Context appContext) {
         this.appContext = appContext;
     }
@@ -45,6 +50,12 @@ class DataLoader {
 
     }
 
+    /**
+     * Load the user with the username of userName.
+     *
+     * @param userName the user's name
+     * @return the user with the correct username
+     */
     // Only public method. Allows us to change how data is stored/loaded.
     User loadUser(String userName) {
 

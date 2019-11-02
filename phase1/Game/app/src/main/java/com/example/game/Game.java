@@ -9,6 +9,13 @@ public class Game {
     private long startTime;
     private String gameName;
 
+    /**
+     * Constructor for Game.
+     *
+     * @param userName the user's name
+     * @param appContext the context of the class
+     * @param gameName the name of the game
+     */
     Game(String userName, Context appContext, String gameName) {
 
         this.appContext = appContext;
@@ -25,6 +32,9 @@ public class Game {
         }
     }
 
+    /**
+     * Saves the game data.
+     */
     void saveData() {
 
         long durationInSeconds = (System.currentTimeMillis() - startTime)/1000;

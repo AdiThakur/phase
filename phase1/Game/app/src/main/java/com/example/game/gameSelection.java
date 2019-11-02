@@ -19,6 +19,11 @@ public class gameSelection extends AppCompatActivity {
     String userName;
     User user;
 
+    /**
+     * Sets up game selection screen.
+     *
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,12 @@ public class gameSelection extends AppCompatActivity {
         Toast.makeText(this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Creates the option menu.
+     *
+     * @param menu the option menu
+     * @return if menu is open or not
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -41,6 +52,12 @@ public class gameSelection extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Handles the function when options item is selected.
+     *
+     * @param item the menu item
+     * @return whether options item is selected
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
@@ -52,12 +69,22 @@ public class gameSelection extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Display user's theme preferences.
+     *
+     * @param user the current user logged in
+     */
     void displayPrefferences(User user) {
         // TODO - Grab user's choice of BG color, text color, and language, draw GUI accordingly. This should be part of game superclass as well.
         View backgroundView = findViewById(R.id.backgroundView);
         backgroundView.setBackgroundColor(Color.parseColor(user.getBackgroundColor()));
     }
 
+    /**
+     * Changes the screen to the game when User clicks on a game button.
+     *
+     * @param view the view of what the User clicked
+     */
     public void gameClicked(View view) {
 
         Intent intent = null;
@@ -76,6 +103,9 @@ public class gameSelection extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handles the function when back button is pressed.
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -92,6 +122,9 @@ public class gameSelection extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Handles the function to destroy content when User decides to exit screen.
+     */
     @Override
     protected void onDestroy() {
         Toast.makeText(this, "Goodbye, " + userName, Toast.LENGTH_SHORT).show();

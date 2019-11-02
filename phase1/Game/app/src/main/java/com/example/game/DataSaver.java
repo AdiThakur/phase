@@ -12,10 +12,23 @@ class DataSaver {
     private final String TAG = "DataSaver";
     private final Context appContext;
 
+    /**
+     * Constructor of DataSaver.
+     *
+     * @param appContext the context of the class
+     */
     DataSaver(Context appContext) {
         this.appContext = appContext;
     }
 
+    /**
+     * Save user information.
+     *
+     * @param user the current user
+     * @param userName the user's name
+     * @param password the user's password
+     * @return whether user information is saved
+     */
     boolean saveUser(User user, String userName, String password) {
 
         String stringToSave;
@@ -40,6 +53,13 @@ class DataSaver {
         }
     }
 
+    /**
+     * Change default data to string.
+     *
+     * @param userName the user's name
+     * @param password the user's password
+     * @return the user's data in String
+     */
     private String defaultDataToString(String userName, String password) {
 
         StringBuilder output = new StringBuilder();
@@ -63,6 +83,12 @@ class DataSaver {
         return output.toString();
     }
 
+    /**
+     * Change user's data to string.
+     *
+     * @param user the current user
+     * @return user's data in string
+     */
     private String userDataToString(User user) {
 
         StringBuilder output = new StringBuilder();

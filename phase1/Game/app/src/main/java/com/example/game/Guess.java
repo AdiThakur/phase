@@ -15,6 +15,12 @@ class Guess extends Game {
     private int correctNumber;
     private int streaks;
 
+    /**
+     * Constructor of Guess.
+     *
+     * @param userName the user's name
+     * @param appContext the context of the class
+     */
     Guess(String userName, Context appContext) {
 
         super (userName, appContext, gameName);
@@ -24,6 +30,12 @@ class Guess extends Game {
         this.streaks = 0;
     }
 
+    /**
+     * Checks if userGuess is correct and increments streaks.
+     *
+     * @param userGuess the string input from the user
+     * @return the boolean value of whether user is correct or not
+     */
     boolean checkCorrect(String userGuess){
 
         boolean correctGuess = ((correctNumber >= pivotNumber && userGuess.equals(HIGHER_GUESS))
@@ -41,37 +53,71 @@ class Guess extends Game {
         return correctGuess;
     }
 
+    /**
+     * Sets the amount of time played.
+     *
+     * @param timePlayedInSeconds amount of time played
+     */
     void setTimePlayed(long timePlayedInSeconds) {
         user.guessStats.incrementTimePlayed(timePlayedInSeconds);
     }
 
+    /**
+     * Check if current streak is the longest streak.
+     */
     private void checkNewHighestStreak() {
         if (user.guessStats.getLongestStreak() < streaks) {
             user.guessStats.setLongestStreak(streaks);
         }
     }
 
+    /**
+     * Sets up the new number to guess.
+     */
     private void setUpNewNumber() {
         correctNumber = generateNumber(MAX_BOUND);
         pivotNumber = generateNumber(MAX_BOUND);
     }
 
+    /**
+     * Generate a random integer given maxBound.
+     *
+     * @param maxBound the maximum bound of what number to generate
+     * @return an integer between 0 and maxBound
+     */
     private int generateNumber(int maxBound){
         Random r = new Random();
         return r.nextInt(maxBound + 1);
     }
 
+    /**
+     * Gets the streaks.
+     *
+     * @return the current streak
+     */
     int getStreaks() {
         return streaks;
     }
 
+    /**
+     * Resets the streak.
+     */
     private void resetStreaks() {
         streaks = 0;
     }
 
-    private void incrementStreaks() { streaks++;
+    /**
+     * Increments streak.
+     */
+    private void incrementStreaks() {
+        streaks++;
     }
 
+    /**
+     * Get the pivot number to guess.
+     *
+     * @return the pivot number
+     */
     int getPivotNumber() {
         return pivotNumber;
     }
