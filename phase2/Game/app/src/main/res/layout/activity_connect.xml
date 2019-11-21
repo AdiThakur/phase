@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".ConnectActivity"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/connectTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/connect"
+        android:textSize="50sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="155dp"
+        android:textColor="#817A7A"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="175dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connectTitle">
+
+        <!--FIRST ROW-->
+
+        <LinearLayout
+            android:id="@+id/child1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/a1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="00"
+                app:srcCompat="@drawable/grey" />
+
+            <ImageView
+                android:id="@+id/a2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="01"
+                app:srcCompat="@drawable/grey" />
+
+            <ImageView
+                android:id="@+id/a3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="02"
+                app:srcCompat="@drawable/grey" />
+        </LinearLayout>
+
+        <!--SECOND ROW-->
+
+        <LinearLayout
+            android:id="@+id/child2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/a4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="10"
+                app:srcCompat="@drawable/grey" />
+
+            <ImageView
+                android:id="@+id/a5"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="11"
+                app:srcCompat="@drawable/grey" />
+
+            <ImageView
+                android:id="@+id/a6"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="12"
+                app:srcCompat="@drawable/grey" />
+        </LinearLayout>
+
+        <!--THIRD ROW-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/a7"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="20"
+                app:srcCompat="@drawable/grey" />
+
+            <ImageView
+                android:id="@+id/a8"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="21"
+                app:srcCompat="@drawable/grey" />
+
+            <ImageView
+                android:id="@+id/a9"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:alpha="1"
+                android:onClick="imageClicked"
+                android:tag="22"
+                app:srcCompat="@drawable/grey" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

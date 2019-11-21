@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Game</string>
+    <string name="game_name">phase 1</string>
+    <string name="greeting_login">welcome back</string>
+    <string name="greeting_signup">welcome</string>
+    <string name="sign_up">sign up</string>
+    <string name="log_in">log in</string>
+    <string name="name">username</string>
+    <string name="password">password</string>
+    <string name="connect">Connect</string>
+    <string name="match">Match</string>
+    <string name="Guess">Guess</string>
+    <string name="title_activity_temp">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="games_played">Games Played</string>
+    <string name="_0">0</string>
+    <string name="time_played">Time Played</string>
+    <string name="games_won">Games Won</string>
+    <string name="longest_streak">Longest Streak</string>
+    <string name="mistakes">Mistakes</string>
+    <string name="repeat">Repeat</string>
+    <string name="_10000">10000</string>
+    <string name="higher">Higher</string>
+    <string name="lower">Lower</string>
+    <string name="higher_or_lower">Higher or Lower</string>
+    <string name="fire">fire</string>
+    <string name="remember">Remember</string>
+    <string name="check">Check</string>
+</resources>
