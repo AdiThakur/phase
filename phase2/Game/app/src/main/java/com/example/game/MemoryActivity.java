@@ -125,7 +125,7 @@ public class MemoryActivity extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                memoryGame.saveData();
+                memoryGame.saveUserData();
                 finish();
             }
         });
@@ -162,7 +162,7 @@ public class MemoryActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
-        memoryGame.saveData();
+        memoryGame.saveUserData();
         super.onDestroy();
     }
 }

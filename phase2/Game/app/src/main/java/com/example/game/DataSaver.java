@@ -1,9 +1,13 @@
 package com.example.game;
 
 import android.content.Context;
+import android.util.Log;
+
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 class DataSaver {
 
@@ -13,6 +17,42 @@ class DataSaver {
         this.appContext = appContext;
     }
 
+    boolean saveScoreboard(Scoreboard scoreboard) {
+
+        String fileName = scoreboard.getGameName() + "scores.txt";
+        String stringToSave = scoreBoardToString(scoreboard);
+        PrintWriter out;
+
+        try {
+            OutputStream outStream = this.appContext.openFileOutput(fileName, Context.MODE_PRIVATE);
+            out = new PrintWriter(outStream);
+            out.print(stringToSave);
+            out.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            Log.i("DataSaver", "File not found");
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    private String scoreBoardToString(Scoreboard scoreboard) {
+
+        HashMap<String, ArrayList<Integer>> userToScores = scoreboard.getScoreMap();
+        StringBuilder output = new StringBuilder();
+
+        for (String userName : userToScores.keySet()) {
+            output.append(userName + ":");
+            for (int score : userToScores.get(userName)) {
+                output.append(score).append(",");
+            }
+            // After we iterate over each user's score, we add a newline before writing next user's scores.
+            output.append("\n");
+        }
+        return output.toString();
+    }
+
     boolean saveUser(User user, String userName, String password, String lastGame) {
 
         String stringToSave;
@@ -20,7 +60,7 @@ class DataSaver {
         PrintWriter out;
 
         if (user == null) {
-            stringToSave = defaultDataToString(userName, password);
+            stringToSave = defaultUserDataToString(userName, password);
         } else {
             stringToSave = userDataToString(user, lastGame);
         }
@@ -31,11 +71,11 @@ class DataSaver {
             out.close();
             return true;
         } catch (FileNotFoundException e) {
-                        return false;
+            return false;
         }
     }
 
-    private String defaultDataToString(String userName, String password) {
+    private String defaultUserDataToString(String userName, String password) {
 
         StringBuilder output = new StringBuilder();
         output.append(userName);

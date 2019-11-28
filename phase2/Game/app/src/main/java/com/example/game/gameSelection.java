@@ -40,7 +40,7 @@ public class gameSelection extends AppCompatActivity {
                 public void run() {
                     continueLastGame();
                 }
-            }, 1000);
+            }, 500);
         }
     }
 
@@ -76,7 +76,7 @@ public class gameSelection extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-               launchGame(lastGame);
+                launchGame(lastGame);
             }
         });
 
@@ -95,7 +95,7 @@ public class gameSelection extends AppCompatActivity {
         if (gameName.equalsIgnoreCase("GUESS")) {
             intent = new Intent(getApplicationContext(), GuessActivity.class);
         } else if (gameName.equalsIgnoreCase("CONNECT")) {
-            intent = new Intent(getApplicationContext(), ConnectActivity.class);
+            intent = new Intent(getApplicationContext(), ConnectConfiguration.class);
         } else  if (gameName.equalsIgnoreCase("REPEAT")){
             intent = new Intent(getApplicationContext(), MemoryActivity.class);
         }

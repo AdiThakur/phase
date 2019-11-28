@@ -2,7 +2,6 @@ package com.example.game;
 
 import android.content.Context;
 import java.util.Random;
-import java.lang.Math;
 
 class Guess extends Game {
 
@@ -12,14 +11,9 @@ class Guess extends Game {
     private final String LOWER_GUESS = "LOWER";
     private final String HIGHER_GUESS = "HIGHER";
 
-    private int equationNumber;
+    private int pivotNumber;
     private int correctNumber;
     private int streaks;
-
-    private String guessingEquation;
-    private int num1;
-    private int num2;
-
 
     /**
      * Constructor of Guess.
@@ -31,11 +25,8 @@ class Guess extends Game {
 
         super (userName, appContext, gameName);
 
+        this.pivotNumber = generateNumber(MAX_BOUND);
         this.correctNumber = generateNumber(MAX_BOUND);
-
-        Random r = new Random();
-        setUpMath(r.nextInt(5));
-
         this.streaks = 0;
     }
 
@@ -47,20 +38,18 @@ class Guess extends Game {
      */
     boolean checkCorrect(String userGuess){
 
-        boolean correctGuess = ((correctNumber <= equationNumber && userGuess.equals(HIGHER_GUESS))
-                || (correctNumber >= equationNumber && userGuess.equals(LOWER_GUESS)));
+        boolean correctGuess = ((correctNumber >= pivotNumber && userGuess.equals(HIGHER_GUESS))
+                || (correctNumber <= pivotNumber && userGuess.equals(LOWER_GUESS)));
         if (correctGuess) {
             incrementStreaks();
             correctGuess =  true;
-        // Round ends: Save time, restart clock.
+            // Round ends: Save time, restart clock.
         } else {
             resetStreaks();
             correctGuess = false;
         }
         checkNewHighestStreak();
-
-        setUpRound();
-
+        setUpNewNumber();
         return correctGuess;
     }
 
@@ -83,45 +72,11 @@ class Guess extends Game {
     }
 
     /**
-     * Set up the math equation and the new the number to guess.
+     * Sets up the new number to guess.
      */
-    private void setUpRound() {
+    private void setUpNewNumber() {
         correctNumber = generateNumber(MAX_BOUND);
-        Random r = new Random();
-        int op = r.nextInt(5);
-        setUpMath(op);
-    }
-
-    private void setUpMath(int op){
-        switch(op){
-            case 1:
-                num1 = generateNumber((int)(Math.sqrt(MAX_BOUND)));
-                num2 = generateNumber((int)(Math.sqrt(MAX_BOUND)));
-                guessingEquation = num1 + "x" + num2;
-                equationNumber = num1 * num2;
-                break;
-
-            case 2:
-                num1 = generateNumber(MAX_BOUND);
-                num2 = generateNumber(MAX_BOUND);
-                guessingEquation = num1 + "+" + num2;
-                equationNumber = num1 + num2;
-                break;
-
-            case 3:
-                num1 = generateNumber(MAX_BOUND);
-                num2 = generateNumber(MAX_BOUND);
-                guessingEquation = num1 + "-" + num2;
-                equationNumber = num1 - num2;
-                break;
-
-            case 4:
-                num1 = generateNumber(MAX_BOUND);
-                num2 = generateNumber(10);
-                guessingEquation = num1 + "÷" + num2;
-                equationNumber = Math.round(num1/num2);
-                break;
-        }
+        pivotNumber = generateNumber(MAX_BOUND);
     }
 
     /**
@@ -132,7 +87,7 @@ class Guess extends Game {
      */
     private int generateNumber(int maxBound){
         Random r = new Random();
-        return r.nextInt(maxBound) + 1;
+        return r.nextInt(maxBound + 1);
     }
 
     /**
@@ -163,21 +118,8 @@ class Guess extends Game {
      *
      * @return the pivot number
      */
-    int getEquationNumber() {
-        return equationNumber;
-    }
-
-    /**
-     * Get the pivot equation to guess.
-     *
-     * @return the pivot equation
-     */
-    String getPivotEquation(){
-        return guessingEquation;
-    }
-
-    int getCorrectNumber(){
-        return correctNumber;
+    int getPivotNumber() {
+        return pivotNumber;
     }
 
 

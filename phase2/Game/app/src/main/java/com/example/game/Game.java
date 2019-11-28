@@ -8,6 +8,10 @@ public class Game {
     protected User user;
     private long startTime;
     private String gameName;
+    protected int score;
+
+    private GameStats stats;
+    private Scoreboard scoreboard;
 
     /**
      * Constructor for Game.
@@ -19,33 +23,52 @@ public class Game {
     Game(String userName, Context appContext, String gameName) {
 
         this.appContext = appContext;
-        this.user = new DataLoader(appContext).loadUser(userName);
-        this.startTime = System.currentTimeMillis();
         this.gameName = gameName;
 
+        DataLoader dataLoader = new DataLoader(appContext);
+        user = dataLoader.loadUser(userName);
+        scoreboard = dataLoader.loadScoreBoard(gameName);
+
+        initializeStats();
+
+        startTime = System.currentTimeMillis();
+        score = 0;
+    }
+
+    private void initializeStats() {
+
         if (gameName.equalsIgnoreCase("Connect")) {
-            user.connectStats.incrementGamesPlayed();
-        } else if (gameName.equalsIgnoreCase("Repeat")) {
-            user.matchStats.incrementGamesPlayed();
+            stats = user.connectStats;
+        } else if (gameName.equalsIgnoreCase("Match")) {
+            stats = user.matchStats;
         } else {
-            user.guessStats.incrementGamesPlayed();
+            stats = user.guessStats;
         }
+        stats.incrementGamesPlayed();
+    }
+
+    int getScore() {
+        return score;
+    }
+
+    String getName() {
+        return gameName;
     }
 
     /**
      * Saves the game data.
      */
-    void saveData() {
+    void saveUserData() {
 
         long durationInSeconds = (System.currentTimeMillis() - startTime)/1000;
-        if (gameName.equalsIgnoreCase("Connect")) {
-            user.connectStats.incrementTimePlayed(durationInSeconds);
-        } else if (gameName.equalsIgnoreCase("Repeat")) {
-            user.matchStats.incrementTimePlayed(durationInSeconds);
-        } else {
-            user.guessStats.incrementTimePlayed(durationInSeconds);
-        }
-        new DataSaver(appContext).saveUser(user, user.getName(), user.getPassword(), gameName);
+        stats.incrementTimePlayed(durationInSeconds);
+
+        DataSaver dataSaver = new DataSaver(appContext);
+        dataSaver.saveUser(user, user.getName(), user.getPassword(), gameName);
+    }
+
+    void addScore(String userName, int score) {
+        scoreboard.addScore(userName, score);
     }
 
 }
