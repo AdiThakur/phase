@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class GuessActivity extends AppCompatActivity {
 
     private TextView guessCorrectTextView;
     private TextView streaksTextView;
+    private TextView correctNumberView;
     private TextView pivotNumberTextView;
     private Chronometer chronometer;
 
@@ -37,6 +39,7 @@ public class GuessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
 
+        correctNumberView = findViewById(R.id.correctNumberView);
         guessCorrectTextView = findViewById(R.id.guessCorrectTextView);
         streaksTextView = findViewById(R.id.streaksTextView);
         pivotNumberTextView = findViewById(R.id.pivotNumberTextView);
@@ -74,7 +77,8 @@ public class GuessActivity extends AppCompatActivity {
      */
     private void updateGUI() {
         streaksTextView.setText(Integer.toString(guessGame.getStreaks()));
-        pivotNumberTextView.setText(Integer.toString(guessGame.getPivotNumber()));
+        pivotNumberTextView.setText(guessGame.getPivotEquation());
+        correctNumberView.setText(Integer.toString(guessGame.getCorrectNumber()));
     }
 
     /**
