@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -124,6 +125,11 @@ public class DisplayScoreboard extends AppCompatActivity {
             setResult(resultCode);
             finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please click either button!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

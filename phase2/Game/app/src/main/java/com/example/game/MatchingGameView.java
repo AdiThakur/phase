@@ -309,7 +309,7 @@ public class MatchingGameView extends AppCompatActivity{
             intent.putExtra(MatchingConfiguration.GAME_SYMBOLS, symbols);
             startActivity(intent);
             finish();
-            // Quit game
+        // Quit game
         } else if (resultCode == 2) {
             Intent intent = new Intent(getApplicationContext(), gameSelection.class);
             intent.putExtra("user", userName);
@@ -317,7 +317,6 @@ public class MatchingGameView extends AppCompatActivity{
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();
-
         }
     }
 }

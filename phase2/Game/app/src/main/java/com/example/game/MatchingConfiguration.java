@@ -5,96 +5,121 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
-
-import com.example.game.R;
 
 public class MatchingConfiguration extends AppCompatActivity implements MatchingPresenter.View{
 
     public static final String GAME_DIFFICULTY = "com.example.memorygame.GAME_DIFFICULTY";
     public static final String GAME_CARDS = "com.example.memorygame.GAME_CARDS";
     public static final String GAME_SYMBOLS = "com.example.memorygame.GAME_SYMBOLS";
+
     private String userName;
-    RadioGroup difficulty;
-    RadioButton difficultyButton;
-    TextView difficultyTextview;
+    private SeekBar difficultySeekBar;
 
-    RadioGroup cardBack;
-    RadioButton cardBackButton;
-    TextView cardBackTextview;
-
-    RadioGroup symbol;
-    RadioButton symbolButton;
-    TextView symbolTextview;
-
-
+    private int selectedDifficulty;
+    private String selectedCardFace = "Animals";
+    private String selectedCardBack = "Red";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_memory);
+        setContentView(R.layout.activity_memory_configuration);
+        this.getSupportActionBar().hide();
 
-        Intent intent = getIntent();
-        userName = intent.getStringExtra("user");
+        userName = getIntent().getStringExtra("user");
 
-        difficulty = findViewById(R.id.difficulty);
-        symbol = findViewById(R.id.symbol);
-        cardBack = findViewById(R.id.cardBack);
-        difficultyButton = getRadioButton(difficulty);
-        cardBackButton = getRadioButton(cardBack);
-        symbolButton = getRadioButton(symbol);
-
-        Button buttonPlay = findViewById(R.id.button_play);
-        buttonPlay.setOnClickListener(new View.OnClickListener() {
+        difficultySeekBar = findViewById(R.id.difficultySeekbar);
+        difficultySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                play();
+            public void onProgressChanged(SeekBar seekBar, int seek, boolean b) {
+                selectedDifficulty = seek;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                updateConfigurationTextViews();
             }
         });
     }
 
-    private RadioButton getRadioButton(RadioGroup group) {
-        int radioId = group.getCheckedRadioButtonId();
+    public void playButton(View view) {
 
-        RadioButton Button = findViewById(radioId);
+        Intent intent = new Intent(getApplicationContext(), MatchingGameView.class);
 
-        return Button;
-    }
-
-    public void checkDifficulty(View v) {
-
-        difficultyButton = getRadioButton(difficulty);
-
-        Toast.makeText(this, "Difficulty: " + difficultyButton.getText(), Toast.LENGTH_SHORT).show();
-    }
-
-
-    public void checkCardBack(View v) {
-        cardBackButton = getRadioButton(cardBack);
-
-        Toast.makeText(this, "Card Back: " + cardBackButton.getText(), Toast.LENGTH_SHORT).show();
-    }
-
-    public void checkSymbol(View v) {
-        symbolButton = getRadioButton(symbol);
-
-        Toast.makeText(this, "Symbol: " + symbolButton.getText(), Toast.LENGTH_SHORT).show();
-    }
-
-    public void play() {
-        String gameDifficulty = difficultyButton.getText().toString();
-        String gameCards = cardBackButton.getText().toString();
-        String gameSymbols = symbolButton.getText().toString();
-        Intent intent = new Intent(this, MatchingGameView.class);
-        intent.putExtra(GAME_DIFFICULTY, gameDifficulty);
-        intent.putExtra(GAME_CARDS, gameCards);
-        intent.putExtra(GAME_SYMBOLS, gameSymbols);
+        intent.putExtra(GAME_DIFFICULTY, selectedDifficultyAsString(selectedDifficulty));
+        intent.putExtra(GAME_SYMBOLS, selectedCardFace);
+        intent.putExtra(GAME_CARDS, selectedCardBack);
         intent.putExtra("user", userName);
+
         startActivity(intent);
+        finish();
+
     }
 
+    private String selectedDifficultyAsString(int selectedDifficulty) {
+
+        String difficultyAsString;
+        if ( selectedDifficulty == 1) {
+            difficultyAsString = "Easy";
+        } else if (selectedDifficulty == 2) {
+            difficultyAsString = "Medium";
+        } else {
+            difficultyAsString = "Hard";
+        }
+        return difficultyAsString;
+    }
+
+    public void modelSelected(View imageClicked) {
+
+        LinearLayout cardFaceLinearLayout = findViewById(R.id.cardFaceLinearLayout);
+        LinearLayout cardBackLinearLayout = findViewById(R.id.cardBackLinearLayout);
+
+        View parentView = (View) imageClicked.getParent();
+
+        if (parentView.getId() == cardFaceLinearLayout.getId()) {
+            selectedCardFace = imageClicked.getTag().toString();
+            resetLinearLayout(cardFaceLinearLayout.getId(), 0.3f, false);
+        } else {
+            selectedCardBack = imageClicked.getTag().toString();
+            resetLinearLayout(cardBackLinearLayout.getId(), 0.3f, false);
+        }
+
+        imageClicked.setAlpha(1f);
+        imageClicked.setEnabled(false);
+    }
+
+    public void resetButton(View view) {
+
+        resetLinearLayout(R.id.cardFaceLinearLayout, 1f, true);
+        resetLinearLayout(R.id.cardBackLinearLayout, 1f, true);
+        difficultySeekBar.setProgress(1);
+        updateConfigurationTextViews();
+    }
+
+    private void resetLinearLayout(int layoutId, float alpha, boolean isEnabled) {
+
+        LinearLayout layoutToReset = findViewById(layoutId);
+        for (int i = 0; i < layoutToReset.getChildCount(); i++) {
+            ImageView image = (ImageView) layoutToReset.getChildAt(i);
+            image.setAlpha(alpha);
+            image.setEnabled(isEnabled);
+        }
+    }
+
+    private void updateConfigurationTextViews(){
+
+        TextView difficulty = findViewById(R.id.difficultyTextView);
+        String difficultyText = "Difficulty - " + difficultySeekBar.getProgress();
+        difficulty.setText(difficultyText);
+    }
 }

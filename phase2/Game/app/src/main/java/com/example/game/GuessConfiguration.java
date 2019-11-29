@@ -101,7 +101,7 @@ public class GuessConfiguration extends AppCompatActivity {
     private void updateConfigurationTextViews(){
 
         TextView difficulty = findViewById(R.id.difficultyTextView);
-        String difficultyText = "Difficulty- " + difficultySeekBar.getProgress();
+        String difficultyText = "Difficulty - " + difficultySeekBar.getProgress();
         difficulty.setText(difficultyText);
 
     }
