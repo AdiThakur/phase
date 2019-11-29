@@ -76,7 +76,7 @@ public class GuessActivity extends AppCompatActivity {
      *
      * @param view the button view of higher or lower
      */
-    public void guessNumber(View view) {
+    public void userGuess(View view) {
 
         String userGuess = view.getTag().toString();
         int score = guessGame.getStreaks();
@@ -152,6 +152,8 @@ public class GuessActivity extends AppCompatActivity {
         // Restart
         if (resultCode == 1) {
             startClock();
+            guessGame.setUpRound();
+            updateGUI();
             // Quit game
         } else if (resultCode == 2) {
             finish();

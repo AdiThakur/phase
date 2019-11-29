@@ -9,7 +9,7 @@ class Guess extends Game {
 
     private static final String gameName = "Guess";
 
-    private final static int MAX_BOUND = 10000;
+    private final static int MAX_BOUND = 250;
     private final static String LOWER_GUESS = "LOWER";
     private final static String HIGHER_GUESS = "HIGHER";
 
@@ -55,10 +55,12 @@ class Guess extends Game {
     /**
      * Set up the math equation and the new the number to guess.
      */
-    private void setUpRound() {
+    void setUpRound() {
         pivotNumber = generateNumber(MAX_BOUND);
         int op = generateNumber(4);
         setUpEquation(op);
+        Log.i("Guess/", "PivotNumber " + pivotNumber);
+        Log.i("Guess/", "ValueOfEquation " + valueOfEquation);
     }
 
     /**
@@ -69,19 +71,17 @@ class Guess extends Game {
      */
     boolean checkCorrect(String userGuess){
 
-        Log.i("Guess/", "PivotNumber " + pivotNumber);
-        Log.i("Guess/", "ValueOfEquation " + valueOfEquation);
-
         boolean correctGuess = ((valueOfEquation >= pivotNumber && userGuess.equals(HIGHER_GUESS))
                 || (valueOfEquation <= pivotNumber && userGuess.equals(LOWER_GUESS)));
 
         if (correctGuess) {
             incrementStreaks();
+            checkNewHighestStreak();
+            setUpRound();
+        // Wrong guess.
         } else {
             resetStreaks();
         }
-        checkNewHighestStreak();
-        setUpRound();
         return correctGuess;
     }
 
