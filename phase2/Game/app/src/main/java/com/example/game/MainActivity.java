@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 // TODO - Customizations - Background color, Music
 
 // TODO - Make gameSelection and Scoreboard better looking
+
 // TODO - Update UML diagrams
 // TODO - Update the readme file.
 
