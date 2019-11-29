@@ -145,7 +145,6 @@ public class ConnectActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DisplayScoreboard.class);
 
         intent.putExtra("score", connectGame.getScore());
-        intent.putExtra("userName", userName);
         intent.putExtra("gameName", connectGame.getName());
         intent.putExtra("msg", winningMessage);
 

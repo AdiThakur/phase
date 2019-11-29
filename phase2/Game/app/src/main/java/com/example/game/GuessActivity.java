@@ -1,5 +1,6 @@
 package com.example.game;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -78,14 +79,27 @@ public class GuessActivity extends AppCompatActivity {
     public void guessNumber(View view) {
 
         String userGuess = view.getTag().toString();
+        int score = guessGame.getStreaks();
         boolean guessCorrect = guessGame.checkCorrect(userGuess);
 
         if (guessCorrect) {
             displayGuess(CORRECT_GUESS, CORRECT_COLOR);
+        // If guess is wrong.
         } else {
             displayGuess(WRONG_GUESS, WRONG_COLOR);
-            startClock();
+            displayAndSaveScore("Game Over!", score);
         }
+    }
+
+    private void displayAndSaveScore(String winningMessage, int score) {
+
+        Intent intent = new Intent(this, DisplayScoreboard.class);
+
+        intent.putExtra("score", score);
+        intent.putExtra("gameName", guessGame.getName());
+        intent.putExtra("msg", winningMessage);
+
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -130,6 +144,18 @@ public class GuessActivity extends AppCompatActivity {
     private void startClock() {
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Restart
+        if (resultCode == 1) {
+            startClock();
+            // Quit game
+        } else if (resultCode == 2) {
+            finish();
+        }
     }
 
     /**
