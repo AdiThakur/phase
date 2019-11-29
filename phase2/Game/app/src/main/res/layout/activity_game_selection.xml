@@ -39,8 +39,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:onClick="gameClicked"
-            android:tag="REPEAT"
-            android:text="@string/repeat"
+            android:tag="MATCH"
+            android:text="@string/match"
             android:textColor="@android:color/background_light"
             android:textSize="50sp"
             android:textStyle="bold|italic" />

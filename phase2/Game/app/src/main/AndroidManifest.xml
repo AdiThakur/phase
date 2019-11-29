@@ -13,7 +13,8 @@
         <activity android:name=".Scoreboard" />
         <activity android:name=".DisplayScoreboard" />
         <activity android:name=".ConnectConfiguration" />
-        <activity android:name=".MemoryActivity" />
+        <activity android:name=".MatchingGameView"></activity>
+        <activity android:name=".MatchingConfiguration" />
         <activity android:name=".StatsActivity" />
         <activity android:name=".ConnectActivity" />
         <activity android:name=".GuessActivity" />
@@ -21,6 +22,7 @@
         <activity android:name=".signUp" />
         <activity android:name=".logIn" />
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
