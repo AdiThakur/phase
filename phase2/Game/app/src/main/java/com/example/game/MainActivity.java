@@ -53,10 +53,8 @@ public class MainActivity extends AppCompatActivity {
 // TODO - Customizations - Background color, Music
 
 // TODO - Make gameSelection and Scoreboard better looking
+
 // TODO - Update UML diagrams
 // TODO - Update the readme file.
 
-// TODO - Implement scoreboard for Guess and Match
-// TODO - Explain Guess game better.
 // TODO - Fix issues in Connect avatar things
-// TODO - Add difficulties for Higher or Lower
