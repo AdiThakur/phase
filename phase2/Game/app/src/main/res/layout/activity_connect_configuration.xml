@@ -25,12 +25,14 @@
         android:id="@+id/playerModelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
         android:text="Player Model"
         android:textSize="15sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/playerModelLinearLayout"
-        app:layout_constraintStart_toStartOf="@+id/playerModelLinearLayout" />
+        app:layout_constraintStart_toStartOf="@+id/playerModelLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/configureTitleTextView" />
 
     <LinearLayout
         android:id="@+id/playerModelLinearLayout"

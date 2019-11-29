@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Scoreboard"></activity>
+        <activity android:name=".GuessConfiguration"></activity>
+        <activity android:name=".Scoreboard" />
         <activity android:name=".DisplayScoreboard" />
         <activity android:name=".ConnectConfiguration" />
         <activity android:name=".MemoryActivity" />

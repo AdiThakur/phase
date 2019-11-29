@@ -1,25 +1,29 @@
 package com.example.game;
 
 import android.content.Context;
+import android.util.Log;
+
 import java.util.Random;
-import java.lang.Math;
 
 class Guess extends Game {
 
     private static final String gameName = "Guess";
 
-    private final int MAX_BOUND = 10000;
-    private final String LOWER_GUESS = "LOWER";
-    private final String HIGHER_GUESS = "HIGHER";
+    private final static int MAX_BOUND = 10000;
+    private final static String LOWER_GUESS = "LOWER";
+    private final static String HIGHER_GUESS = "HIGHER";
 
-    private int equationNumber;
-    private int correctNumber;
+    private int pivotNumber;
     private int streaks;
+    private int difficulty;
 
-    private String guessingEquation;
     private int num1;
     private int num2;
+    private int valueOfEquation;
+    private String equationToGuess;
 
+    private Random random = new Random();
+    private GuessEquation equationGenerator;
 
     /**
      * Constructor of Guess.
@@ -27,16 +31,34 @@ class Guess extends Game {
      * @param userName the user's name
      * @param appContext the context of the class
      */
-    Guess(String userName, Context appContext) {
+    Guess(String userName, Context appContext, int difficulty) {
 
         super (userName, appContext, gameName);
-
-        this.correctNumber = generateNumber(MAX_BOUND);
-
-        Random r = new Random();
-        setUpMath(r.nextInt(5));
-
         this.streaks = 0;
+        this.difficulty = difficulty;
+
+        setDifficulty();
+        setUpRound();
+    }
+
+    private void setDifficulty() {
+
+        if (difficulty == 1) {
+            equationGenerator = new GuessEasyDifficulty();
+        } else if (difficulty == 2) {
+            equationGenerator = new GuessMediumDifficulty();
+        } else {
+            equationGenerator = new GuessHardDifficulty();
+        }
+    }
+
+    /**
+     * Set up the math equation and the new the number to guess.
+     */
+    private void setUpRound() {
+        pivotNumber = generateNumber(MAX_BOUND);
+        int op = generateNumber(4);
+        setUpEquation(op);
     }
 
     /**
@@ -47,30 +69,20 @@ class Guess extends Game {
      */
     boolean checkCorrect(String userGuess){
 
-        boolean correctGuess = ((correctNumber <= equationNumber && userGuess.equals(HIGHER_GUESS))
-                || (correctNumber >= equationNumber && userGuess.equals(LOWER_GUESS)));
+        Log.i("Guess/", "PivotNumber " + pivotNumber);
+        Log.i("Guess/", "ValueOfEquation " + valueOfEquation);
+
+        boolean correctGuess = ((valueOfEquation >= pivotNumber && userGuess.equals(HIGHER_GUESS))
+                || (valueOfEquation <= pivotNumber && userGuess.equals(LOWER_GUESS)));
+
         if (correctGuess) {
             incrementStreaks();
-            correctGuess =  true;
-            // Round ends: Save time, restart clock.
         } else {
             resetStreaks();
-            correctGuess = false;
         }
         checkNewHighestStreak();
-
         setUpRound();
-
         return correctGuess;
-    }
-
-    /**
-     * Sets the amount of time played.
-     *
-     * @param timePlayedInSeconds amount of time played
-     */
-    void setTimePlayed(long timePlayedInSeconds) {
-        user.guessStats.incrementTimePlayed(timePlayedInSeconds);
     }
 
     /**
@@ -82,46 +94,8 @@ class Guess extends Game {
         }
     }
 
-    /**
-     * Set up the math equation and the new the number to guess.
-     */
-    private void setUpRound() {
-        correctNumber = generateNumber(MAX_BOUND);
-        Random r = new Random();
-        int op = r.nextInt(5);
-        setUpMath(op);
-    }
-
-    private void setUpMath(int op){
-        switch(op){
-            case 1:
-                num1 = generateNumber((int)(Math.sqrt(MAX_BOUND)));
-                num2 = generateNumber((int)(Math.sqrt(MAX_BOUND)));
-                guessingEquation = num1 + "x" + num2;
-                equationNumber = num1 * num2;
-                break;
-
-            case 2:
-                num1 = generateNumber(MAX_BOUND);
-                num2 = generateNumber(MAX_BOUND);
-                guessingEquation = num1 + "+" + num2;
-                equationNumber = num1 + num2;
-                break;
-
-            case 3:
-                num1 = generateNumber(MAX_BOUND);
-                num2 = generateNumber(MAX_BOUND);
-                guessingEquation = num1 + "-" + num2;
-                equationNumber = num1 - num2;
-                break;
-
-            case 4:
-                num1 = generateNumber(MAX_BOUND);
-                num2 = generateNumber(10);
-                guessingEquation = num1 + "÷" + num2;
-                equationNumber = Math.round(num1/num2);
-                break;
-        }
+    private void setUpEquation(int operator){
+        equationGenerator.setUpEquation(operator);
     }
 
     /**
@@ -131,8 +105,7 @@ class Guess extends Game {
      * @return an integer between 0 and maxBound
      */
     private int generateNumber(int maxBound){
-        Random r = new Random();
-        return r.nextInt(maxBound) + 1;
+        return random.nextInt(maxBound) + 1;
     }
 
     /**
@@ -158,27 +131,74 @@ class Guess extends Game {
         streaks++;
     }
 
-    /**
-     * Get the pivot number to guess.
-     *
-     * @return the pivot number
-     */
-    int getEquationNumber() {
-        return equationNumber;
+    String getEquationToGuess(){
+        return equationToGuess;
     }
 
-    /**
-     * Get the pivot equation to guess.
-     *
-     * @return the pivot equation
-     */
-    String getPivotEquation(){
-        return guessingEquation;
+    int getPivotNumber(){
+        return pivotNumber;
     }
 
-    int getCorrectNumber(){
-        return correctNumber;
+    interface GuessEquation {
+        void setUpEquation(int operator);
     }
 
+    // Strategy Pattern for Difficulty.
 
+    private class GuessEasyDifficulty implements  GuessEquation {
+
+        @Override
+        public void setUpEquation(int operator) {
+
+            num1 = generateNumber(MAX_BOUND);
+            num2 = generateNumber(MAX_BOUND);
+            equationToGuess = num1 + "+" + num2;
+            valueOfEquation = num1 + num2;
+        }
+    }
+
+    private class GuessMediumDifficulty implements  GuessEquation {
+
+        @Override
+        public void setUpEquation(int operator) {
+
+            num1 = generateNumber(MAX_BOUND);
+            num2 = generateNumber(MAX_BOUND);
+
+            if (operator % 2 == 0) {
+                equationToGuess = num1 + "+" + num2;
+                valueOfEquation = num1 + num2;
+            } else {
+                equationToGuess = num1 + "-" + num2;
+                valueOfEquation = num1 - num2;
+            }
+        }
+    }
+
+    private class GuessHardDifficulty implements  GuessEquation {
+
+        @Override
+        public void setUpEquation(int operator) {
+
+            num1 = generateNumber(MAX_BOUND);
+            num2 = generateNumber(MAX_BOUND);
+
+            if (operator == 1) {
+                equationToGuess = num1 + "+" + num2;
+                valueOfEquation = num1 + num2;
+            } else if (operator == 2) {
+                equationToGuess = num1 + "-" + num2;
+                valueOfEquation = num1 - num2;
+            } else if (operator == 3) {
+                // This ensures that the product isn't too obvious, or big number * big number.
+                num1 = generateNumber( (int) (Math.sqrt(MAX_BOUND)));
+                num2 = generateNumber( (int) (Math.sqrt(MAX_BOUND)));
+                equationToGuess = num1 + "x" + num2;
+                valueOfEquation = num1 * num2;
+            } else {
+                equationToGuess = num1 + "÷" + num2;
+                valueOfEquation = num1 / num2;
+            }
+        }
+    }
 }

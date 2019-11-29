@@ -9,9 +9,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GuessActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class GuessActivity extends AppCompatActivity {
 
     private TextView guessCorrectTextView;
     private TextView streaksTextView;
-    private TextView correctNumberView;
+    private TextView equationTextView;
     private TextView pivotNumberTextView;
     private Chronometer chronometer;
 
@@ -36,21 +36,38 @@ public class GuessActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
 
-        correctNumberView = findViewById(R.id.correctNumberView);
+
+        // Initializing Views.
+        equationTextView = findViewById(R.id.equationTextView);
         guessCorrectTextView = findViewById(R.id.guessCorrectTextView);
         streaksTextView = findViewById(R.id.streaksTextView);
         pivotNumberTextView = findViewById(R.id.pivotNumberTextView);
         chronometer = findViewById(R.id.chronometer);
 
+        // Grabbing information passed by Configuration activity.
         Intent intent = getIntent();
         String userName = intent.getStringExtra("user");
-        guessGame = new Guess(userName, this);
+        int streaksEmoji = intent.getIntExtra("streaksEmoji", R.drawable.redfire);
+        String equationColor = intent.getStringExtra("equationColor");
+        int difficulty = intent.getIntExtra("difficulty", 1);
 
+        guessGame = new Guess(userName, this, difficulty);
+
+        applyPreferences(streaksEmoji, equationColor);
         updateGUI();
         startClock();
+    }
+
+    private void applyPreferences(int streaksEmoji, String equationColor) {
+
+        ImageView streaks = findViewById(R.id.streaksImageView);
+        streaks.setImageResource(streaksEmoji);
+
+        equationTextView.setTextColor(Color.parseColor("#" + equationColor));
     }
 
     /**
@@ -67,18 +84,18 @@ public class GuessActivity extends AppCompatActivity {
             displayGuess(CORRECT_GUESS, CORRECT_COLOR);
         } else {
             displayGuess(WRONG_GUESS, WRONG_COLOR);
-            guessGame.setTimePlayed((SystemClock.elapsedRealtime() - chronometer.getBase())/1000);
             startClock();
         }
     }
 
     /**
-     * Updates the GUI with streaks and the pivot number.
+     * Updates the GUI with appropriate equation, streaks, and the pivot number.
      */
     private void updateGUI() {
+
         streaksTextView.setText(Integer.toString(guessGame.getStreaks()));
-        pivotNumberTextView.setText(guessGame.getPivotEquation());
-        correctNumberView.setText(Integer.toString(guessGame.getCorrectNumber()));
+        pivotNumberTextView.setText(Integer.toString(guessGame.getPivotNumber()));
+        equationTextView.setText(guessGame.getEquationToGuess());
     }
 
     /**

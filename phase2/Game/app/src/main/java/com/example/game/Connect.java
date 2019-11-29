@@ -1,8 +1,6 @@
 package com.example.game;
 
 import android.content.Context;
-import android.util.Log;
-import java.util.Random;
 
 class Connect extends  Game {
 
@@ -25,19 +23,19 @@ class Connect extends  Game {
      * @param userName
      * @param appContext
      */
-    Connect(String userName, Context appContext, int gridSize, int aiLevel) {
+    Connect(String userName, Context appContext, int gridSize, int difficulty) {
 
         super(userName, appContext, gameName);
         this.gameBoard = new int[gridSize][gridSize];
         this.row = gridSize;
         this.col = gridSize;
         this.moves = 0;
-        this.difficulty = aiLevel;
+        this.difficulty = difficulty;
 
-        setAiLevel();
+        setDifficulty();
     }
 
-    private void setAiLevel( ) {
+    private void setDifficulty( ) {
 
         if (difficulty == 3) {
             computerAlgo = new ConnectAlgoStrategy();
@@ -398,8 +396,9 @@ class Connect extends  Game {
         }
         return copyBoard;
     }
+
+    interface  ConnectAlgo {
+        String computerMove(int[][] board);
+    }
 }
 
-interface  ConnectAlgo {
-    String computerMove(int[][] board);
-}

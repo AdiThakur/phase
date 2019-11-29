@@ -66,9 +66,4 @@ public class Game {
         DataSaver dataSaver = new DataSaver(appContext);
         dataSaver.saveUser(user, user.getName(), user.getPassword(), gameName);
     }
-
-    void addScore(String userName, int score) {
-        scoreboard.addScore(userName, score);
-    }
-
 }
