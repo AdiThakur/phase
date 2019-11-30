@@ -4,14 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.content.Intent;
 
 public class MatchingConfiguration extends AppCompatActivity implements MatchingPresenter.View{
@@ -63,7 +59,6 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
 
         startActivity(intent);
         finish();
-
     }
 
     private String selectedDifficultyAsString(int selectedDifficulty) {
