@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class GuessActivity extends AppCompatActivity {
 
-    private Guess guessGame;
+    private GuessPresenter guessPresenter;
 
     private final String CORRECT_GUESS = "CORRECT!";
     private final String CORRECT_COLOR = "#009688";
@@ -56,7 +56,7 @@ public class GuessActivity extends AppCompatActivity {
         String equationColor = intent.getStringExtra("equationColor");
         int difficulty = intent.getIntExtra("difficulty", 1);
 
-        guessGame = new Guess(userName, this, difficulty);
+        guessPresenter = new GuessPresenter(userName, this, difficulty);
 
         applyPreferences(streaksEmoji, equationColor);
         updateGUI();
@@ -79,8 +79,8 @@ public class GuessActivity extends AppCompatActivity {
     public void userGuess(View view) {
 
         String userGuess = view.getTag().toString();
-        int score = guessGame.getStreaks();
-        boolean guessCorrect = guessGame.checkCorrect(userGuess);
+        int score = guessPresenter.getStreaks();
+        boolean guessCorrect = guessPresenter.checkCorrect(userGuess);
 
         if (guessCorrect) {
             displayGuess(CORRECT_GUESS, CORRECT_COLOR);
@@ -96,7 +96,7 @@ public class GuessActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DisplayScoreboard.class);
 
         intent.putExtra("score", score);
-        intent.putExtra("gameName", guessGame.getName());
+        intent.putExtra("gameName", guessPresenter.getName());
         intent.putExtra("msg", winningMessage);
 
         startActivityForResult(intent, 1);
@@ -107,9 +107,9 @@ public class GuessActivity extends AppCompatActivity {
      */
     private void updateGUI() {
 
-        streaksTextView.setText(Integer.toString(guessGame.getStreaks()));
-        pivotNumberTextView.setText(Integer.toString(guessGame.getPivotNumber()));
-        equationTextView.setText(guessGame.getEquationToGuess());
+        streaksTextView.setText(String.valueOf(guessPresenter.getStreaks()));
+        pivotNumberTextView.setText(String.valueOf(guessPresenter.getPivotNumber()));
+        equationTextView.setText(guessPresenter.getEquationToGuess());
     }
 
     /**
@@ -152,7 +152,7 @@ public class GuessActivity extends AppCompatActivity {
         // Restart
         if (resultCode == 1) {
             startClock();
-            guessGame.setUpRound();
+            guessPresenter.setUpRound();
             updateGUI();
             // Quit game
         } else if (resultCode == 2) {
@@ -190,7 +190,7 @@ public class GuessActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
-        guessGame.saveUserData();
+        guessPresenter.saveUserData();
         super.onDestroy();
     }
 }
