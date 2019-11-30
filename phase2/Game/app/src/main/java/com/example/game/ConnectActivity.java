@@ -23,7 +23,7 @@ public class ConnectActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private String userName;
 
-    private Connect connectGame;
+    private Connect connectPresenter;
     private int playerModel;
     private int aiModel;
 
@@ -48,7 +48,7 @@ public class ConnectActivity extends AppCompatActivity {
         int gridSize = intent.getIntExtra("gridSize", 3);
         int aiLevel = intent.getIntExtra("aiLevel", 1);
 
-        connectGame = new Connect(userName, this, gridSize, aiLevel);
+        connectPresenter = new Connect(userName, this, gridSize, aiLevel);
         playerModel = intent.getIntExtra("playerModel", R.drawable.x);
         aiModel = intent.getIntExtra("aiModel", R.drawable.o);
 
@@ -78,7 +78,7 @@ public class ConnectActivity extends AppCompatActivity {
     /**
      *
      *
-     * @param view
+     * @param view - the imageview that was chosen
      */
     public void registerMove(View view) {
 
@@ -88,11 +88,11 @@ public class ConnectActivity extends AppCompatActivity {
         int x = Integer.parseInt(tag.charAt(0) + "");
         int y = Integer.parseInt(tag.charAt(1) + "");
 
-        if (connectGame.validMove(x, y)) {
+        if (connectPresenter.validMove(x, y)) {
 
             imageClicked.setImageResource(playerModel);
-            // Problem in connectGame.playerMove() - All strats!
-            final String resultOfMove = connectGame.playerMove(x, y);
+            // Problem in connectPresenter.playerMove() - All strats!
+            final String resultOfMove = connectPresenter.playerMove(x, y);
 
             // This move did not result in the game ending.
             if (resultOfMove != null & resultOfMove.length() == 2) {
@@ -144,8 +144,8 @@ public class ConnectActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, DisplayScoreboard.class);
 
-        intent.putExtra("score", connectGame.getScore());
-        intent.putExtra("gameName", connectGame.getName());
+        intent.putExtra("score", connectPresenter.getScore());
+        intent.putExtra("gameName", connectPresenter.getName());
         intent.putExtra("msg", winningMessage);
 
         startActivityForResult(intent, 1);
@@ -181,7 +181,7 @@ public class ConnectActivity extends AppCompatActivity {
                 imageView.setImageResource(R.drawable.grey);
             }
         }
-        connectGame.resetBoard();
+        connectPresenter.resetBoard();
         startClock();
     }
 
@@ -246,7 +246,7 @@ public class ConnectActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
-        connectGame.saveUserData();
+        connectPresenter.saveUserData();
         super.onDestroy();
     }
 }

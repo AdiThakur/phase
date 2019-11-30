@@ -30,7 +30,7 @@ public class MatchingGameView extends AppCompatActivity{
     GridView gridView;
     TableLayout layout;
     TextView titleTextView;
-    ImageView currView = null;
+    TextView mistakesTextView;
 
     final static int[] animal_drawable = new int[]{R.drawable.animals_0, R.drawable.animals_1,
             R.drawable.animals_2, R.drawable.animals_3, R.drawable.animals_4, R.drawable.animals_5,
@@ -59,7 +59,7 @@ public class MatchingGameView extends AppCompatActivity{
     }
 
 
-    MatchingPresenter presenter;
+    private MatchingPresenter matchingPresenter;
     private String difficulty;
     private String cardBack;
     private String symbols;
@@ -68,12 +68,8 @@ public class MatchingGameView extends AppCompatActivity{
     private int pairsFound;
     private int numPairs;
     private boolean isBusy = false;
-    private int mistakes = 0;
-    String userName;
-    //
-//    public static final int GREEN = -16711936;
-//    public static final int RED = -65536;
-    private long mLastClickedTime = 0;
+    private int mistakes;
+    private String userName;
 
 
     private ArrayList<Integer> cards;
@@ -92,26 +88,24 @@ public class MatchingGameView extends AppCompatActivity{
         pairsFound = 0;
 
         cards = start(userName);
-        numPairs = presenter.getDifficulty();
+        mistakes = matchingPresenter.getMistakes();
+        numPairs = matchingPresenter.getDifficulty();
 
         chronometer = findViewById(R.id.chronometer);
         titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText("Matching: " + String.valueOf(pairsFound) + "/" + String.valueOf(numPairs));
+        String title = getString(R.string.matching_outof_numpairs, pairsFound, numPairs);
+        titleTextView.setText(title);
+        mistakesTextView = findViewById(R.id.mistakesTextView);
+        String mistakesMade = getString(R.string.mistakes_made, mistakes);
+        mistakesTextView.setText(mistakesMade);
 
         gridView = (GridView) findViewById(R.id.gridView);
-////
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, cards.toArray(new String[0]));
-//
         gridView.setAdapter(new ImageAdapter(this, cards.size(), cardBackMap.get(cardBack)));
-////        gridView.setAdapter(new ButtonAdapter(this, cards.size(), cardBack));
         gridView.setNumColumns(4);
-//
-//
         gridView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Log.println(Log.DEBUG, "id/position", String.valueOf(v.getId()) + "/" + position);
+                Log.println(Log.DEBUG, "id/position", v.getId() + "/" + position);
                 if (isBusy || v == card1 || v.getTag().equals("Flipped")) {
                     return;
                 }
@@ -125,28 +119,47 @@ public class MatchingGameView extends AppCompatActivity{
 
     }
 
+    /**
+     * Given two cards (ImageViews), use their ids to guess whether or not they match. If they do
+     * match then the images displayed on the screen will be the same.
+     *
+     * @return true if they match, false otherwise
+     */
     private boolean guess() {
         int num1 = card1.getId();
         int num2 = card2.getId();
-        boolean g = presenter.guess(num1, num2);
+        boolean g = matchingPresenter.guess(num1, num2);
         Log.println(Log.DEBUG, "cards array", cards.toString());
         Log.println(Log.DEBUG, "numPairs", String.valueOf(numPairs));
         if(g) {
-            Log.println(Log.DEBUG, "Guessed these two values ", String.valueOf(num1) + " == " + String.valueOf(num2));
+            Log.println(Log.DEBUG, "Guessed these two values ", num1 + " == " + num2);
         } else {
-            Log.println(Log.DEBUG, "Guessed these two values ", String.valueOf(num1) + " != " + String.valueOf(num2));
+            Log.println(Log.DEBUG, "Guessed these two values ", num1 + " != " + num2);
         }
 
 
         return g;
     }
 
+    /**
+     * Starts the matching game.
+     *
+     * @param user - the username of the user playing tha game
+     * @return an arraylist of integers in random order that represents the pairs
+     */
     public ArrayList<Integer>start(String user) {
 
-        presenter = new MatchingPresenter(user, this, difficulty);
-        return presenter.getDeck();
+        matchingPresenter = new MatchingPresenter(user, this, difficulty);
+        return matchingPresenter.getDeck();
     }
 
+    /**
+     * Flips the chosen view to show what image it corresponds to and if it is the second
+     * image to be flipped then no other card can be flipped until the logic for whether or
+     * not the two cards matched is done.
+     *
+     * @param v - the imageview that is being flipped
+     */
     private void flip(View v){
         if(card1 == null) {
             card1 = (ImageView) v;
@@ -165,11 +178,20 @@ public class MatchingGameView extends AppCompatActivity{
         }
     }
 
+    /**
+     * Shows the drawable image based on the id of the ImageView.
+     *
+     * @param card - the imageview that is to be shown
+     */
     private void show(ImageView card) {
         card.setImageResource(drawables.get(symbols)[cards.get(card.getId()) % numPairs]);
         Log.println(Log.DEBUG, "Image id of the image clicked", String.valueOf(cards.get(card.getId())));
     }
 
+    /**
+     * Flips the card back over by setting the image resource to drawable assoicated with
+     * cardBack
+     */
     private void hide() {
         if(card1 == null || card2 == null) {
             return;
@@ -181,57 +203,48 @@ public class MatchingGameView extends AppCompatActivity{
         }
     }
 
+    /**
+     * Runs only when the two cards match. Sets the tag of the images to flipped so that when they
+     * are clicked, flip does not run. Updates the counter representing how many pairs have been
+     * found.
+     *
+     */
     public void correct(){
-        pairsFound += 1;
+        pairsFound = matchingPresenter.getPairsFound();
         Toast.makeText(getApplicationContext(),
                 "Correct", Toast.LENGTH_SHORT).show();
-        titleTextView.setText("Matching: " + String.valueOf(pairsFound) + "/" + String.valueOf(numPairs));
+        String title = getString(R.string.matching_outof_numpairs, pairsFound, numPairs);
+        titleTextView.setText(title);
         card1.setTag("Flipped");
         card2.setTag("Flipped");
         card1 = null;
         card2 = null;
-        if (pairsFound == numPairs) {
-            gameWon();
+        checkGameWon();
+    }
+
+    /**
+     * Checks whether or not the game is over.
+     *
+     */
+    private void checkGameWon() {
+        if (matchingPresenter.checkGameWon()) {
+            chronometer.stop();
+            displayAndSaveScore("You Won! You made " + matchingPresenter.getMistakes() + " total mistakes.");
         }
-    }
-
-    private void gameWon() {
-        chronometer.stop();
-        displayAndSaveScore("You Won! You made " + String.valueOf(presenter.getMistakes()) + " total mistakes.");
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("You Won! You made " + String.valueOf(presenter.getMistakes()) + " total mistakes.");
-//        builder.setMessage("Do you want to play again?");
-//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                Intent intent = new Intent(getApplicationContext(), gameSelection.class);
-//                intent.putExtra("user", userName);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                Intent intent = new Intent(getApplicationContext(), MatchingGameView.class);
-//                intent.putExtra("user", userName);
-//                intent.putExtra(MatchingConfiguration.GAME_DIFFICULTY, difficulty);
-//                intent.putExtra(MatchingConfiguration.GAME_CARDS, cardBack);
-//                intent.putExtra(MatchingConfiguration.GAME_SYMBOLS, symbols);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
 
     }
 
+    /**
+     * Runs when the two cards do not match. After a short delay, the two images are flipped back
+     * over and the counter keeping track of mistakes is updated.
+     *
+     */
     public void incorrect() {
         Toast.makeText(getApplicationContext(),
                 "Incorrect", Toast.LENGTH_SHORT).show();
+        mistakes = matchingPresenter.getMistakes();
+        String mistakesMade = getString(R.string.mistakes_made, mistakes);
+        mistakesTextView.setText(mistakesMade);
         final Handler handler = new Handler();
 
         handler.postDelayed( new Runnable() {
@@ -242,17 +255,26 @@ public class MatchingGameView extends AppCompatActivity{
         }, 500);
     }
 
+    /**
+     * Starts the clock.
+     *
+     */
     private void startClock() {
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }
 
+    /**
+     * Runs when the game has been finished. Displays the scoreboard for the matching game.
+     *
+     * @param winningMessage - the message to be displayed when the game has been won
+     */
     private void displayAndSaveScore(String winningMessage) {
 
         Intent intent = new Intent(this, DisplayScoreboard.class);
 
-        intent.putExtra("score", presenter.getScore());
-        intent.putExtra("gameName", presenter.getGameName());
+        intent.putExtra("score", matchingPresenter.getScore());
+        intent.putExtra("gameName", matchingPresenter.getGameName());
         intent.putExtra("msg", winningMessage);
 
         startActivityForResult(intent, 1);
@@ -293,10 +315,18 @@ public class MatchingGameView extends AppCompatActivity{
      */
     @Override
     protected void onDestroy() {
-        presenter.saveData();
+        matchingPresenter.saveData();
         super.onDestroy();
     }
 
+    /**
+     * After the game has finished and the user has chosen either play again or quit in the display
+     * scoreboard activity this function runs. If the user chose play again
+     *
+     * @param requestCode - the request code
+     * @param resultCode - the code received from DisplayScoreboard
+     * @param data - the intent received from DisplayScoreboard
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

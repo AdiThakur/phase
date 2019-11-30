@@ -3,6 +3,7 @@ package com.example.game;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,7 +70,8 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
     private String selectedDifficultyAsString(int selectedDifficulty) {
 
         String difficultyAsString;
-        if ( selectedDifficulty == 1) {
+        Log.println(Log.DEBUG, "Selected Difficulty", Integer.toString(selectedDifficulty));
+        if ( selectedDifficulty <= 1) {
             difficultyAsString = "Easy";
         } else if (selectedDifficulty == 2) {
             difficultyAsString = "Medium";
