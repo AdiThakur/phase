@@ -15,7 +15,7 @@ import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GuessActivity extends AppCompatActivity {
+public class GuessView extends AppCompatActivity {
 
     private GuessPresenter guessPresenter;
 
@@ -178,7 +178,7 @@ public class GuessActivity extends AppCompatActivity {
         builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                GuessActivity.super.onBackPressed();
+                GuessView.super.onBackPressed();
             }
         });
         AlertDialog dialog = builder.create();

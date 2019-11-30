@@ -50,7 +50,7 @@ public class GuessConfiguration extends AppCompatActivity {
 
     public void playButton(View view) {
 
-        Intent intent = new Intent(getApplicationContext(), GuessActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GuessView.class);
         intent.putExtra("streaksEmoji", streaksEmojiId[selectedStreaksEmoji]);
         intent.putExtra("equationColor", equationColorValue[selectedEquationColor]);
         intent.putExtra("difficulty", selectedDifficulty);

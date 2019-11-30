@@ -99,7 +99,7 @@ public class MatchingGameView extends AppCompatActivity{
         String mistakesMade = getString(R.string.mistakes_made, mistakes);
         mistakesTextView.setText(mistakesMade);
 
-        gridView = (GridView) findViewById(R.id.gridView);
+        gridView = findViewById(R.id.gridView);
         gridView.setAdapter(new ImageAdapter(this, cards.size(), cardBackMap.get(cardBack)));
         gridView.setNumColumns(4);
         gridView.setOnItemClickListener(new OnItemClickListener() {

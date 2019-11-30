@@ -312,9 +312,13 @@ class Connect extends  Game {
                     }
                 }
             }
-            // Playing the calculated move.
-            gameBoard[maxWinsX][maxWinsY] = COMPUTER;
-            return maxWinsX + "" + maxWinsY;
+            if (maxWinsX > -1) {
+                // Playing the calculated move.
+                gameBoard[maxWinsX][maxWinsY] = COMPUTER;
+                return maxWinsX + "" + maxWinsY;
+            } else {
+                return new ConnectAlgoBlock().computerMove(gameBoard);
+            }
         }
 
         private int[] calculateTotalWins(int xRoot, int yRoot) {

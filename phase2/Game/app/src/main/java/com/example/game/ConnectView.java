@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
@@ -17,13 +16,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
-public class ConnectActivity extends AppCompatActivity {
+public class ConnectView extends AppCompatActivity {
 
     private TableLayout tableLayout;
     private Chronometer chronometer;
-    private String userName;
 
-    private Connect connectPresenter;
+    private ConnectPresenter connectPresenter;
     private int playerModel;
     private int aiModel;
 
@@ -39,16 +37,14 @@ public class ConnectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connect);
         this.getSupportActionBar().hide();
 
-        Log.i("Connect/Tie", "Startup");
-
         chronometer = findViewById(R.id.chronometer);
 
         Intent intent = getIntent();
-        userName = getIntent().getStringExtra("user");
+        String userName = getIntent().getStringExtra("user");
         int gridSize = intent.getIntExtra("gridSize", 3);
         int aiLevel = intent.getIntExtra("aiLevel", 1);
 
-        connectPresenter = new Connect(userName, this, gridSize, aiLevel);
+        connectPresenter = new ConnectPresenter(userName, this, gridSize, aiLevel);
         playerModel = intent.getIntExtra("playerModel", R.drawable.x);
         aiModel = intent.getIntExtra("aiModel", R.drawable.o);
 
@@ -78,7 +74,7 @@ public class ConnectActivity extends AppCompatActivity {
     /**
      *
      *
-     * @param view - the imageview that was chosen
+     * @param view - the ImageView that was chosen
      */
     public void registerMove(View view) {
 
@@ -91,7 +87,6 @@ public class ConnectActivity extends AppCompatActivity {
         if (connectPresenter.validMove(x, y)) {
 
             imageClicked.setImageResource(playerModel);
-            // Problem in connectPresenter.playerMove() - All strats!
             final String resultOfMove = connectPresenter.playerMove(x, y);
 
             // This move did not result in the game ending.
@@ -234,7 +229,7 @@ public class ConnectActivity extends AppCompatActivity {
         builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ConnectActivity.super.onBackPressed();
+                ConnectView.super.onBackPressed();
             }
         });
         AlertDialog dialog = builder.create();

@@ -17,8 +17,8 @@ public class ConnectConfiguration extends AppCompatActivity {
     private int selectedGridSize = 3;
     private int selectedAiLevel = 1;
 
-    private int selectedPlayerModelIndex;
-    private int selectedAiModelIndex;
+    private int selectedPlayerModelIndex = 0;
+    private int selectedAiModelIndex = 1;
 
     private SeekBar gridSizeSeek;
     private SeekBar aiLevelSeek;
@@ -33,11 +33,11 @@ public class ConnectConfiguration extends AppCompatActivity {
 
         gridSizeSeek = findViewById(R.id.gridSizeSeekBar);
         gridSizeSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int seek, boolean b) {
                 selectedGridSize = seek;
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
 
@@ -49,11 +49,11 @@ public class ConnectConfiguration extends AppCompatActivity {
 
         aiLevelSeek = findViewById(R.id.aiLevelSeekBar);
         aiLevelSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int seek, boolean b) {
                 selectedAiLevel = seek;
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
 
@@ -66,7 +66,7 @@ public class ConnectConfiguration extends AppCompatActivity {
 
     public void playButton(View view) {
 
-        Intent intent = new Intent(getApplicationContext(), ConnectActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ConnectView.class);
         intent.putExtra("playerModel", modelId[selectedPlayerModelIndex]);
         intent.putExtra("aiModel", modelId[selectedAiModelIndex]);
         intent.putExtra("gridSize", selectedGridSize);
@@ -74,7 +74,6 @@ public class ConnectConfiguration extends AppCompatActivity {
         intent.putExtra("user", userName);
         startActivity(intent);
         finish();
-
     }
 
     public void modelSelected(View view) {
