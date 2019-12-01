@@ -8,10 +8,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class signUp extends AppCompatActivity {
+public class SignUpView extends AppCompatActivity {
 
     private EditText userNameEditText;
     private EditText passwordEditText;
+    private SignUpPresenter signUpPresenter;
 
     /**
      * Initializes activity.
@@ -28,6 +29,7 @@ public class signUp extends AppCompatActivity {
         Intent intent = getIntent();
         String desiredUserName = intent.getStringExtra("user");
         userNameEditText.setText(desiredUserName);
+        signUpPresenter = new SignUpPresenter(this, new SignUp());
     }
 
     /**
@@ -40,34 +42,15 @@ public class signUp extends AppCompatActivity {
         String enteredUserName = userNameEditText.getText().toString();
         String enteredPassword = passwordEditText.getText().toString();
 
-        // If fields aren't empty and no such user is saved.
-        if ((!enteredUserName.equals("") && !enteredPassword.equals(""))) {
-            DataLoader dataLoader = new DataLoader(this);
-            User user = dataLoader.loadUser(enteredUserName);
-            // If such user isn't saved in files.
-            if (user == null) {
-                DataSaver dataSaver = new DataSaver(this);
-                boolean userCreated = dataSaver.saveUser(null, enteredUserName, enteredPassword, null);
-                if (userCreated) {
-                    Intent intent = new Intent(getApplicationContext(), gameSelection.class);
-                    // This allows gameSelection activity to load data from enteredUserName.txt
-                    intent.putExtra("user", enteredUserName);
-                    startActivity(intent);
-                    finish();
-                }
-            } else {
-                raiseToast("User name is already taken!");
-            }
-        } else {
-            raiseToast("Fields cannot be empty!");
-        }
+        signUpPresenter.validateCredentials(enteredUserName, enteredPassword);
+
     }
 
     /**
      * Gives feedback to the user in a small pop up on their phone.
      * @param msg the given message to the user
      */
-    private void raiseToast(String msg) {
+    void raiseToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }
