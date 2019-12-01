@@ -49,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-// TODO - MVP architecture Connect, Guess, Log-In, Sign-Up
-// TODO - Customizations - Background color, Music
+// TODO - MVP for Log-In, Sign-Up
+// TODO - Customizations - Last selected avatars, colors, background, colors
+// TODO - Organize classes into packages.
+// TODO - Go through everything and add comments, Java-docs, etc.
 
 // TODO - Make gameSelection and Scoreboard better looking
 

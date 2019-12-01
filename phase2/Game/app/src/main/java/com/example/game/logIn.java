@@ -16,7 +16,6 @@ enum Classes {
 }
 
 public class logIn extends AppCompatActivity {
-    private final String TAG = "logIn";
 
     private EditText userNameEditText;
     private EditText passwordEditText;
