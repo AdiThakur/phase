@@ -8,8 +8,8 @@ class User {
     private String name;
     private String password;
     private String backgroundColor;
-    private String textColor;
-    private String language;
+    private String indexOfCustomization1;
+    private String indexOfCustomization2;
     private String lastGame;
 
     ConnectStats connectStats;
@@ -74,36 +74,40 @@ class User {
         return this.backgroundColor;
     }
 
-    /**
-     * Setter for textColor.
-     * @param textColorHexa user's preferred text colour
-     */
-    void setTextColor(String textColorHexa) {
-        this.textColor = textColorHexa;
+    void setIndexOfCustomization1(String indexOfCustomization1) {
+        this.indexOfCustomization1 = indexOfCustomization1;
+    }
+
+    void setIndexOfCustomization1(int indexOfCustomization) {
+        this.indexOfCustomization1 = Integer.toString(indexOfCustomization);
     }
 
     /**
-     * Getter for textColor.
+     * Getter for indexOfCustomization1.
      * @return user's preferred text colour
      */
-    String getTextColor() {
-        return this.textColor;
+    int getIndexOfCustomization1() {
+        return Integer.valueOf(indexOfCustomization1);
     }
 
     /**
-     * Setter for language.
-     * @param language user's preferred language
+     * Setter for indexOfCustomization2.
+     * @param indexOfCustomization2 user's preferred indexOfCustomization2
      */
-    void setLanguage(String language) {
-        this.language = language;
+    void setIndexOfCustomization2(String indexOfCustomization2) {
+        this.indexOfCustomization2 = indexOfCustomization2;
+    }
+
+    void setIndexOfCustomization2(int indexOfCustomization) {
+        this.indexOfCustomization2 = Integer.toString(indexOfCustomization);
     }
 
     /**
-     * Getter for language.
-     * @return user's preferred language
+     * Getter for indexOfCustomization2.
+     * @return user's preferred indexOfCustomization2
      */
-    String getLanguage() {
-        return this.language;
+    int getIndexOfCustomization2() {
+        return Integer.valueOf(indexOfCustomization2);
     }
 
     /**

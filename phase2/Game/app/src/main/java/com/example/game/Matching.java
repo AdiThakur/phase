@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class Matching extends Game {
 
-    private static final String gameName = "Match";
+    static final String gameName = "Match";
     private static HashMap<String, Integer> difficultyMap = new HashMap<String, Integer>();
 
     static {

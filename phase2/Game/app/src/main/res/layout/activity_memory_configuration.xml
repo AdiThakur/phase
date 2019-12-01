@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:onClick="modelSelected"
             android:scaleType="fitCenter"
-            android:tag="Animals"
+            android:tag="0"
             app:srcCompat="@drawable/animals_3" />
 
         <ImageView
@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:onClick="modelSelected"
             android:scaleType="fitCenter"
-            android:tag="Fruits"
+            android:tag="1"
             app:srcCompat="@drawable/fruits_0" />
 
         <ImageView
@@ -74,7 +74,7 @@
             android:layout_weight="1"
             android:onClick="modelSelected"
             android:scaleType="fitCenter"
-            android:tag="Numbers"
+            android:tag="2"
             app:srcCompat="@drawable/numbers_0" />
     </LinearLayout>
 
@@ -109,7 +109,7 @@
             android:layout_weight="1"
             android:onClick="modelSelected"
             android:padding="5dp"
-            android:tag="Red"
+            android:tag="0"
             app:srcCompat="@drawable/darkredcircle" />
 
         <ImageView
@@ -119,7 +119,7 @@
             android:layout_weight="1"
             android:onClick="modelSelected"
             android:padding="5dp"
-            android:tag="White"
+            android:tag="1"
             app:srcCompat="@drawable/offwhitecircle" />
 
         <ImageView
@@ -129,7 +129,7 @@
             android:layout_weight="1"
             android:onClick="modelSelected"
             android:padding="5dp"
-            android:tag="Blue"
+            android:tag="2"
             app:srcCompat="@drawable/darkbluecircle" />
     </LinearLayout>
 

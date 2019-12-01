@@ -17,12 +17,17 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
     public static final String GAME_CARDS = "com.example.memorygame.GAME_CARDS";
     public static final String GAME_SYMBOLS = "com.example.memorygame.GAME_SYMBOLS";
 
-    private String userName;
+    private String[] cardFaceArray = {"Animals", "Fruits", "Numbers"};
+    private String[] cardBackArray = {"Red", "White", "Blue"};
+
     private SeekBar difficultySeekBar;
 
-    private int selectedDifficulty;
-    private String selectedCardFace = "Animals";
-    private String selectedCardBack = "Red";
+    private int selectedDifficulty = 1;
+    private int selectedCardFace = 0;
+    private int selectedCardBack = 0;
+
+    private String userName;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,8 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
         this.getSupportActionBar().hide();
 
         userName = getIntent().getStringExtra("user");
+        user = new DataLoader(this).loadUser(userName);
+        loadUserCustomizations();
 
         difficultySeekBar = findViewById(R.id.difficultySeekbar);
         difficultySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -54,12 +61,41 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
         Intent intent = new Intent(getApplicationContext(), MatchingGameView.class);
 
         intent.putExtra(GAME_DIFFICULTY, selectedDifficultyAsString(selectedDifficulty));
-        intent.putExtra(GAME_SYMBOLS, selectedCardFace);
-        intent.putExtra(GAME_CARDS, selectedCardBack);
+        intent.putExtra(GAME_SYMBOLS, cardFaceArray[selectedCardFace]);
+        intent.putExtra(GAME_CARDS, cardBackArray[selectedCardBack]);
         intent.putExtra("user", userName);
-
+        saveUserCustomizations(selectedCardFace, selectedCardBack);
         startActivity(intent);
         finish();
+    }
+
+    private void loadUserCustomizations() {
+
+        if (user.getLastGame().equalsIgnoreCase(Matching.gameName)) {
+            selectedCardFace = user.getIndexOfCustomization1();
+            selectedCardBack = user.getIndexOfCustomization2();
+
+            Log.i("Guess", "selectedStreaksEmoji " + selectedCardFace );
+            Log.i("Guess", "selectedEquationColor " + selectedCardBack );
+
+            displayUserCustomizations(R.id.cardFaceLinearLayout, selectedCardFace);
+            displayUserCustomizations(R.id.cardBackLinearLayout, selectedCardBack);
+        }
+    }
+
+    private void displayUserCustomizations(int layoutId, int selectedIndex) {
+
+        LinearLayout layout = findViewById(layoutId);
+        View lastUsedModel = layout.getChildAt(selectedIndex);
+        resetLinearLayout(layout.getId(), 0.3f, false);
+        lastUsedModel.setAlpha(1f);
+    }
+
+    private void saveUserCustomizations(int indexOfCardFace, int indexOfCardBack) {
+
+        user.setIndexOfCustomization1(indexOfCardFace);
+        user.setIndexOfCustomization2(indexOfCardBack);
+        new DataSaver(this).saveUser(user, user.getName(), user.getPassword(), user.getLastGame());
     }
 
     private String selectedDifficultyAsString(int selectedDifficulty) {
@@ -76,23 +112,23 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
         return difficultyAsString;
     }
 
-    public void modelSelected(View imageClicked) {
+    public void modelSelected(View selectedModel) {
 
         LinearLayout cardFaceLinearLayout = findViewById(R.id.cardFaceLinearLayout);
         LinearLayout cardBackLinearLayout = findViewById(R.id.cardBackLinearLayout);
+        int indexOfSelectedModel = Integer.valueOf(selectedModel.getTag().toString());
 
-        View parentView = (View) imageClicked.getParent();
+        View parentView = (View) selectedModel.getParent();
 
         if (parentView.getId() == cardFaceLinearLayout.getId()) {
-            selectedCardFace = imageClicked.getTag().toString();
+            selectedCardFace = indexOfSelectedModel;
             resetLinearLayout(cardFaceLinearLayout.getId(), 0.3f, false);
         } else {
-            selectedCardBack = imageClicked.getTag().toString();
+            selectedCardBack = indexOfSelectedModel;
             resetLinearLayout(cardBackLinearLayout.getId(), 0.3f, false);
         }
 
-        imageClicked.setAlpha(1f);
-        imageClicked.setEnabled(false);
+        selectedModel.setAlpha(1f);
     }
 
     public void resetButton(View view) {
