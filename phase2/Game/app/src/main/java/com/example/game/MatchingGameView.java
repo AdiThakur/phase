@@ -305,7 +305,7 @@ public class MatchingGameView extends AppCompatActivity{
                 MatchingGameView.super.onBackPressed();
             }
         });
-        builder.setNegativeButton("Continue", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
