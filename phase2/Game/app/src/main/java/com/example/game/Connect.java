@@ -4,7 +4,7 @@ import android.content.Context;
 
 class Connect extends  Game {
 
-    private static final String gameName = "Connect";
+    static final String gameName = "Connect";
 
     private final int PLAYER_1 = 1;
     private final int COMPUTER = 2;
@@ -189,6 +189,19 @@ class Connect extends  Game {
         gameBoard = new int[row][col];
         moves = 0;
         user.connectStats.incrementGamesPlayed();
+    }
+
+    private int[][] copyGameBoard(int [][] gameBoard) {
+
+        int[][] copyBoard = new int[row][col];
+        for (int i = 0; i < gameBoard.length; i++) {
+            copyBoard[i] = gameBoard[i].clone();
+        }
+        return copyBoard;
+    }
+
+    private interface  ConnectAlgo {
+        String computerMove(int[][] board);
     }
 
     private class ConnectAlgoRandom implements ConnectAlgo {
@@ -392,17 +405,7 @@ class Connect extends  Game {
         }
     }
 
-    private int[][] copyGameBoard(int [][] gameBoard) {
 
-        int[][] copyBoard = new int[row][col];
-        for (int i = 0; i < gameBoard.length; i++) {
-            copyBoard[i] = gameBoard[i].clone();
-        }
-        return copyBoard;
-    }
 
-    interface  ConnectAlgo {
-        String computerMove(int[][] board);
-    }
 }
 

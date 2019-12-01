@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,7 +15,6 @@ public class GuessConfiguration extends AppCompatActivity {
 
     private int[] streaksEmojiId = {R.drawable.redfire, R.drawable.bluefire, R.drawable.greenfire};
     private String[] equationColorValue = {"da7c7c", "2dd5d5", "74ea27"};
-    private String userName;
 
     private int selectedDifficulty = 1;
 
@@ -23,6 +23,9 @@ public class GuessConfiguration extends AppCompatActivity {
 
     private SeekBar difficultySeekBar;
 
+    private String userName;
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,8 @@ public class GuessConfiguration extends AppCompatActivity {
         this.getSupportActionBar().hide();
 
         userName = getIntent().getStringExtra("user");
+        user = new DataLoader(this).loadUser(userName);
+        loadUserCustomizations();
 
         difficultySeekBar = findViewById(R.id.difficultySeekBar);
         difficultySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -48,6 +53,35 @@ public class GuessConfiguration extends AppCompatActivity {
         });
     }
 
+    private void loadUserCustomizations() {
+
+        if (user.getLastGame().equalsIgnoreCase(Guess.gameName)) {
+            selectedStreaksEmoji = user.getIndexOfCustomization1();
+            selectedEquationColor = user.getIndexOfCustomization2();
+
+            Log.i("Guess", "selectedStreaksEmoji " + selectedStreaksEmoji );
+            Log.i("Guess", "selectedEquationColor " + selectedEquationColor );
+
+            displayUserCustomizations(R.id.streaksEmojiLinearLayout, selectedStreaksEmoji);
+            displayUserCustomizations(R.id.equationColorsLinearLayout, selectedEquationColor);
+        }
+    }
+
+    private void displayUserCustomizations(int layoutId, int selectedIndex) {
+
+        LinearLayout layout = findViewById(layoutId);
+        View lastUsedModel = layout.getChildAt(selectedIndex);
+        resetLinearLayout(layout.getId(), 0.3f, false);
+        lastUsedModel.setAlpha(1f);
+    }
+
+    private void saveUserCustomizations(int streaksEmoji, int equationColor) {
+
+        user.setIndexOfCustomization1(streaksEmoji);
+        user.setIndexOfCustomization2(equationColor);
+        new DataSaver(this).saveUser(user, user.getName(), user.getPassword(), user.getLastGame());
+    }
+
     public void playButton(View view) {
 
         Intent intent = new Intent(getApplicationContext(), GuessView.class);
@@ -55,6 +89,7 @@ public class GuessConfiguration extends AppCompatActivity {
         intent.putExtra("equationColor", equationColorValue[selectedEquationColor]);
         intent.putExtra("difficulty", selectedDifficulty);
         intent.putExtra("user", userName);
+        saveUserCustomizations(selectedStreaksEmoji, selectedEquationColor);
         startActivity(intent);
         finish();
 
@@ -77,7 +112,6 @@ public class GuessConfiguration extends AppCompatActivity {
         }
 
         view.setAlpha(1f);
-        view.setEnabled(false);
     }
 
     public void resetButton(View view) {

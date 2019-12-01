@@ -7,7 +7,7 @@ import java.util.Random;
 
 class Guess extends Game {
 
-    private static final String gameName = "Guess";
+    static final String gameName = "Guess";
 
     private final static int MAX_BOUND = 250;
     private final static String LOWER_GUESS = "LOWER";

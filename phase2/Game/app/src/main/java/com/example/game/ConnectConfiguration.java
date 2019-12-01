@@ -3,6 +3,7 @@ package com.example.game;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 public class ConnectConfiguration extends AppCompatActivity {
 
     private int[] modelId = {R.drawable.x, R.drawable.o, R.drawable.yellow};
-    private String userName;
 
     private int selectedGridSize = 3;
     private int selectedAiLevel = 1;
@@ -23,6 +23,9 @@ public class ConnectConfiguration extends AppCompatActivity {
     private SeekBar gridSizeSeek;
     private SeekBar aiLevelSeek;
 
+    private String userName;
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,8 @@ public class ConnectConfiguration extends AppCompatActivity {
         this.getSupportActionBar().hide();
 
         userName = getIntent().getStringExtra("user");
+        user = new DataLoader(this).loadUser(userName);
+        loadUserCustomizations();
 
         gridSizeSeek = findViewById(R.id.gridSizeSeekBar);
         gridSizeSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -72,34 +77,63 @@ public class ConnectConfiguration extends AppCompatActivity {
         intent.putExtra("gridSize", selectedGridSize);
         intent.putExtra("aiLevel", selectedAiLevel);
         intent.putExtra("user", userName);
+        saveUserCustomizations(selectedPlayerModelIndex, selectedAiModelIndex);
         startActivity(intent);
         finish();
     }
 
-    public void modelSelected(View view) {
+    private void loadUserCustomizations() {
+
+        if (user.getLastGame().equalsIgnoreCase(Connect.gameName)) {
+            selectedPlayerModelIndex = user.getIndexOfCustomization1();
+            selectedAiModelIndex = user.getIndexOfCustomization2();
+
+            displayUserCustomizations(R.id.playerModelLinearLayout, selectedPlayerModelIndex);
+            displayUserCustomizations(R.id.aiModelLinearLayout, selectedAiModelIndex);
+        }
+    }
+
+    private void displayUserCustomizations(int layoutId, int selectedIndex) {
+
+        Log.i("Connect/", "Hi");
+        LinearLayout layout = findViewById(layoutId);
+        View lastUsedModel = layout.getChildAt(selectedIndex);
+        resetLinearLayout(layout.getId(), 0.3f, false);
+        Log.i("Connect/", "Last used index" + selectedIndex);
+        lastUsedModel.setAlpha(1f);
+    }
+
+    private void saveUserCustomizations(int playerModel, int aiModel) {
+
+        user.setIndexOfCustomization1(playerModel);
+        user.setIndexOfCustomization2(aiModel);
+        new DataSaver(this).saveUser(user, user.getName(), user.getPassword(), user.getLastGame());
+    }
+
+    public void modelSelected(View selectedModel) {
 
         LinearLayout playerModelLinearLayout = findViewById(R.id.playerModelLinearLayout);
         LinearLayout aiModelLinearLayout = findViewById(R.id.aiModelLinearLayout);
-        int modelIndex = Integer.valueOf(view.getTag().toString());
+        int modelIndex = Integer.valueOf(selectedModel.getTag().toString());
 
-        View parentView = (View) view.getParent();
-        View imageToDisable;
+        View parentView = (View) selectedModel.getParent();
+        View correspondingModelForComputer;
 
         if (parentView.getId() == playerModelLinearLayout.getId()) {
             selectedPlayerModelIndex = modelIndex;
-            imageToDisable = aiModelLinearLayout.getChildAt(modelIndex);
+            correspondingModelForComputer = aiModelLinearLayout.getChildAt(modelIndex);
             resetLinearLayout(playerModelLinearLayout.getId(), 0.3f, false);
         } else {
             selectedAiModelIndex = modelIndex;
-            imageToDisable = playerModelLinearLayout.getChildAt(modelIndex);
+            correspondingModelForComputer = playerModelLinearLayout.getChildAt(modelIndex);
             resetLinearLayout(aiModelLinearLayout.getId(), 0.3f, false);
         }
 
-        view.setAlpha(1f);
-        view.setEnabled(false);
+        selectedModel.setAlpha(1f);
+        selectedModel.setEnabled(false);
 
-        imageToDisable.setAlpha(0.3f);
-        imageToDisable.setEnabled(false);
+        correspondingModelForComputer.setAlpha(0.3f);
+        correspondingModelForComputer.setEnabled(false);
     }
 
     public void resetButton(View view) {
@@ -121,7 +155,7 @@ public class ConnectConfiguration extends AppCompatActivity {
         }
     }
 
-    private void updateConfigurationTextViews(){
+    private void updateConfigurationTextViews() {
 
         TextView gridSize = findViewById(R.id.gridSizeTextView);
         String gridText = "Grid Size - " + gridSizeSeek.getProgress();
@@ -130,6 +164,5 @@ public class ConnectConfiguration extends AppCompatActivity {
         TextView aiLevel = findViewById(R.id.aiLevelTextView);
         String aiText = "A.I Level - " + aiLevelSeek.getProgress();
         aiLevel.setText(aiText);
-
     }
 }

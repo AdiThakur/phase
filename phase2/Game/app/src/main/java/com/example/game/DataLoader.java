@@ -1,11 +1,9 @@
 package com.example.game;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 class DataLoader {
@@ -14,8 +12,8 @@ class DataLoader {
     private final int USERNAME_INDEX = 0;
     private final int PASSWORD_INDEX = 1;
     private final int BACKGROUNDCOLOR_INDEX = 2;
-    private final int TEXTCOLOR_INDEX = 3;
-    private final int LANGUAGE_INDEX = 4;
+    private final int CUSTOM1_INDEX = 3;
+    private final int CUSTOM2_INDEX = 4;
     private final int CONNECT_STATS = 5;
     private final int MATCH_STATS = 6;
     private final int GUESS_STATS = 7;
@@ -95,8 +93,8 @@ class DataLoader {
             user.setPassword(userDataFromFile.get(PASSWORD_INDEX));
             // Three preferences.
             user.setBackgroundColor(userDataFromFile.get(BACKGROUNDCOLOR_INDEX));
-            user.setTextColor(userDataFromFile.get(TEXTCOLOR_INDEX));
-            user.setLanguage(userDataFromFile.get(LANGUAGE_INDEX));
+            user.setIndexOfCustomization1(userDataFromFile.get(CUSTOM1_INDEX));
+            user.setIndexOfCustomization2(userDataFromFile.get(CUSTOM2_INDEX));
             // Statistics for Connect.
             String[] connectStats = userDataFromFile.get(CONNECT_STATS).split(",");
             user.initializeConnectStats(Integer.parseInt(connectStats[0].trim()),

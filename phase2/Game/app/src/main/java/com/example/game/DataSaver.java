@@ -84,9 +84,9 @@ class DataSaver {
         output.append("\n");
         output.append("white"); // BG color.
         output.append("\n");
-        output.append("white"); // Text color
+        output.append("0"); // Index of first customization.
         output.append("\n");
-        output.append("english"); // Language
+        output.append("1"); // Index of second customization.
         output.append("\n");
         output.append("0, 0, 0"); // Tic
         output.append("\n");
@@ -110,9 +110,9 @@ class DataSaver {
         output.append("\n");
         output.append(user.getBackgroundColor()); // BG color.
         output.append("\n");
-        output.append(user.getTextColor()); // Text color
+        output.append(user.getIndexOfCustomization1()); // Text color
         output.append("\n");
-        output.append(user.getLanguage()); // Language
+        output.append(user.getIndexOfCustomization2()); // Language
         output.append("\n");
         output.append(user.connectStats.getGamesPlayed() + ", " +
                 user.connectStats.getTimePlayed() + ", " + user.connectStats.getGamesWon());
