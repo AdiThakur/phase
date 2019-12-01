@@ -37,4 +37,8 @@ public class GuessPresenter {
     void saveUserData() {
         game.saveUserData();
     }
+
+    int getBackgroundColor() {
+        return game.getBackgroundColor();
+    }
 }

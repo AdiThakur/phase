@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MatchingGameView">
@@ -10,23 +11,23 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="@string/matching_outof_numpairs"
         android:textSize="30sp"
-        android:textStyle="bold|italic"
-        android:layout_centerHorizontal="true" />
+        android:textStyle="bold|italic" />
 
     <GridView
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleTextView"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:layout_marginTop="40dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="50dp">
+        android:stretchMode="columnWidth">
 
     </GridView>
 
@@ -38,17 +39,17 @@
         android:layout_centerHorizontal="true"
         android:textColor="#817A7A"
         android:textSize="60sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/mistakesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/gridView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:text="@string/mistakes_made"
         android:textSize="30sp"
-        android:textStyle="bold|italic"
-        android:layout_centerHorizontal="true" />
+        android:textStyle="bold|italic" />
 
 </RelativeLayout>

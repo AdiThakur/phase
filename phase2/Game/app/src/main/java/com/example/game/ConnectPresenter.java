@@ -42,6 +42,7 @@ public class ConnectPresenter {
     void saveUserData() { game.saveUserData(); }
 
 
-
-
+    public int getBackgroundColor() {
+        return game.getBackgroundColor();
+    }
 }

@@ -116,7 +116,14 @@ public class MatchingGameView extends AppCompatActivity{
         });
 
         startClock();
+        setBackgroundColor(R.id.parent);
+    }
 
+    private void setBackgroundColor(int layoutId) {
+
+        int colorToSet = matchingPresenter.getBackgroundColor();
+        View parent = findViewById(layoutId);
+        parent.setBackgroundColor(colorToSet);
     }
 
     /**

@@ -60,9 +60,17 @@ public class GuessView extends AppCompatActivity {
 
         guessPresenter = new GuessPresenter(userName, this, difficulty);
 
+        setBackgroundColor(R.id.parent);
         applyPreferences(streaksEmoji, equationColor);
         updateGUI();
         startClock();
+    }
+
+    private void setBackgroundColor(int layoutId) {
+
+        int colorToSet = guessPresenter.getBackgroundColor();
+        View parent = findViewById(layoutId);
+        parent.setBackgroundColor(colorToSet);
     }
 
     private void applyPreferences(int streaksEmoji, String equationColor) {

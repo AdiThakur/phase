@@ -3,6 +3,7 @@ package com.example.game;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,6 +53,13 @@ public class ConnectView extends AppCompatActivity {
         startClock();
     }
 
+    private void setBackgroundColor(int layoutId) {
+
+        int colorToSet = connectPresenter.getBackgroundColor();
+        View parent = findViewById(layoutId);
+        parent.setBackgroundColor(colorToSet);
+    }
+
     private void displayAppropriateGrid(int gridSize) {
 
         int layoutId;
@@ -67,6 +75,7 @@ public class ConnectView extends AppCompatActivity {
             layoutId = R.id.connect5Layout;
             tableId = R.id.connect5Table;
         }
+        setBackgroundColor(layoutId);
         findViewById(layoutId).setVisibility(View.VISIBLE);
         tableLayout = findViewById(tableId);
     }

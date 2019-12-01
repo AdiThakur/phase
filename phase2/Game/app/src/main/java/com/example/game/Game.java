@@ -66,4 +66,8 @@ public class Game {
         DataSaver dataSaver = new DataSaver(appContext);
         dataSaver.saveUser(user, user.getName(), user.getPassword(), gameName);
     }
+
+    public int getBackgroundColor() {
+        return user.getBackgroundColor();
+    }
 }

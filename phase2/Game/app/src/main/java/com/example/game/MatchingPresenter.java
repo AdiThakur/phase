@@ -46,6 +46,10 @@ public class MatchingPresenter {
         return game.checkGameWon();
     }
 
+    int getBackgroundColor() {
+        return game.getBackgroundColor();
+    }
+
     public interface View {
 
     }

@@ -82,7 +82,7 @@ class DataSaver {
         output.append("\n");
         output.append(password);
         output.append("\n");
-        output.append("white"); // BG color.
+        output.append("-1"); // BG color.
         output.append("\n");
         output.append("0"); // Index of first customization.
         output.append("\n");

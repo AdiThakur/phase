@@ -70,8 +70,8 @@ class User {
      * Getter for backgroundColor.
      * @return user's preferred background colour
      */
-    String getBackgroundColor() {
-        return this.backgroundColor;
+    int getBackgroundColor() {
+        return Integer.valueOf(this.backgroundColor);
     }
 
     void setIndexOfCustomization1(String indexOfCustomization1) {

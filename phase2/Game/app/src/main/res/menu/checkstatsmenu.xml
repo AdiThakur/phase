@@ -4,4 +4,8 @@
 
         android:title="Statistics"
         ></item>
+    <item android:id="@+id/selectBackgroundColor"
+
+        android:title="Background Color"
+        ></item>
 </menu>

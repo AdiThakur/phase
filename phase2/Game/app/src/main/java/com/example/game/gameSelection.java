@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 
 public class gameSelection extends AppCompatActivity {
 
@@ -58,14 +60,28 @@ public class gameSelection extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
             intent.putExtra("user", userName);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.selectBackgroundColor) {
+            launchColorPicker();
         }
         return true;
     }
 
-    void displayPrefferences(User user) {
-        // TODO - Grab user's choice of BG color, text color, and language, draw GUI accordingly. This should be part of game superclass as well.
-        View backgroundView = findViewById(R.id.backgroundView);
-        backgroundView.setBackgroundColor(Color.parseColor(user.getBackgroundColor()));
+    private void launchColorPicker() {
+
+        int defaultColor = user.getBackgroundColor();
+
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+            }
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                user.setBackgroundColor(color + "");
+                new DataSaver(gameSelection.this).saveUser(user, user.getName(), user.getPassword(), user.getLastGame());
+                Toast.makeText(gameSelection.this, "Color selected! " + color, Toast.LENGTH_SHORT).show();
+            }
+        });
+        colorPicker.show();
     }
 
     private void continueLastGame() {
