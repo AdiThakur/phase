@@ -29,6 +29,7 @@ public class GuessView extends AppCompatActivity {
     private TextView equationTextView;
     private TextView pivotNumberTextView;
     private Chronometer chronometer;
+    private boolean isBusy;
 
     /**
      * Sets up the entire game when user clicks the game button.
@@ -55,6 +56,7 @@ public class GuessView extends AppCompatActivity {
         int streaksEmoji = intent.getIntExtra("streaksEmoji", R.drawable.redfire);
         String equationColor = intent.getStringExtra("equationColor");
         int difficulty = intent.getIntExtra("difficulty", 1);
+        isBusy = false;
 
         guessPresenter = new GuessPresenter(userName, this, difficulty);
 
@@ -78,21 +80,24 @@ public class GuessView extends AppCompatActivity {
      */
     public void userGuess(View view) {
 
-        String userGuess = view.getTag().toString();
-        int score = guessPresenter.getStreaks();
-        boolean guessCorrect = guessPresenter.checkCorrect(userGuess);
+        if(!isBusy) {
+            String userGuess = view.getTag().toString();
+            int score = guessPresenter.getStreaks();
+            boolean guessCorrect = guessPresenter.checkCorrect(userGuess);
 
-        if (guessCorrect) {
-            displayGuess(CORRECT_GUESS, CORRECT_COLOR);
-        // If guess is wrong.
-        } else {
-            displayGuess(WRONG_GUESS, WRONG_COLOR);
-            displayAndSaveScore("Game Over!", score);
+            if (guessCorrect) {
+                displayGuess(CORRECT_GUESS, CORRECT_COLOR);
+                // If guess is wrong.
+            } else {
+                displayGuess(WRONG_GUESS, WRONG_COLOR);
+                displayAndSaveScore("Game Over!", score);
+            }
         }
     }
 
     private void displayAndSaveScore(String winningMessage, int score) {
 
+        isBusy = true;
         Intent intent = new Intent(this, DisplayScoreboard.class);
 
         intent.putExtra("score", score);
@@ -152,6 +157,7 @@ public class GuessView extends AppCompatActivity {
         // Restart
         if (resultCode == 1) {
             startClock();
+            isBusy = false;
             guessPresenter.setUpRound();
             updateGUI();
             // Quit game

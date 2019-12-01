@@ -9,20 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GuessConfiguration"></activity>
+        <activity android:name=".BackgroundColor"></activity>
+        <activity android:name=".GuessConfiguration" />
         <activity android:name=".Scoreboard" />
         <activity android:name=".DisplayScoreboard" />
         <activity android:name=".ConnectConfiguration" />
-        <activity android:name=".MatchingGameView"></activity>
+        <activity android:name=".MatchingGameView" />
         <activity android:name=".MatchingConfiguration" />
         <activity android:name=".StatsActivity" />
         <activity android:name=".ConnectView" />
         <activity android:name=".GuessView" />
         <activity android:name=".gameSelection" />
-        <activity android:name=".signUp" />
-        <activity android:name=".logIn" />
+        <activity android:name=".SignUpView" />
+        <activity android:name=".LogInView" />
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

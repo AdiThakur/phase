@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 
 public class ImageAdapter extends BaseAdapter {
+
     private Context context;
     private int length;
     private int background;
