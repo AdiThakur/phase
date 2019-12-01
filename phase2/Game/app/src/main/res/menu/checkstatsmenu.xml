@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/checkStatsButton"
-
-        android:title="Statistics"
-        ></item>
-    <item android:id="@+id/selectBackgroundColor"
-
-        android:title="Background Color"
-        ></item>
+    <item android:id="@+id/checkStatsButton" android:title="Statistics"></item>
+    <item android:id="@+id/selectBackgroundColor" android:title="Background Color"></item>
 </menu>

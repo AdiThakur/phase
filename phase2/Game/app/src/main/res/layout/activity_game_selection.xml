@@ -16,6 +16,7 @@
         android:layout_marginBottom="5dp"
         android:orientation="vertical"
         android:weightSum="3"
+        android:fontFamily="@font/josefinsans"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,10 +27,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginBottom="2dp"
             android:onClick="gameClicked"
             android:tag="CONNECT"
+            android:fontFamily="@font/josefinsans"
             android:text="@string/connect"
             android:textColor="@android:color/background_light"
+            android:background="@drawable/button"
+            android:radius="10dp"
             android:textSize="50sp"
             android:textStyle="bold|italic" />
 
@@ -38,10 +43,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:onClick="gameClicked"
             android:tag="MATCH"
+            android:fontFamily="@font/josefinsans"
             android:text="@string/match"
             android:textColor="@android:color/background_light"
+            android:background="@drawable/button2"
             android:textSize="50sp"
             android:textStyle="bold|italic" />
 
@@ -50,10 +59,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginTop="2dp"
             android:onClick="gameClicked"
             android:tag="GUESS"
+            android:fontFamily="@font/josefinsans"
             android:text="@string/Guess"
             android:textColor="@android:color/background_light"
+            android:background="@drawable/button3"
             android:textSize="50sp"
             android:textStyle="bold|italic" />
     </LinearLayout>

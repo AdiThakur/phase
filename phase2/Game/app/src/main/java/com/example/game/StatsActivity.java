@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class StatsActivity extends AppCompatActivity {
@@ -46,5 +48,13 @@ public class StatsActivity extends AppCompatActivity {
         TextView guessLongestStreak = findViewById(R.id.guessLongestStreak);
         guessLongestStreak.setText(user.guessStats.getLongestStreak() + "");
 
+        runTransition();
+    }
+
+    public void runTransition() {
+        View view = findViewById(R.id.background);
+        TransitionDrawable transition = (TransitionDrawable) view.getBackground();
+        transition.startTransition(3000);
+        transition.reverseTransition(3000);
     }
 }

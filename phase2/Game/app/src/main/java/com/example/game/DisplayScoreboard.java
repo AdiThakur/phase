@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,8 +56,16 @@ public class DisplayScoreboard extends AppCompatActivity {
         // Displaying the dialogue box to get user's preferred display name.
         buildScoreInputDialog(winningMsg, lastGamePlayed);
 
+        runTransition();
     }
 
+    public void runTransition() {
+        View view = findViewById(R.id.background);
+        TransitionDrawable transition = (TransitionDrawable) view.getBackground();
+        transition.startTransition(3000);
+        transition.reverseTransition(3000);
+    }
+    
     // Inflates sorting menu.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
