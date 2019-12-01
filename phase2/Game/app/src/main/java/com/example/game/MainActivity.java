@@ -31,20 +31,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Starts the logIn activity.
+     * Starts the LogInView activity.
      * @param view standard view parameter
      */
     public void logIn(View view) {
-        Intent intent = new Intent(getApplicationContext(), logIn.class);
+        Intent intent = new Intent(getApplicationContext(), LogInView.class);
         startActivity(intent);
     }
 
     /**
-     * Starts the signUp activity.
+     * Starts the SignUpView activity.
      * @param view standard view parameter
      */
     public void signUp(View view) {
-        Intent intent = new Intent(getApplicationContext(), signUp.class);
+        Intent intent = new Intent(getApplicationContext(), SignUpView.class);
         startActivity(intent);
     }
 }

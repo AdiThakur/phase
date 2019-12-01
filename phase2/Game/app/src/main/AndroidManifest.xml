@@ -19,8 +19,8 @@
         <activity android:name=".ConnectView" />
         <activity android:name=".GuessView" />
         <activity android:name=".gameSelection" />
-        <activity android:name=".signUp" />
-        <activity android:name=".logIn" />
+        <activity android:name=".SignUpView" />
+        <activity android:name=".LogInView" />
         <activity android:name=".MainActivity">
 
             <intent-filter>
