@@ -1,19 +1,5 @@
-# phase
-Collection of games developed in Java, for Android.
+<img src="images/login.png" width="534" height="968" float="left"><\img>
 
-# Screen Shots
+<img src="images/token_selection.png" width="534" height="968" float="left"><\img>
 
-#### Home Page
-
-![Main Page](images/home.png)
-#### Login Screen
-
-![Main Page](images/login.png)
-#### Game Customization
-
-![Main Page](images/token_selection.png)
-#### Game of Connect
-
-![Main Page](images/connect.png)
-
-
+<img src="images/connect.png" width="534" height="968" float="left"><\img>
