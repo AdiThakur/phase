@@ -59,8 +59,6 @@ class Guess extends Game {
         pivotNumber = generateNumber(MAX_BOUND);
         int op = generateNumber(4);
         setUpEquation(op);
-        Log.i("Guess/", "PivotNumber " + pivotNumber);
-        Log.i("Guess/", "ValueOfEquation " + valueOfEquation);
     }
 
     /**
@@ -144,7 +142,6 @@ class Guess extends Game {
     }
 
     // Strategy Pattern for Difficulty.
-
     private class GuessEasyDifficulty implements  GuessEquation {
 
         @Override

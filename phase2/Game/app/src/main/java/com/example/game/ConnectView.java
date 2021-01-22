@@ -81,8 +81,6 @@ public class ConnectView extends AppCompatActivity {
     }
 
     /**
-     *
-     *
      * @param view - the ImageView that was chosen
      */
     public void registerMove(View view) {

@@ -48,15 +48,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-
-// TODO - MVP for Log-In, Sign-Up
-// TODO - Customizations - Last selected avatars, colors, background, colors
-// TODO - Organize classes into packages.
-// TODO - Go through everything and add comments, Java-docs, etc.
-
-// TODO - Make gameSelection and Scoreboard better looking
-
-// TODO - Update UML diagrams
-// TODO - Update the readme file.
-
-// TODO - Fix issues in Connect avatar things

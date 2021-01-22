@@ -209,25 +209,6 @@ class Connect extends  Game {
         @Override
         public String computerMove(int[][] gameBoard) {
 
-//            Random random = new Random();
-//            int x, y;
-//            boolean madeMove = false;
-//            String computerMove = null;
-//
-//            while (!madeMove) {
-//
-//                x = random.nextInt(gameBoard.length);
-//                y = random.nextInt(gameBoard.length);
-//
-//                if (gameBoard[x][y] == 0) {
-//                    gameBoard[x][y] = COMPUTER;
-//                    computerMove = "" + x + "" + y;
-//                    madeMove = true;
-//                }
-//            }
-//            return computerMove;
-//        }
-
             int xMove = 0, yMove = 0;
             boolean madeMove = false;
 
@@ -404,8 +385,5 @@ class Connect extends  Game {
             return adjacentTokens;
         }
     }
-
-
-
 }
 

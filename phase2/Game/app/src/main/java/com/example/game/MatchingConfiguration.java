@@ -75,9 +75,6 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
             selectedCardFace = user.getIndexOfCustomization1();
             selectedCardBack = user.getIndexOfCustomization2();
 
-            Log.i("Guess", "selectedStreaksEmoji " + selectedCardFace );
-            Log.i("Guess", "selectedEquationColor " + selectedCardBack );
-
             displayUserCustomizations(R.id.cardFaceLinearLayout, selectedCardFace);
             displayUserCustomizations(R.id.cardBackLinearLayout, selectedCardBack);
         }
@@ -101,7 +98,7 @@ public class MatchingConfiguration extends AppCompatActivity implements Matching
     private String selectedDifficultyAsString(int selectedDifficulty) {
 
         String difficultyAsString;
-        Log.println(Log.DEBUG, "Selected Difficulty", Integer.toString(selectedDifficulty));
+        
         if ( selectedDifficulty <= 1) {
             difficultyAsString = "Easy";
         } else if (selectedDifficulty == 2) {

@@ -57,7 +57,7 @@ public class Matching extends Game {
      * deck and after that is finished the ArrayList gets shuffled.
      */
     private void generateDeck() {
-//        Create the cards as pairs and add them to the deck
+        // Create the cards as pairs and add them to the deck
         for (int i = 0; i < numPairs * 2; i++) {
             deck.add(i);
         }
@@ -138,7 +138,5 @@ public class Matching extends Game {
         } else {
             return false;
         }
-
     }
-
 }

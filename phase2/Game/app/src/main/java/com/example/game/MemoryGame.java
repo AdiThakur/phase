@@ -62,7 +62,5 @@ class MemoryGame extends Game {
         boolean guessCorrect = enteredNumber.equals(numberSequence.toString());
         setUpNextLevel(guessCorrect);
         return guessCorrect;
-
     }
-
 }

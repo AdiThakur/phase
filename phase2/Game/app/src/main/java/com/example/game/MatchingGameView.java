@@ -21,28 +21,34 @@ import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 
 import java.lang.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MatchingGameView extends AppCompatActivity{
+
     Chronometer chronometer;
     GridView gridView;
     TableLayout layout;
     TextView titleTextView;
     TextView mistakesTextView;
 
-    final static int[] animal_drawable = new int[]{R.drawable.animals_0, R.drawable.animals_1,
+    final static int[] animal_drawable = new int[]{
+            R.drawable.animals_0, R.drawable.animals_1,
             R.drawable.animals_2, R.drawable.animals_3, R.drawable.animals_4, R.drawable.animals_5,
-            R.drawable.animals_6, R.drawable.animals_7, R.drawable.animals_8, R.drawable.animals_9};
+            R.drawable.animals_6, R.drawable.animals_7, R.drawable.animals_8, R.drawable.animals_9
+        };
 
-    final static int[] number_drawable = new int[]{R.drawable.numbers_0, R.drawable.numbers_1,
+    final static int[] number_drawable = new int[]{
+            R.drawable.numbers_0, R.drawable.numbers_1,
             R.drawable.numbers_2, R.drawable.numbers_3, R.drawable.numbers_4, R.drawable.numbers_5,
-            R.drawable.numbers_6, R.drawable.numbers_7, R.drawable.numbers_8, R.drawable.numbers_9};
+            R.drawable.numbers_6, R.drawable.numbers_7, R.drawable.numbers_8, R.drawable.numbers_9
+        };
 
-    final static int[] fruit_drawable = new int[]{R.drawable.fruits_0, R.drawable.fruits_1,
+    final static int[] fruit_drawable = new int[]{
+            R.drawable.fruits_0, R.drawable.fruits_1,
             R.drawable.fruits_2, R.drawable.fruits_3, R.drawable.fruits_4, R.drawable.fruits_5,
-            R.drawable.fruits_6, R.drawable.fruits_7, R.drawable.fruits_8, R.drawable.fruits_9};
+            R.drawable.fruits_6, R.drawable.fruits_7, R.drawable.fruits_8, R.drawable.fruits_9
+        };
 
     final static HashMap<String, int[]> drawables = new HashMap<>();
     static {
@@ -105,14 +111,11 @@ public class MatchingGameView extends AppCompatActivity{
         gridView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Log.println(Log.DEBUG, "id/position", v.getId() + "/" + position);
                 if (isBusy || v == card1 || v.getTag().equals("Flipped")) {
                     return;
                 }
                 flip(v);
-
             }
-
         });
 
         startClock();
@@ -133,17 +136,10 @@ public class MatchingGameView extends AppCompatActivity{
      * @return true if they match, false otherwise
      */
     private boolean guess() {
+
         int num1 = card1.getId();
         int num2 = card2.getId();
         boolean g = matchingPresenter.guess(num1, num2);
-        Log.println(Log.DEBUG, "cards array", cards.toString());
-        Log.println(Log.DEBUG, "numPairs", String.valueOf(numPairs));
-        if(g) {
-            Log.println(Log.DEBUG, "Guessed these two values ", num1 + " == " + num2);
-        } else {
-            Log.println(Log.DEBUG, "Guessed these two values ", num1 + " != " + num2);
-        }
-
 
         return g;
     }
@@ -168,6 +164,7 @@ public class MatchingGameView extends AppCompatActivity{
      * @param v - the imageview that is being flipped
      */
     private void flip(View v){
+
         if(card1 == null) {
             card1 = (ImageView) v;
             show(card1);
@@ -192,7 +189,6 @@ public class MatchingGameView extends AppCompatActivity{
      */
     private void show(ImageView card) {
         card.setImageResource(drawables.get(symbols)[cards.get(card.getId()) % numPairs]);
-        Log.println(Log.DEBUG, "Image id of the image clicked", String.valueOf(cards.get(card.getId())));
     }
 
     /**
@@ -200,6 +196,7 @@ public class MatchingGameView extends AppCompatActivity{
      * cardBack
      */
     private void hide() {
+
         if(card1 == null || card2 == null) {
             return;
         } else {
@@ -217,6 +214,7 @@ public class MatchingGameView extends AppCompatActivity{
      *
      */
     public void correct(){
+        
         pairsFound = matchingPresenter.getPairsFound();
         Toast.makeText(getApplicationContext(),
                 "Correct", Toast.LENGTH_SHORT).show();

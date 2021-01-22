@@ -29,5 +29,4 @@ class MatchStats extends GameStats {
     void incrementTotalMistakes() {
         this.totalMistakes++;
     }
-
 }

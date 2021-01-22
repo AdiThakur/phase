@@ -50,7 +50,6 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setId(position);
         imageView.setTag("Not Flipped");
 
-
         return imageView;
     }
 }

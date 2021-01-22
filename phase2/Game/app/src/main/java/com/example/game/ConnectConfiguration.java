@@ -3,7 +3,6 @@ package com.example.game;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,11 +94,9 @@ public class ConnectConfiguration extends AppCompatActivity {
 
     private void displayUserCustomizations(int layoutId, int selectedIndex) {
 
-        Log.i("Connect/", "Hi");
         LinearLayout layout = findViewById(layoutId);
         View lastUsedModel = layout.getChildAt(selectedIndex);
         resetLinearLayout(layout.getId(), 0.3f, false);
-        Log.i("Connect/", "Last used index" + selectedIndex);
         lastUsedModel.setAlpha(1f);
     }
 

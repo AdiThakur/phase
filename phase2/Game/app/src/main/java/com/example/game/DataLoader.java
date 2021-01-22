@@ -57,14 +57,12 @@ class DataLoader {
         // Condition: ArrayList dataFromFile cannot be empty or null.
         if (dataFromFile != null && !dataFromFile.isEmpty()) {
             for (String line : dataFromFile) {
-                // Splitting userName from scores.
+
                 String[] dataFromCurrLine = line.split(":");
                 String userName = dataFromCurrLine[0];
-                // Splitting all the scores apart.
                 String[] scoresAsStrings = dataFromCurrLine[1].split(",");
-                // For each score that this user has for this particular game.
+
                 for (String scoreString : scoresAsStrings) {
-//                    Log.i("Score/loadScoreboard", userName + " " + scoreString);
                     scoreboard.addScore(userName, Integer.valueOf(scoreString));
                 }
             }
@@ -91,18 +89,22 @@ class DataLoader {
         } else {
             user = new User(userName);
             user.setPassword(userDataFromFile.get(PASSWORD_INDEX));
+
             // Three preferences.
             user.setBackgroundColor(userDataFromFile.get(BACKGROUNDCOLOR_INDEX));
             user.setIndexOfCustomization1(userDataFromFile.get(CUSTOM1_INDEX));
             user.setIndexOfCustomization2(userDataFromFile.get(CUSTOM2_INDEX));
+
             // Statistics for Connect.
             String[] connectStats = userDataFromFile.get(CONNECT_STATS).split(",");
             user.initializeConnectStats(Integer.parseInt(connectStats[0].trim()),
-                    Long.parseLong(connectStats[1].trim()), Integer.parseInt(connectStats[2].trim()));
+                Long.parseLong(connectStats[1].trim()), Integer.parseInt(connectStats[2].trim()));
+
             // Statistics for Match.
             String[] matchStats = userDataFromFile.get(MATCH_STATS).split(",");
             user.initializeMatchStats(Integer.parseInt(matchStats[0].trim()),
                     Long.parseLong(matchStats[1].trim()), Integer.parseInt(matchStats[2].trim()));
+
             // Statistics for Guess
             String[] guessStats = userDataFromFile.get(GUESS_STATS).split(",");
             user.initializeGuessStats(Integer.parseInt(guessStats[0].trim()),

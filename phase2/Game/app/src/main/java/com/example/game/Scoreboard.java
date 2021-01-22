@@ -11,12 +11,10 @@ class Scoreboard {
 
         int size = formattedScoresList.size();
         if (sortBy.equalsIgnoreCase("NAME")) {
-
             Collections.sort(formattedScoresList);
-
         } else if (sortBy.equalsIgnoreCase("SCORE")) {
 
-            for (int i = 0; i < size-1; i++)
+            for (int i = 0; i < size-1; i++) {
                 for (int j = 0; j < size-i-1; j++) {
 
                     int currScore = extractScore(formattedScoresList.get(j));
@@ -29,6 +27,7 @@ class Scoreboard {
                         formattedScoresList.set(j+1, temp);
                     }
                 }
+            }
         }
     }
 
@@ -55,7 +54,6 @@ class Scoreboard {
             scores.get(userName).add(score);
 
         }
-        Log.i("Score/Scoreboard.addScore() - Displaying HashMap", scores.toString());
     }
 
     HashMap<String, ArrayList<Integer>> getScoreMap() {

@@ -59,9 +59,6 @@ public class GuessConfiguration extends AppCompatActivity {
             selectedStreaksEmoji = user.getIndexOfCustomization1();
             selectedEquationColor = user.getIndexOfCustomization2();
 
-            Log.i("Guess", "selectedStreaksEmoji " + selectedStreaksEmoji );
-            Log.i("Guess", "selectedEquationColor " + selectedEquationColor );
-
             displayUserCustomizations(R.id.streaksEmojiLinearLayout, selectedStreaksEmoji);
             displayUserCustomizations(R.id.equationColorsLinearLayout, selectedEquationColor);
         }
